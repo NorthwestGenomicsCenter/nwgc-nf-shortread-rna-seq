@@ -1,18 +1,15 @@
-include { CALL_VARIANTS } from './workflows/call_variants.nf'
-include { VALIDATE_VARIANTS } from './modules/validate_variants.nf'
+include { STAR_MAP_MERGE_SORT } from './workflows/star_map_merge_sort.nf'
 
 workflow {
-    NwgcCore.init(params)
 
-    CALL_VARIANTS()
-    VALIDATE_VARIANTS(CALL_VARIANTS.out.gvcf, CALL_VARIANTS.out.gvcf_index)
+    // Map/Merge using STAR
+    STAR_MAP_MERGE_SORT()
+    ch_versions = ch_versions.mix(STAR_MAP_MERGE_SORT.out.versions)
 
-}
+    if (!STAR_MAP_MERGE_SORT.out.readCountsPassed) {
+        error "Error:  Not enough reads to proceed: " + STAR_MAP_MERGE_SORT.out.readCount
+    }
 
-workflow.onError {
-    NwgcCore.error(workflow, "$params.sampleId")
-}
+    ch_versions.unique().collectFile(name: 'rna_star_software_versions.yaml', storeDir: "${params.sampleDirectory}")
 
-workflow.onComplete {
-    NwgcCore.processComplete(workflow, "$params.sampleId")
 }

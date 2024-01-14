@@ -10,21 +10,18 @@ userEmail: "<userEmail>"     # e.g. userEmail: "kolart@uw.edu"
 sampleDirectory: "<full path to sample directory>"    # e.g. sampleDirectory: "/net/nwgc/vol1/data/processed/samples/123456/WHOLE_GENOME"
 sampleId: <samplify sampleId>                         # e.g sampleId: 123456
 
-# Target
-sequencingTarget: "<name of sequencing target>"   	  # e.g. sequencingTarget: "nimblegen_solution_V2refseq_2010"
-targetListFile: "<full path to target .list file>"    # e.g. targetListFile: "/net/nwgc/vol1/references/human/hg19/targets/nimblegen_solution_V2refseq_2010/nimblegen_solution_V2refseq_2010.hg19.list"
-
 # Reference Genome
-referenceGenome: "<full path to reference genome fasta>"    # e.g. referenceGenome: "/net/nwgc/vol1/references/human/hg19/genome/assembly_bwa_0.7.15/hs37d5.fa"
-dbSnp: "<full path to dbSnp file>"                          # e.g. dbSnp: "/net/nwgc/vol1/references/human/snps/dbSNP/dbSNP138.vcf"
+starDirectory: "<full path to STAR reference directory>"    # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev30/bundle"
 
-# Bam  
-bam: "<full path to the bam file from which to call variants>"  # e.g.  bam: /net/nwgc/vol1/home/kolart/pacbio_merged_test.bam   
+# Fastqs  
+fastq1Files: "<comma separated list of full path to the fastq1 files>"
+  # e.g.  fastq1Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz   
+fastq2Files: "<comma separated list of full path to the fastq2 files (in same order as fastq1Files>"
+  # e.g.  fastq2Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz 
 
-# Optional (Already defaulted in nextflow.config file to organism=Homo sapiens, isGRC38=false)
-organism: "<species other than Homo sapiens>"  # e.g. organism: "Mus musculus"
-isGRC38: "<true if grc38>"                     # e.g. isGRC38: true
-
+# Read Groups
+readGroups: "<comma separated list of read group info (in same order ast fastq1Files)>"
+    # e.g.  readGroups: ID:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:22.912" , ID:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:16.431"
 
 ##########################################
 ### RabbitMQ
