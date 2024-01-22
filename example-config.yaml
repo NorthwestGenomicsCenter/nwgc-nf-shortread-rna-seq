@@ -11,7 +11,8 @@ sampleDirectory: "<full path to sample directory>"    # e.g. sampleDirectory: "/
 sampleId: <samplify sampleId>                         # e.g sampleId: 123456
 
 # Reference Genome
-starDirectory: "<full path to STAR reference directory>"    # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev30/bundle"
+starDirectory: "<full path to STAR reference directory>"       # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev30/bundle"
+rsemReferencePrefix: "<label used as prefix for rsem files>"   # e.g. rsemReferencePrefix: "rsem_reference"
 
 # Fastqs  
 fastq1Files: "<comma separated list of full path to the fastq1 files>"
