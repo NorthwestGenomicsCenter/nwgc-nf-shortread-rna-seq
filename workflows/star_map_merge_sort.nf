@@ -5,9 +5,9 @@ include { CHECK_MAPPED_READ_COUNT } from '../modules/check_mapped_read_count.nf'
 workflow STAR_MAP_MERGE_SORT {
 
     main:
-        STAR(params.fastq1Files, params.fastqs2Files, params.readGroups)
+        STAR(params.fastq1Files, params.fastq2Files, params.readGroups)
         SAMBAMBA_SORT(STAR.out.aligned_bam)
-        tuple val(readCount), val(readCountsPassed) = CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedByCoordinate_bam)
+        CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedByCoordinate_bam, SAMBAMBA_SORT.out.sortedByCoordinate_bai)
 
         // Versions
         ch_versions = Channel.empty()
@@ -19,7 +19,6 @@ workflow STAR_MAP_MERGE_SORT {
         sortedByCoordinate_bam = SAMBAMBA_SORT.out.sortedByCoordinate_bam
         spliceJunctions_tab = STAR.out.spliceJunctions_tab
         readsPerGene_tab = STAR.out.readsPerGene_tab
-        readCount = readCount
-        readCountsPassed = readCountsPassed
+        readCountJson = CHECK_MAPPED_READ_COUNT.out.readCountJson
         versions = ch_versions
 }
