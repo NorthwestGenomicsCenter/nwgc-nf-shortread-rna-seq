@@ -3,8 +3,8 @@ process STAR {
     label "STAR_${params.sampleId}_${params.userId}"
 
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.out.bam"
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam"
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum"
+    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam"}
+    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum" saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5sum"}
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.ReadsPerGene.out.tab"
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.SJ.out.tab"
 
@@ -15,9 +15,9 @@ process STAR {
 
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
-        path "*.Aligned.toTranscriptome.out.bam" emit: transcriptome_bam
-        path "*.ReadsPerGene.out.tab" emit: readsPerGene_tab
-        path "*.SJ.out.tab" emit: spliceJunctions_tab
+        path "*.Aligned.toTranscriptome.out.bam", emit: transcriptome_bam
+        path "*.ReadsPerGene.out.tab", emit: readsPerGene_tab
+        path "*.SJ.out.tab", emit: spliceJunctions_tab
         path "versions.yaml", emit: versions
 
     script:
