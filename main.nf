@@ -28,8 +28,6 @@ workflow {
     read_count_ch.fail.view{ "$it is fail" }
 
     RNA_ANALYSIS(read_count_ch.pass, STAR_MAP_MERGE_SORT.out.transcriptome_bam)
-    read_count_ch.pass.view{ "$it is pass" }
-
 
     ch_versions.unique().collectFile(name: 'rna_star_software_versions.yaml', storeDir: "${params.sampleDirectory}")
 
