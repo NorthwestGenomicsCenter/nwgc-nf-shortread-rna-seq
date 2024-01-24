@@ -23,7 +23,7 @@ process RSEM {
             --estimate-rspd \
             --forward-prob 0.0 \
             --bam $bam \
-            ${parms.starDirectory}/${params.rsemReferencePrefix}' \
+            ${params.starDirectory}/${params.rsemReferencePrefix}' \
             ${params.sampleId}.transcriptome_hits.merged 
     
     
