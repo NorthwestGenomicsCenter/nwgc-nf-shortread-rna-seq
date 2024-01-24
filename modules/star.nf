@@ -4,7 +4,7 @@ process STAR {
 
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.out.bam"
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam"}
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum" saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5sum"}
+    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5sum"}
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.ReadsPerGene.out.tab"
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.SJ.out.tab"
 
