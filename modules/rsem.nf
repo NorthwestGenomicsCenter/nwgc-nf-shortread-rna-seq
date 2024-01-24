@@ -1,6 +1,6 @@
 process RSEM {
 
-    label "SAMBAMBA_SORT_${params.sampleId}_${params.userId}"
+    label "RSEM_${params.sampleId}_${params.userId}"
 
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.genes.results"
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*..isoforms.results"
@@ -23,7 +23,7 @@ process RSEM {
             --estimate-rspd \
             --forward-prob 0.0 \
             --bam $bam \
-            ${params.starDirectory}/${params.rsemReferencePrefix}' \
+            ${params.starDirectory}/${params.rsemReferencePrefix} \
             ${params.sampleId}.transcriptome_hits.merged 
     
         cat <<-END_VERSIONS > versions.yaml
