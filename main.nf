@@ -19,9 +19,9 @@ workflow {
                            return [ jsonObj.read_count ]
                        }
                        .branch {readCount ->
-                           pass: readCount[0] >= 1000
+                           pass: readCount[0] >= 3000
                                  return readCount
-                           fail: readCount[0] < 1000
+                           fail: readCount[0] < 3000
                                  return "Not enough reads to proceed " + readCount
                        }
 
