@@ -11,8 +11,6 @@ process CHECK_MAPPED_READ_COUNT {
 
     script:
         """
-        sleep 10
-
         ## Use samtools to find mapped reads (first try idxstats as it is faster)
         MAPPED_READS_FROM_SAMTOOLS=`samtools idxstats $bam | awk '{sum+=\$3} {print sum}' | tail -n 1`
         if [ \$MAPPED_READS_FROM_SAMTOOLS == 0 ] ; then
