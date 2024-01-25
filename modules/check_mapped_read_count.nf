@@ -7,7 +7,7 @@ process CHECK_MAPPED_READ_COUNT {
         path bai
 
     output:
-        env MAPPED_READS_FROM_SAMTOOLS, emit: readCountJson
+        env MAPPED_READS_FROM_SAMTOOLS, emit: readCount
 
     script:
         """

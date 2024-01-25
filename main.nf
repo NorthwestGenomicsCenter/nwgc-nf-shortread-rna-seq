@@ -13,11 +13,11 @@ workflow {
     STAR_MAP_MERGE_SORT()
     ch_versions = ch_versions.mix(STAR_MAP_MERGE_SORT.out.versions)
 
-    read_count_ch = STAR_MAP_MERGE_SORT.out.readCountJson
+    read_count_ch = STAR_MAP_MERGE_SORT.out.readCount
                         .branch {readCount ->
-                           pass: readCount[0] >= 3000
+                           pass: readCount[0] >= 1000
                                  return readCount
-                           fail: readCount[0] < 3000
+                           fail: readCount[0] < 1000
                                  return "Not enough reads to proceed " + readCount
                        }
 
