@@ -5,6 +5,7 @@ include { RNA_ANALYSIS } from './workflows/rna_analysis.nf'
 
 workflow {
 
+
     // Versions channel
     ch_versions = Channel.empty()
 
