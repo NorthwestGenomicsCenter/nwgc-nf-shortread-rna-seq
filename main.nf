@@ -16,7 +16,7 @@ workflow {
     read_count_ch = STAR_MAP_MERGE_SORT.out.readCount
                         .branch {readCount ->
                            pass: readCount.isInteger() && readCount.toInteger() >= 1000
-                                 return STAR_MAP_MERGE_SORT.out.transcriptome_bam
+                                 return STAR_MAP_MERGE_SORT.out
                            fail: !readCount.isInteger() || readCount.toInteger() < 1000
                                  return "Not enough reads to proceed " + readCount
                        }
@@ -26,7 +26,7 @@ workflow {
     read_count_ch.pass.view{ "$it is pass"}
 
     // Enough reads, so proceed with RNA Analysis
-    RNA_ANALYSIS(read_count_ch.pass, STAR_MAP_MERGE_SORT.out.transcriptome_bam)
+    RNA_ANALYSIS(read_count_ch.pass)
 
     ch_versions.unique().collectFile(name: 'rna_star_software_versions.yaml', storeDir: "${params.sampleDirectory}")
 
