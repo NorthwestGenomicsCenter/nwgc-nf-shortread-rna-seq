@@ -21,8 +21,9 @@ workflow {
                                  return "Not enough reads to proceed " + readCount
                        }
 
-    // If not enough reads, wwite early exit message to stdout
+    // If not enough reads, write early exit message to stdout
     read_count_ch.fail.view()
+    read_count_ch.pass.view{ "$it is pass"}
 
     // Enough reads, so proceed with RNA Analysis
     RNA_ANALYSIS(read_count_ch.pass, STAR_MAP_MERGE_SORT.out.transcriptome_bam)
