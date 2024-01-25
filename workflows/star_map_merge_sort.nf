@@ -19,6 +19,6 @@ workflow STAR_MAP_MERGE_SORT {
         sortedByCoordinate_bam = SAMBAMBA_SORT.out.sortedByCoordinate_bam
         spliceJunctions_tab = STAR.out.spliceJunctions_tab
         readsPerGene_tab = STAR.out.readsPerGene_tab
-        readCountJson = CHECK_MAPPED_READ_COUNT.out.readCountJson
+        readCount = CHECK_MAPPED_READ_COUNT.out.readCount
         versions = ch_versions
 }
