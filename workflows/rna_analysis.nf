@@ -3,12 +3,12 @@ include { RSEM } from '../modules/rsem.nf'
 workflow RNA_ANALYSIS {
 
     take:
-        starOutput
+        transcriptome_bam
 
     main:
 
         println "Starting RNA_ANALYSIS"
-        RSEM(starOutput.transcriptome_bam.collect())
+        RSEM(transcriptome_bam)
         println "Finshed RNA_ANALYSIS"
 
 }
