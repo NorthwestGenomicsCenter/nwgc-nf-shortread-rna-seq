@@ -26,7 +26,7 @@ workflow {
     read_count_ch.pass.view{ "$it is pass"}
 
     // Enough reads, so proceed with RNA Analysis
-    RNA_ANALYSIS(read_count_ch.pass)
+    RNA_ANALYSIS(read_count_ch.pass, STAR_MAP_MERGE_SORT.out.transcriptome_bam)
 
     ch_versions.unique().collectFile(name: 'rna_star_software_versions.yaml', storeDir: "${params.sampleDirectory}")
 
