@@ -9,7 +9,7 @@ workflow RNA_ANALYSIS {
     main:
 
         println "Starting RNA_ANALYSIS"
-        RSEM(readCount, transcriptome_bam)
+        RSEM(transcriptome_bam)
         println "Finshed RNA_ANALYSIS"
 
 }
