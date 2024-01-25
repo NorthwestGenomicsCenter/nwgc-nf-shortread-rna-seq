@@ -16,7 +16,5 @@ process CHECK_MAPPED_READ_COUNT {
         if [ \$MAPPED_READS_FROM_SAMTOOLS == 0 ] ; then
             MAPPED_READS_FROM_SAMTOOLS=`samtools flagstat $bam | head -n 5 |tail -n 1  | awk '{print \$1'}`
         fi
-
-        echo -n '{"read_count": ' >> read_count.json; echo -n "\$MAPPED_READS_FROM_SAMTOOLS" >> read_count.json; echo -n '}' >> read_count.json
         """
 }

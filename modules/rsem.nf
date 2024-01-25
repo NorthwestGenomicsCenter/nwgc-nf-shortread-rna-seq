@@ -6,7 +6,6 @@ process RSEM {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.isoforms.results"
  
     input:
-        val readCount
         path bam
 
     output:
