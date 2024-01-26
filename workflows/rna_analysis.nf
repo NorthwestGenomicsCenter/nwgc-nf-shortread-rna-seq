@@ -1,14 +1,22 @@
 include { RSEM } from '../modules/rsem.nf'
+include { JUNCTIONS_BED } from '../modules/junctions_bed.nf'
 
 workflow RNA_ANALYSIS {
 
     take:
-        mergeSortOut
+        starOut
 
     main:
 
-        println "Starting RNA_ANALYSIS"
-        RSEM(mergeSortOut.transcriptome_bam.get())
-        println "Finshed RNA_ANALYSIS"
+        RSEM(starOut.transcriptome_bam.get())
+        JUNCTIONS_BED(starOut.spliceJunctions_tab.get())
+
+        // Versions
+        ch_versions = Channel.empty()
+        ch_versions = ch_versions.mix(RSEM.out.versions)
+        ch_versions = ch_versions.mix(JUNCTIONS_BED.out.versions)
+
+    emit:
+        versions = ch_versions
 
 }

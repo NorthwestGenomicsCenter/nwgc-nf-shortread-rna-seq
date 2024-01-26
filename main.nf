@@ -5,7 +5,6 @@ include { RNA_ANALYSIS } from './workflows/rna_analysis.nf'
 
 workflow {
 
-
     // Versions channel
     ch_versions = Channel.empty()
 
@@ -29,7 +28,8 @@ workflow {
 
     // Enough reads, so proceed with RNA Analysis
     RNA_ANALYSIS(read_count_ch.pass)
+    ch_versions = ch_versions.mix(RNA_ANALYSIS.out.versions)
 
-    ch_versions.unique().collectFile(name: 'rna_star_software_versions.yaml', storeDir: "${params.sampleDirectory}")
+    ch_versions.unique().collectFile(name: 'rna-star_software_versions.yaml', storeDir: "${params.sampleDirectory}")
 
 }
