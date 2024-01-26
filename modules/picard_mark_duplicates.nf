@@ -4,7 +4,7 @@ process PICARD_MARK_DUPLICATES {
 
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bam", saveAs: {s-> "${params.sampleId}.accepted_hits.merged.markeddups.recal.bam"}
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bai", saveAs: {s-> "${params.sampleId}.accepted_hits.merged.markeddups.recal.bai"}
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bam.md5sum", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5sum"}
+    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5"}
 
     input:
         path bam
@@ -13,24 +13,24 @@ process PICARD_MARK_DUPLICATES {
     output:
         path "${params.sampleId}.markeddups.bam", emit: bam
         path "${params.sampleId}.markeddups.bai", emit: bai
-        path "${params.sampleId}.markeddups.bam.md5sum", emit: md5
+        path "${params.sampleId}.markeddups.bam.md5", emit: md5
         path "versions.yaml", emit: versions
 
     script:
 
         """
-        PICARD_TEMP__DIR=picard_temp
-        mkdir -p "\$PICARD_TEMP__DIR"
+        PICARD_TEMP_DIR=picard_temp
+        mkdir -p "\$PICARD_TEMP_DIR"
 
         java \
             -XX:InitialRAMPercentage=80.0 \
             -XX:MaxRAMPercentage=85.0 \
             -jar \$PICARD_DIR/picard.jar \
             MarkDuplicates \
-            $bam \
+            --INPUT $bam \
             --OUTPUT ${params.sampleId}.markeddups.bam \
             --METRICS_FILE ${params.sampleId}.duplicate_metrics.txt \
-            --TMP-DIR \$PICARD_TEMP__DIR \
+            --TMP_DIR \$PICARD_TEMP_DIR \
             --ASSUME_SORT_ORDER coordinate \
             --CREATE_MD5_FILE true \
             --CREATE_INDEX true \

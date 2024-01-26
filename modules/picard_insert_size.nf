@@ -17,8 +17,8 @@ process PICARD_INSERT_SIZE {
     script:
 
         """
-        PICARD_TEMP__DIR=picard_temp
-        mkdir -p "\$PICARD_TEMP__DIR"
+        PICARD_TEMP_DIR=picard_temp
+        mkdir -p "\$PICARD_TEMP_DIR"
 
         java \
             -XX:InitialRAMPercentage=80.0 \
@@ -27,9 +27,9 @@ process PICARD_INSERT_SIZE {
             CollectInsertSizeMetrics \
             --INPUT $bam \
             --OUTPUT ${params.sampleId}.insert_size_metrics.txt \
-            --TMP_DIR \$PICARD_TEMP__DIR \
+            --TMP_DIR \$PICARD_TEMP_DIR \
             --Histogram_FILE ${params.sampleId}.insert_size_histogram.pdf \
-            --HISTOGRAM_WIDTH=1000 
+            --HISTOGRAM_WIDTH 1000 
 
         pdftoppm ${params.sampleId}.insert_size_histogram.pdf -png -scale-to 480 > ${params.sampleId}.insert_size_histogram.png
 

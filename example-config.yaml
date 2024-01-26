@@ -7,8 +7,9 @@ userId: "<samplify userId>"  # e.g. userid: "kolart"
 userEmail: "<userEmail>"     # e.g. userEmail: "kolart@uw.edu"
 
 # Sample
-sampleDirectory: "<full path to sample directory>"    # e.g. sampleDirectory: "/net/nwgc/vol1/data/processed/samples/123456/WHOLE_GENOME"
-sampleId: <samplify sampleId>                         # e.g sampleId: 123456
+sampleDirectory: "<full path to sample directory>"         # e.g. sampleDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star"
+sampleQCDirectory: "<full path to sample QC directory>"    # e.g. sampleDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/qc"
+sampleId: <samplify sampleId>                              # e.g sampleId: 123456
 
 # Reference Genome
 starDirectory: "<full path to STAR reference directory>"       # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev30/bundle"
