@@ -6,8 +6,8 @@ process PICARD_INSERT_SIZE {
     publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.insert_size_histogram.png"
 
     input:
-        path bam
-        path bai
+        bam
+        bai
 
     output:
         path "${params.sampleId}.insert_size_metrics.txt", emit: metrics

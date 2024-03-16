@@ -6,7 +6,7 @@ process RSEM {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.isoforms.results"
  
     input:
-        path bam
+        bam
 
     output:
         path "*.genes.results",  emit: genes
