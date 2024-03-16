@@ -27,7 +27,7 @@ process DEEPTOOLS_BAM_COVERAGE {
             --outFileFormat bigwig \
             --normalizeUsing RPGC \
             --numberOfProcessors 1 \
-            --outFileName ${params.sampleDirectory}.$chromosome.$strand.bw
+            --outFileName ${params.sampleDirectory}.${chromosome}.${strand}.bw
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':
