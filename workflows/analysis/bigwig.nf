@@ -11,7 +11,7 @@ workflow BIGWIG {
         // Chromsomee-Strand Input for DEEPTOOLS_BAM_COVERAGE
         chromosomesChannel = Channel.fromList(params.chromosomes)
         strandChannel = Channel.fromList('forward','reverse')
-        chromosomeStrandTuple = chromsomesChannel.combine(strandChannel)
+        chromosomeStrandTuple = chromosomesChannel.combine(strandChannel)
 
         DEEPTOOLS_BAM_COVERAGE(chromosomeStrandTuple, markedDupsBam, markedDupsBai)
 
