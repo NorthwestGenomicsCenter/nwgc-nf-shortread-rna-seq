@@ -15,7 +15,7 @@ process GATK_VARIANT_FILTRATION {
 
         """
         gatk \
-            --java-options "-XX:InitialRAMPercentage=80 -XX:MaxRAMPercentage=85" \
+            --java-options "-XX:InitialRAMPercentage=80.0 -XX:MaxRAMPercentage=85.0" \
             VariantFiltration \
             -R ${params.starDirectory}/${params.referenceGenome} \
             -V $vcf

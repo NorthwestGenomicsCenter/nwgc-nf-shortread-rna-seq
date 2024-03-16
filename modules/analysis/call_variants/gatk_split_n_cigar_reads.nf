@@ -14,7 +14,7 @@ process GATK_SPLIT_N_CIGAR_READS {
 
         """
         gatk \
-            --java-options "-XX:InitialRAMPercentage=80 -XX:MaxRAMPercentage=85" \
+            --java-options "-XX:InitialRAMPercentage=80.0 -XX:MaxRAMPercentage=85.0" \
             SplitNCigarReads \
             -R ${params.starDirectory}/${params.referenceGenome} \
             --TMP_DIR . \
