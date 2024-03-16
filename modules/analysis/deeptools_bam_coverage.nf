@@ -4,7 +4,7 @@ process DEEPTOOLS_BAM_COVERAGE {
 
     publishDir "${params.bigWigDirectory}", mode:  'link', pattern: "*.bw"
 
-    memory { 10G * (Math.pow(2, task.attempt - 1)) }
+    memory { 10.GB * (Math.pow(2, task.attempt - 1)) }
     errorStrategy { task.exitStatus == 137 ? 'retry' : 'terminate' }
 
     input:
