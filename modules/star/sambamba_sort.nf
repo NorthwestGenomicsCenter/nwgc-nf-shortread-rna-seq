@@ -7,7 +7,7 @@ process SAMBAMBA_SORT {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.aligned.sortedByCoord.bam.md5sum"
 
     input:
-        bam
+        path bam
 
     output:
         path "*.aligned.sortedByCoord.bam",  emit: sortedByCoordinate_bam
