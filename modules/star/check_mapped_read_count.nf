@@ -3,8 +3,8 @@ process CHECK_MAPPED_READ_COUNT {
     label "CHECK_MAPPED_READ_COUNT_${params.sampleId}_${params.userId}"
 
     input:
-        path bam
-        path bai
+        bam
+        bai
 
     output:
         env MAPPED_READS_FROM_SAMTOOLS, emit: readCount

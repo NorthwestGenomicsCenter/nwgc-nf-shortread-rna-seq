@@ -9,9 +9,9 @@ process STAR {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
 
     input:
-        val fastq1Files
-        val fastq2Files
-        val readGroups
+        fastq1Files
+        fastq2Files
+        readGroups
 
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
