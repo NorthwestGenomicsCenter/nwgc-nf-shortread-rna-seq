@@ -5,7 +5,7 @@ process GATK_VARIANT_FILTRATION {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.filtered.vcf"
 
     input:
-        vcf
+        path vcf
 
     output:
         path  "*.filtered.vcf", emit: filtered_vcf

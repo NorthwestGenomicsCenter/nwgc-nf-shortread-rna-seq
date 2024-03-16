@@ -3,8 +3,8 @@ process GATK_SPLIT_N_CIGAR_READS {
     label "GATK_SPLIT_N_CIGAR_READS_${params.sampleId}_${params.userId}"
 
     input:
-        bam
-        bai
+        path bam
+        path bai
 
     output:
         path "*.splitncigar.bam", emit: bam

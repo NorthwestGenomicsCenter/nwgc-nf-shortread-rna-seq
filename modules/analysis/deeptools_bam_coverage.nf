@@ -9,8 +9,8 @@ process DEEPTOOLS_BAM_COVERAGE {
 
     input:
         tuple val(chromosome), val(strand)
-        bam
-        bai
+        path bam
+        path bai
 
     output:
         path "versions.yaml", emit: versions

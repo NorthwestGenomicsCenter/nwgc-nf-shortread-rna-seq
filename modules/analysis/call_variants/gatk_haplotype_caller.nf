@@ -3,8 +3,8 @@ process GATK_HAPLOTYPE_CALLER {
     label "GATK_HAPLOTYPE_CALLER_${params.sampleId}_${params.userId}"
 
     input:
-        bam
-        bai
+        path bam
+        path bai
 
     output:
         path  "*.vcf", emit: vcf

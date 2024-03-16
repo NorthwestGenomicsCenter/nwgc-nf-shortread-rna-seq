@@ -9,8 +9,8 @@ process RNASEQC {
     publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.exon_reads.gct"
 
     input:
-        bam
-        bai
+        path bam
+        path bai
 
     output:
         path "*.metrics.tsv", emit: metrics
