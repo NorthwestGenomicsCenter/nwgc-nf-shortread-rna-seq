@@ -1,6 +1,6 @@
-include { STAR } from '../modules/star.nf'
-include { SAMBAMBA_SORT } from '../modules/sambamba_sort.nf'
-include { CHECK_MAPPED_READ_COUNT } from '../modules/check_mapped_read_count.nf'
+include { STAR } from '../../modules/star/star.nf'
+include { SAMBAMBA_SORT } from '../../modules/star/sambamba_sort.nf'
+include { CHECK_MAPPED_READ_COUNT } from '../../modules/star/check_mapped_read_count.nf'
 
 workflow STAR_MAP_MERGE_SORT {
 

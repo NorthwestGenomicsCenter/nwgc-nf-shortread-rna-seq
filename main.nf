@@ -1,7 +1,7 @@
 import groovy.json.JsonSlurper
 
-include { STAR_MAP_MERGE_SORT } from './workflows/star_map_merge_sort.nf'
-include { RNA_ANALYSIS } from './workflows/rna_analysis.nf'
+include { STAR_MAP_MERGE_SORT } from './workflows/star/star_map_merge_sort.nf'
+include { ANALYSIS } from './workflows/analysis/analysis.nf'
 
 workflow {
 
@@ -27,8 +27,8 @@ workflow {
     read_count_ch.pass.view{ "$it is pass"}
 
     // Enough reads, so proceed with RNA Analysis
-    RNA_ANALYSIS(read_count_ch.pass)
-    ch_versions = ch_versions.mix(RNA_ANALYSIS.out.versions)
+    ANALYSIS(read_count_ch.pass)
+    ch_versions = ch_versions.mix(ANALYSIS.out.versions)
 
     ch_versions.unique().collectFile(name: 'rna-star_software_versions.yaml', storeDir: "${params.sampleDirectory}")
 

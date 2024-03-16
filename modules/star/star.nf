@@ -2,11 +2,11 @@ process STAR {
 
     label "STAR_${params.sampleId}_${params.userId}"
 
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.out.bam"
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam"}
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5sum"}
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.ReadsPerGene.out.tab"
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.SJ.out.tab"
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.Aligned.out.bam"
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam"}
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5sum"}
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.ReadsPerGene.out.tab"
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
 
     input:
         val fastq1Files
@@ -24,8 +24,8 @@ process STAR {
         """
         STAR \
             --runMode alignReads \
-            --runThreadN $task.cpus \
-            --genomeDir $params.starDirectory \
+            --runThreadN ${task.cpus} \
+            --genomeDir ${params.starDirectory} \
             --twopassMode Basic \
             --alignSJoverhangMin 8 \
             --alignSJDBoverhangMin 1 \
@@ -41,7 +41,7 @@ process STAR {
             --limitSjdbInsertNsj 1200000 \
             --readFilesIn $fastq1Files $fastq2Files \
             --readFilesCommand zcat \
-            --outFileNamePrefix "$params.sampleId." \
+            --outFileNamePrefix "${params.sampleId}." \
             --outSAMstrandField intronMotif \
             --outFilterIntronMotifs None \
             --alignSoftClipAtReferenceEnds Yes \

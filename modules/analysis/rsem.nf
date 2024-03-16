@@ -2,8 +2,8 @@ process RSEM {
 
     label "RSEM_${params.sampleId}_${params.userId}"
 
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.genes.results"
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.isoforms.results"
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.genes.results"
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.isoforms.results"
  
     input:
         path bam
