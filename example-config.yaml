@@ -18,7 +18,7 @@ starDirectory: "<full path to STAR reference directory>"       # e.g. STARDirect
 # STAR specific files (should reside in the starDirectory defined above)
 rsemReferencePrefix: "<label used as prefix for rsem files>"   # e.g. rsemReferencePrefix: "rsem_reference"
 gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "gencode.v30.GRCh38.ERCC.genes.collapsed_only.gtf"
-referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: ""
+referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
 
 # Fastqs  
 fastq1Files: "<comma separated list of full path to the fastq1 files>"

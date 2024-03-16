@@ -14,8 +14,7 @@ process GATK_HAPLOTYPE_CALLER {
 
         """
         gatk \
-            -XX:InitialRAMPercentage=80 \
-            -XX:MaxRAMPercentage=85 \
+            --java-options "-XX:InitialRAMPercentage=80 -XX:MaxRAMPercentage=85" \
             HaplotypeCaller \
             -R ${params.starDirectory}/${params.referenceGenome} \
             -I $bam \
