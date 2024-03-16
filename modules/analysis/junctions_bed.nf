@@ -5,7 +5,7 @@ process JUNCTIONS_BED {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.starJunctions.bed"
  
     input:
-        spliceJunctions_tab
+        path spliceJunctions_tab
 
     output:
         path "*.starJunctions.bed",  emit: junctions_bed

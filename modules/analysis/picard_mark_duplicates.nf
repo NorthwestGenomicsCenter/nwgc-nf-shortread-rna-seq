@@ -7,8 +7,8 @@ process PICARD_MARK_DUPLICATES {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5"}
 
     input:
-        bam
-        bai
+        path bam
+        path bai
 
     output:
         path "${params.sampleId}.markeddups.bam", emit: bam
