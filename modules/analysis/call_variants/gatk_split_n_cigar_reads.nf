@@ -8,6 +8,7 @@ process GATK_SPLIT_N_CIGAR_READS {
 
     output:
         path "*.splitncigar.bam", emit: bam
+        path "*.splitncigar.bai", emit: bai
         path "versions.yaml", emit: versions
 
     script:
