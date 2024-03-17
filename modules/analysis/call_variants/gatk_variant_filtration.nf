@@ -21,14 +21,14 @@ process GATK_VARIANT_FILTRATION {
             VariantFiltration \
             -R ${params.starDirectory}/${params.referenceGenome} \
             -V $vcf \
-            -O ${sampleId}.filtered.vcf \
+            -O ${params.sampleId}.filtered.vcf \
             -window 35 \
             -cluster 3 \
             --filter-name FS -filter "FS > 30.0" \
             --filter-name QD -filter "QD < 2.0"
 
-        bgzip -f ${sampleId}.filtered.vcf 
-        tabix -p vcf -f ${sampleId}.filtered.vcf.gz
+        bgzip -f ${params.sampleId}.filtered.vcf 
+        tabix -p vcf -f ${params.sampleId}.filtered.vcf.gz
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':
