@@ -14,7 +14,7 @@ process RNASEQC {
 
     output:
         path "*.metrics.tsv", emit: metrics
-        path "*.genes_tpm.gct", emit: genes_tpm
+        path "*.gene_tpm.gct", emit: gene_tpm
         path "*.gene_reads.gct", emit: gene_reads
         path "*.gene_fragments.gct", emit: gene_fragments
         path "*.exon_reads.gct", emit: exon_reads
