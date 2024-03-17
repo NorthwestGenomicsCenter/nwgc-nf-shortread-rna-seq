@@ -3,7 +3,7 @@ process RNASEQC {
     label "RNASEQC_${params.sampleId}_${params.userId}"
 
     publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.metrics.tsv"
-    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.genes_tpm.gct"
+    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.gene_tpm.gct"
     publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.gene_reads.gct"
     publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.gene_fragments.gct"
     publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.exon_reads.gct"
