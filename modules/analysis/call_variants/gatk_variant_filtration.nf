@@ -2,13 +2,15 @@ process GATK_VARIANT_FILTRATION {
 
     label "GATK_VARIANT_FILTRATION${params.sampleId}_${params.userId}"
 
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.filtered.vcf"
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz"
+    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz.tbi"
 
     input:
         path vcf
 
     output:
-        path  "*.filtered.vcf", emit: filtered_vcf
+        path  "*.filtered.vcf.gz", emit: filtered_vcf
+        path  "*.filtered.vcf.gz.tbi", emit: filtered_vcf_index
         path "versions.yaml", emit: versions
 
     script:
@@ -24,6 +26,9 @@ process GATK_VARIANT_FILTRATION {
             -cluster 3 \
             --filter-name FS -filter "FS > 30.0" \
             --filter-name QD -filter "QD < 2.0"
+
+        bgzip -f ${sampleId}.filtered.vcf 
+        tabix -p vcf -f ${sampleId}.filtered.vcf.gz
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':
