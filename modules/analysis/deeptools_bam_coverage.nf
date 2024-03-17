@@ -2,7 +2,7 @@ process DEEPTOOLS_BAM_COVERAGE {
 
     label "DEEPTOOLS_BAM_COVERAGE${params.sampleId}_${params.userId}"
 
-    publishDir "${params.bigWigDirectory}", mode:  'link', pattern: "*.bw"
+    publishDir "${params.sampleBigWigDirectory}", mode:  'link', pattern: "*.bw"
 
     memory { 10.GB * (Math.pow(2, task.attempt - 1)) }
     errorStrategy { task.exitStatus == 137 ? 'retry' : 'terminate' }

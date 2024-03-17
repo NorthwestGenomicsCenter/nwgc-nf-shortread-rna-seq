@@ -9,7 +9,7 @@ userEmail: "<userEmail>"     # e.g. userEmail: "kolart@uw.edu"
 # Sample
 sampleDirectory: "<full path to sample directory>"         # e.g. sampleDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star"
 sampleQCDirectory: "<full path to sample QC directory>"    # e.g. sampleQCDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/qc"
-sampleBigWigirectory: "<full path to sample BigWig directory>"    # e.g. sampleBigWigDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/tracks"
+sampleBigWigDirectory: "<full path to sample BigWig directory>"    # e.g. sampleBigWigDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/tracks"
 sampleId: <samplify sampleId>                              # e.g sampleId: 123456
 
 # STAR
