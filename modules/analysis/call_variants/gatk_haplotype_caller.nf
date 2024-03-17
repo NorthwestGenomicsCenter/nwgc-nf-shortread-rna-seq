@@ -8,6 +8,7 @@ process GATK_HAPLOTYPE_CALLER {
 
     output:
         path  "*.vcf", emit: vcf
+        path  "*.vcf.idx", emit: vcf_index
         path "versions.yaml", emit: versions
 
     script:

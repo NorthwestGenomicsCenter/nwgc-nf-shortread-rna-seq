@@ -7,6 +7,7 @@ process GATK_VARIANT_FILTRATION {
 
     input:
         path vcf
+        path vcf_index
 
     output:
         path  "*.filtered.vcf.gz", emit: filtered_vcf
