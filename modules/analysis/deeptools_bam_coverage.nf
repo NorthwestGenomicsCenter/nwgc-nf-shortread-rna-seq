@@ -13,6 +13,7 @@ process DEEPTOOLS_BAM_COVERAGE {
         path bai
 
     output:
+        path "*.bw", emit: bigwig
         path "versions.yaml", emit: versions
 
     script:
@@ -27,7 +28,7 @@ process DEEPTOOLS_BAM_COVERAGE {
             --outFileFormat bigwig \
             --normalizeUsing RPGC \
             --numberOfProcessors 1 \
-            --outFileName ${params.sampleDirectory}.${chromosome}.${strand}.bw
+            --outFileName ${params.sampleId}.${chromosome}.${strand}.bw
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':
