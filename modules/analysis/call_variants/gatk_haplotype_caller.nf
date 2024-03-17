@@ -18,7 +18,7 @@ process GATK_HAPLOTYPE_CALLER {
             HaplotypeCaller \
             -R ${params.starDirectory}/${params.referenceGenome} \
             -I $bam \
-            -O ${params.sampleId}.vcf
+            -O ${params.sampleId}.vcf \
             --read-filter OverclippedReadFilter \
             --dont-require-soft-clips-both-ends \
             --dont-use-soft-clipped-bases \

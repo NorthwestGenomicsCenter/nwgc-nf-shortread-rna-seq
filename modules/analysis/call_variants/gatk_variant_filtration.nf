@@ -20,8 +20,8 @@ process GATK_VARIANT_FILTRATION {
             --java-options "-XX:InitialRAMPercentage=80.0 -XX:MaxRAMPercentage=85.0" \
             VariantFiltration \
             -R ${params.starDirectory}/${params.referenceGenome} \
-            -V $vcf
-            -O ${sampleId}.filtered.vcf
+            -V $vcf \
+            -O ${sampleId}.filtered.vcf \
             -window 35 \
             -cluster 3 \
             --filter-name FS -filter "FS > 30.0" \
