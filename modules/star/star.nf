@@ -9,7 +9,7 @@ process STAR {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
 
     input:
-        tuple val(fastqsInfo)
+        val fastqsInfo
 
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
