@@ -6,12 +6,13 @@ workflow STAR_MAP_MERGE_SORT {
 
     main:
 
-        fastqInfo_ch = Channel.of(params.fastqs).map(row -> {
-            def fastq1Files = row.fastq1Files
-            def fastq2Files = row.fastq2Files
-            def readGroups = row.readGroups
-            return tuple (fastq1Files, fastq1Files, readGroups)
-            })
+        fastqInfo_ch = Channel.of(params.fastqs)
+            .map{row -> 
+                def fastq1Files = row.fastq1Files
+                def fastq2Files = row.fastq2Files
+                def readGroups = row.readGroups
+                return tuple (fastq1Files, fastq1Files, readGroups)
+            }
 
         STAR(fastqInfo_ch)
         SAMBAMBA_SORT(STAR.out.aligned_bam)
