@@ -6,24 +6,7 @@ workflow STAR_MAP_MERGE_SORT {
 
     main:
 
-        println("fastqs: ")
-        params.fastqs.view()
-
-        fastqs_ch = Channel.of(params.fastqs)
-        println("fastqs_ch: ")
-        fastqs_ch.view()
-
-        fastqInfo_ch = Channel.of(params.fastqs)
-            .map{row -> 
-                def fastq1Files = row.fastq1Files
-                def fastq2Files = row.fastq2Files
-                def readGroups = row.readGroups
-                return tuple (fastq1Files, fastq1Files, readGroups)
-            }
-        println("fastqInfo_ch: ")
-        fastqInfo_ch.view()
-
-        STAR(fastqs_ch)
+        STAR(params.fastqs)
         SAMBAMBA_SORT(STAR.out.aligned_bam)
         CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedByCoordinate_bam, SAMBAMBA_SORT.out.sortedByCoordinate_bai)
 
