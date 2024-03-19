@@ -26,7 +26,7 @@ workflow ANALYSIS {
         }
 
         // Analysis that use sorted bam output from star
-        if (runAll || params.analysisToRun.contains("VCF") || params.analysisToRun.contains("QC") || params.analysisToRun.contains("BigWig") ) {
+        if (runAll || params.analysisToRun.contains("VCF") || params.analysisToRun.contains("QC") || params.analysisToRun.contains("BigWig")) {
             PICARD_MARK_DUPLICATES(starOut.sortedByCoordinate_bam.get(), starOut.sortedByCoordinate_bai.get())
             ch_versions = ch_versions.mix(PICARD_MARK_DUPLICATES.out.versions)
         }
