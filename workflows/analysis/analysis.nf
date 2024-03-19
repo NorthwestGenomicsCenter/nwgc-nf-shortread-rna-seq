@@ -12,25 +12,37 @@ workflow ANALYSIS {
 
     main:
 
+        ch_versions = Channel.empty()
+        def runAll = params.analysisToRun.contains("All")
+
         // Analysis that use non-bam output from STAR
-        RSEM(starOut.transcriptome_bam.get())
-        JUNCTIONS_BED(starOut.spliceJunctions_tab.get())
+        if (runAll || analysisToRun.contains("RSEM")) {
+            RSEM(starOut.transcriptome_bam.get())
+            ch_versions = ch_versions.mix(RSEM.out.versions)
+        }
+        if (runAll || analysisToRun.contains("Junctions")) {
+            JUNCTIONS_BED(starOut.spliceJunctions_tab.get())
+        ch_versions = ch_versions.mix(JUNCTIONS_BED.out.versions)
+        }
 
         // Analysis that use sorted bam output from star
-        PICARD_MARK_DUPLICATES(starOut.sortedByCoordinate_bam.get(), starOut.sortedByCoordinate_bai.get())
-        CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
-        QC(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
-        BIGWIG(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
-
-        // Versions
-        ch_versions = Channel.empty()
-        ch_versions = ch_versions.mix(RSEM.out.versions)
-        ch_versions = ch_versions.mix(JUNCTIONS_BED.out.versions)
-        ch_versions = ch_versions.mix(PICARD_MARK_DUPLICATES.out.versions)
-        ch_versions = ch_versions.mix(CALL_VARIANTS.out.versions)
-        ch_versions = ch_versions.mix(QC.out.versions)
-        ch_versions = ch_versions.mix(BIGWIG.out.versions)
-
+        if (runAll || analysisToRun.contains("VCF") || analysisToRun.contains("QC") || analysisToRun.contains("BigWig") ) {
+            PICARD_MARK_DUPLICATES(starOut.sortedByCoordinate_bam.get(), starOut.sortedByCoordinate_bai.get())
+            ch_versions = ch_versions.mix(PICARD_MARK_DUPLICATES.out.versions)
+        }
+        if (runAll || analysisToRun.contains("VCF")) {
+            CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
+            ch_versions = ch_versions.mix(CALL_VARIANTS.out.versions)
+        }
+        if (runAll || analysisToRun.contains("QC")) {
+            QC(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
+            ch_versions = ch_versions.mix(QC.out.versions)
+        }
+        if (runAll || analysisToRun.contains("BigWig")) {
+            BIGWIG(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
+           ch_versions = ch_versions.mix(BIGWIG.out.versions)
+        }
+ 
     emit:
         versions = ch_versions
 
