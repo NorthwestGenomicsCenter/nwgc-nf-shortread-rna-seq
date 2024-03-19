@@ -52,7 +52,7 @@ process STAR {
             --chimOutType Junctions WithinBAM SoftClip \
             --chimMainSegmentMultNmax 1 \
             --outSAMattributes NH HI AS nM NM ch \
-            --outSAMattrRGline ${fastqInfo.readGroups} \
+            --outSAMattrRGline ${fastqsInfo.readGroups} \
             --outTmpDir starTempDir
 
         md5sum ${params.sampleId}.Aligned.toTranscriptome.out.bam | awk '{print \$1}' > ${params.sampleId}.Aligned.toTranscriptome.out.bam.md5sum
