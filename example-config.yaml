@@ -20,15 +20,32 @@ rsemReferencePrefix: "<label used as prefix for rsem files>"   # e.g. rsemRefere
 gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "gencode.v30.GRCh38.ERCC.genes.collapsed_only.gtf"
 referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
 
-# Fastqs &   
-fastq1Files: "<comma separated list of full path to the fastq1 files>"
-  # e.g.  fastq1Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz   
-fastq2Files: "<comma separated list of full path to the fastq2 files (in same order as fastq1Files>"
-  # e.g.  fastq2Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz 
+##########################################
+### Inputs  - Pick one set  Fastqs or Analysis 
+##########################################
+# Fastqs & Read Groups 
+fastqs:  
+  - fastq1Files: "<comma separated list of full path to the fastq1 files>"
+    fastq2Files: "<comma separated list of full path to the fastq2 files (in same order as fastq1Files>"
+    readGroups: "<comma separated list of read group info (in same order ast fastq1Files)>"
+#e.g.
+# fastqs:
+#   - fastq1Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz   
+#     fastq2Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz 
+#     readGroups: ID:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:22.912" , ID:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:16.431"
 
-# Read Groups
-readGroups: "<comma separated list of read group info (in same order ast fastq1Files)>"
-    # e.g.  readGroups: ID:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:22.912" , ID:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:16.431"
+# Analyis Only
+analysis:   
+  - starBam: "<full path to star bam file>"
+    transcriptomeBam: "<full path to transcriptome bam file>"
+    spliceJunctionsTab: "<full path to spiceJunctions.tab file>"
+#e.g.
+# analysis:   
+#   - starBam: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/"
+#     transcriptomeBam: "<full path to transcriptome bam file>"
+#     spliceJunctionsTab: "<full path to spiceJunctions.tab file>"#
+
+
 
 ##########################################
 ### RabbitMQ

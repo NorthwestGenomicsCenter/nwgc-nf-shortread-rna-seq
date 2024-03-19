@@ -5,7 +5,7 @@ include { CHECK_MAPPED_READ_COUNT } from '../../modules/star/check_mapped_read_c
 workflow STAR_MAP_MERGE_SORT {
 
     main:
-        STAR(params.fastq1Files, params.fastq2Files, params.readGroups)
+        STAR(params.fastqs)
         SAMBAMBA_SORT(STAR.out.aligned_bam)
         CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedByCoordinate_bam, SAMBAMBA_SORT.out.sortedByCoordinate_bai)
 
