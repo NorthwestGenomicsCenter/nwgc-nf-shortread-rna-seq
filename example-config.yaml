@@ -20,7 +20,7 @@ rsemReferencePrefix: "<label used as prefix for rsem files>"   # e.g. rsemRefere
 gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "gencode.v30.GRCh38.ERCC.genes.collapsed_only.gtf"
 referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
 
-# Fastqs  
+# Fastqs &   
 fastq1Files: "<comma separated list of full path to the fastq1 files>"
   # e.g.  fastq1Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz   
 fastq2Files: "<comma separated list of full path to the fastq2 files (in same order as fastq1Files>"
