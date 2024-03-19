@@ -8,7 +8,7 @@ workflow STAR_MAP_MERGE_SORT {
 
         fastqs_ch = Channel.of(params.fastqs)
         println("fastqs_ch: ")
-        fastqs_ch.view("$it")
+        fastqs_ch.view()
 
         fastqInfo_ch = Channel.of(params.fastqs)
             .map{row -> 
