@@ -16,29 +16,29 @@ workflow ANALYSIS {
         def runAll = params.analysisToRun.contains("All")
 
         // Analysis that use non-bam output from STAR
-        if (runAll || analysisToRun.contains("RSEM")) {
+        if (runAll || params.analysisToRun.contains("RSEM")) {
             RSEM(starOut.transcriptome_bam.get())
             ch_versions = ch_versions.mix(RSEM.out.versions)
         }
-        if (runAll || analysisToRun.contains("Junctions")) {
+        if (runAll || params.analysisToRun.contains("Junctions")) {
             JUNCTIONS_BED(starOut.spliceJunctions_tab.get())
         ch_versions = ch_versions.mix(JUNCTIONS_BED.out.versions)
         }
 
         // Analysis that use sorted bam output from star
-        if (runAll || analysisToRun.contains("VCF") || analysisToRun.contains("QC") || analysisToRun.contains("BigWig") ) {
+        if (runAll || params.analysisToRun.contains("VCF") || params.analysisToRun.contains("QC") || params.analysisToRun.contains("BigWig") ) {
             PICARD_MARK_DUPLICATES(starOut.sortedByCoordinate_bam.get(), starOut.sortedByCoordinate_bai.get())
             ch_versions = ch_versions.mix(PICARD_MARK_DUPLICATES.out.versions)
         }
-        if (runAll || analysisToRun.contains("VCF")) {
+        if (runAll || params.analysisToRun.contains("VCF")) {
             CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
             ch_versions = ch_versions.mix(CALL_VARIANTS.out.versions)
         }
-        if (runAll || analysisToRun.contains("QC")) {
+        if (runAll || params.analysisToRun.contains("QC")) {
             QC(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
             ch_versions = ch_versions.mix(QC.out.versions)
         }
-        if (runAll || analysisToRun.contains("BigWig")) {
+        if (runAll || params.analysisToRun.contains("BigWig")) {
             BIGWIG(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
            ch_versions = ch_versions.mix(BIGWIG.out.versions)
         }
