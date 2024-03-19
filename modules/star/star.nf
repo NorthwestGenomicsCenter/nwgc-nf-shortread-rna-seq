@@ -37,7 +37,7 @@ process STAR {
             --outFilterScoreMinOverLread 0.33 \
             --outFilterMatchNminOverLread 0.33 \
             --limitSjdbInsertNsj 1200000 \
-            --readFilesIn ${fastqsInfo.fastq1Files} ${fastqsInfo.fastq2Files} \
+            --readFilesIn $fastqsInfo ${fastqsInfo.fastq1Files} ${fastqsInfo.fastq2Files} \
             --readFilesCommand zcat \
             --outFileNamePrefix "${params.sampleId}." \
             --outSAMstrandField intronMotif \
