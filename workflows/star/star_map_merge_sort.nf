@@ -6,7 +6,10 @@ workflow STAR_MAP_MERGE_SORT {
 
     main:
 
-        STAR(Channel.of(params.fastqs))
+        fastqs_ch = Channel.of(params.fastqs)
+        println("fastqs_ch: " fastqs_ch)
+
+        STAR(fastqs_ch)
         SAMBAMBA_SORT(STAR.out.aligned_bam)
         CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedByCoordinate_bam, SAMBAMBA_SORT.out.sortedByCoordinate_bai)
 
