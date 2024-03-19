@@ -6,7 +6,7 @@ workflow STAR_MAP_MERGE_SORT {
 
     main:
 
-        fastqs_ch = Channel.of(params.fastqs)
+        fastqs_ch = Channel.fromList(params.fastqs)
 
         STAR(fastqs_ch)
         SAMBAMBA_SORT(STAR.out.aligned_bam)
