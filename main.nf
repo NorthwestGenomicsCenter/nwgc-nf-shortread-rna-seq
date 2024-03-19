@@ -10,7 +10,7 @@ workflow {
 
     if (params.runAnalysisOnly) {
         read_count_ch = Channel.fromList([2000])
-        ANALYSIS(read_count_ch.pass)
+        ANALYSIS(read_count_ch)
         ch_versions = ch_versions.mix(ANALYSIS.out.versions)
     }
     else {
