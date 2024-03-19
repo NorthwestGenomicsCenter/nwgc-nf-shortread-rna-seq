@@ -7,7 +7,8 @@ workflow STAR_MAP_MERGE_SORT {
     main:
 
         fastqs_ch = Channel.of(params.fastqs)
-        println("fastqs_ch: " + fastqs_ch.view())
+        println("fastqs_ch: ")
+        fastqs_ch.view("$it")
 
         fastqInfo_ch = Channel.of(params.fastqs)
             .map{row -> 
@@ -16,8 +17,8 @@ workflow STAR_MAP_MERGE_SORT {
                 def readGroups = row.readGroups
                 return tuple (fastq1Files, fastq1Files, readGroups)
             }
-        println("fastqInfo_ch: " + fastqInfo_ch.view())
-
+        println("fastqInfo_ch: ")
+        fastqInfo_ch.view()
 
         STAR(fastqs_ch)
         SAMBAMBA_SORT(STAR.out.aligned_bam)
