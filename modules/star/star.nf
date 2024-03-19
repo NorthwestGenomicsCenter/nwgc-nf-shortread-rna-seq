@@ -9,7 +9,7 @@ process STAR {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
 
     input:
-        tuple val(fastqsInfo), val(fastq2Files), val(readGroups)
+        tuple val(fastqsInfo)
 
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
@@ -37,7 +37,7 @@ process STAR {
             --outFilterScoreMinOverLread 0.33 \
             --outFilterMatchNminOverLread 0.33 \
             --limitSjdbInsertNsj 1200000 \
-            --readFilesIn $fastqsInfo ${fastqsInfo.fastq1Files} ${fastqsInfo.fastq2Files} \
+            --readFilesIn ${fastqsInfo.fastq1Files} ${fastqsInfo.fastq2Files} \
             --readFilesCommand zcat \
             --outFileNamePrefix "${params.sampleId}." \
             --outSAMstrandField intronMotif \
