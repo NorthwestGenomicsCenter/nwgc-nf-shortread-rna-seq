@@ -9,7 +9,7 @@ process STAR {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
 
     input:
-        tuple val(fastq1Files), val(fastq2Files), val(readGroups)
+        tuple val(fastqsInfo), val(fastq2Files), val(readGroups)
 
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
@@ -37,7 +37,7 @@ process STAR {
             --outFilterScoreMinOverLread 0.33 \
             --outFilterMatchNminOverLread 0.33 \
             --limitSjdbInsertNsj 1200000 \
-            --readFilesIn $fastq1Files $fastq2Files \
+            --readFilesIn $fastqsInfo ${fastqsInfo.fastq1Files} ${fastqsInfo.fastq2Files} \
             --readFilesCommand zcat \
             --outFileNamePrefix "${params.sampleId}." \
             --outSAMstrandField intronMotif \
@@ -52,7 +52,7 @@ process STAR {
             --chimOutType Junctions WithinBAM SoftClip \
             --chimMainSegmentMultNmax 1 \
             --outSAMattributes NH HI AS nM NM ch \
-            --outSAMattrRGline $readGroups \
+            --outSAMattrRGline ${fastqInfo.readGroups} \
             --outTmpDir starTempDir
 
         md5sum ${params.sampleId}.Aligned.toTranscriptome.out.bam | awk '{print \$1}' > ${params.sampleId}.Aligned.toTranscriptome.out.bam.md5sum
