@@ -14,6 +14,9 @@ process PICARD_INSERT_SIZE {
         path "${params.sampleId}.insert_size_histogram.png", emit: histogram
         path "versions.yaml", emit: versions
 
+    when:
+        params.analysisToRun.contains("All") || params.analysisToRun.contains("QC")
+
     script:
 
         """

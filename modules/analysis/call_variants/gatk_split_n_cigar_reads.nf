@@ -11,6 +11,9 @@ process GATK_SPLIT_N_CIGAR_READS {
         path "*.splitncigar.bai", emit: bai
         path "versions.yaml", emit: versions
 
+    when:
+        params.analysisToRun.contains("All") || params.analysisToRun.contains("VCF") 
+
     script:
 
         """

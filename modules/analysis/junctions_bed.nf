@@ -11,6 +11,9 @@ process JUNCTIONS_BED {
         path "*.starJunctions.bed",  emit: junctions_bed
         path "versions.yaml", emit: versions
 
+    when:
+        params.analysisToRun.contains("All") || params.analysisToRun.contains("Junctions") 
+
     script:
         """
         ## column 1: chromosome

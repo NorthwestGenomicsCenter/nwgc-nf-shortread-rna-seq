@@ -20,6 +20,9 @@ process RNASEQC {
         path "*.exon_reads.gct", emit: exon_reads
         path "versions.yaml", emit: versions
 
+    when:
+        params.analysisToRun.contains("All") || params.analysisToRun.contains("QC")
+
     script:
 
         """

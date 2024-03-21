@@ -16,6 +16,9 @@ process PICARD_MARK_DUPLICATES {
         path "${params.sampleId}.markeddups.bam.md5", emit: md5
         path "versions.yaml", emit: versions
 
+    when:
+        params.analysisToRun.contains("All") || params.analysisToRun.contains("VCF") || params.analysisToRun.contains("QC") || params.analysisToRun.contains("BigWig")
+
     script:
 
         """

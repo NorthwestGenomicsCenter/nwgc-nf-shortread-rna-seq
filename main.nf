@@ -1,5 +1,5 @@
-include { STAR_MAP_MERGE_SORT } from './workflows/star/star_map_merge_sort.nf'
-include { ANALYSIS } from './workflows/analysis/analysis.nf'
+include { STAR_MAP_MERGE_SORT } from './workflows/star_map_merge_sort.nf'
+include { ANALYSIS } from './workflows/analysis.nf'
 
 workflow {
 
@@ -21,7 +21,6 @@ workflow {
 
     // If not enough reads, write early exit message to stdout
     read_count_ch.fail.view()
-    read_count_ch.pass.view{ "$it is pass"}
 
     // Enough reads, so proceed with RNA Analysis
     ANALYSIS(read_count_ch.pass)
