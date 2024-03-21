@@ -1,9 +1,9 @@
-include { RSEM } from '../../modules/analysis/rsem.nf'
-include { JUNCTIONS_BED } from '../../modules/analysis/junctions_bed.nf'
-include { PICARD_MARK_DUPLICATES } from '../../modules/analysis/picard_mark_duplicates.nf'
-include { BIGWIG } from './bigwig.nf'
-include { CALL_VARIANTS } from './call_variants.nf'
-include { QC } from './qc.nf'
+include { RSEM } from '../modules/analysis/rsem.nf'
+include { JUNCTIONS_BED } from '../modules/analysis/junctions_bed.nf'
+include { PICARD_MARK_DUPLICATES } from '../modules/analysis/picard_mark_duplicates.nf'
+include { BIGWIG } from './analysis/bigwig.nf'
+include { CALL_VARIANTS } from './analysis/call_variants.nf'
+include { QC } from './analysis/qc.nf'
 
 workflow ANALYSIS {
 
