@@ -8,18 +8,13 @@ include { QC } from './analysis/qc.nf'
 workflow ANALYSIS {
 
     take:
-        tuple (
-            file (starBam),
-            file (starBai),
-            file (transcriptomeBam)
-            file (spliceJunctionsTab)
-        )
+        anaylisInputTuple 
 
     main:
 
-        RSEM(transcriptomeBam)
-        JUNCTIONS_BED(spliceJunctionsTab)
-        PICARD_MARK_DUPLICATES(starBam, starBai)
+        RSEM(analysisInputTuple.transcriptomeBam)
+        JUNCTIONS_BED(analysisInputTuple.spliceJunctionsTab)
+        PICARD_MARK_DUPLICATES(analysisInputTuple.starBam, analysisInputTuple.starBai)
         CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
         QC(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
         BIGWIG(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
