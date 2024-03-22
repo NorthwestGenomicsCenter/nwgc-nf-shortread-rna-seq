@@ -20,16 +20,16 @@ workflow {
                   return "Not enough reads to proceed " + readCount
       }
 
-    println: "fail"
+    println "fail"
     read_count_ch.fail.view()
 
-    println: "pass"
+    println "pass"
     read_count_ch.pass.view()
 
     // If not enough reads, write early exit message to stdout
     read_count_ch.fail.view()
     ch_analysisInput.mix(read_count_ch.pass)
-    println: "analysisInput"
+    println "analysisInput"
     ch_analysisInput.view()
 
     // Check for workflow starting from merge
