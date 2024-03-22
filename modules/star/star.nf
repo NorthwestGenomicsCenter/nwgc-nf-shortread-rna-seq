@@ -9,7 +9,11 @@ process STAR {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
 
     input:
-        tuple (val(fastq1Files), val(fastqs2Files), val(readGroups))
+        tuple(
+            val(fastq1Files),
+            val(fastqs2Files),
+            val(readGroups)
+        )
 
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
