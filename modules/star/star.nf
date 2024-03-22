@@ -11,7 +11,7 @@ process STAR {
     input:
         tuple(
             val(fastq1Files),
-            val(fastqs2Files),
+            val(fastq2Files),
             val(readGroups)
         )
 
