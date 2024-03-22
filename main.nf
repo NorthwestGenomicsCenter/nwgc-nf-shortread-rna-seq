@@ -25,6 +25,8 @@ workflow {
     ch_analysisInput.mix(read_count_ch.pass)
 
     // Check for workflow starting from merge
+    ch_analysisInput.view()
+
 
     // Enough reads, so proceed with RNA Analysis
     ANALYSIS(ch_analysisInput.collect())
