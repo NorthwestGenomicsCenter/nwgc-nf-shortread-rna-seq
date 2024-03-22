@@ -12,9 +12,9 @@ workflow ANALYSIS {
 
     main:
 
-        RSEM(analysisInputTuple.transcriptomeBam)
-        JUNCTIONS_BED(analysisInputTuple.spliceJunctionsTab)
-        PICARD_MARK_DUPLICATES(analysisInputTuple.starBam, analysisInputTuple.starBai)
+        RSEM(analysisInputTuple)
+        JUNCTIONS_BED(analysisInputTuple)
+        PICARD_MARK_DUPLICATES(analysisInputTuple)
         CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
         QC(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)
         BIGWIG(PICARD_MARK_DUPLICATES.out.bam, PICARD_MARK_DUPLICATES.out.bai)

@@ -5,7 +5,7 @@ process JUNCTIONS_BED {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.starJunctions.bed"
  
     input:
-        path spliceJunctions_tab
+        tuple (path(starBam), path(starBai), path(transcriptomeBam), path(junctionsTab))
 
     output:
         path "*.starJunctions.bed",  emit: junctions_bed
@@ -43,7 +43,7 @@ process JUNCTIONS_BED {
                 else if(\$4==2 && \$5==5) print \$1"\t"\$2"\t"\$3"\tAT-AC_"\$1":"\$2"-"\$3";"\$7"\t"\$7"\t-"; \
                 else if(\$4==2 && \$5==6) print \$1"\t"\$2"\t"\$3"\tGT-AT_"\$1":"\$2"-"\$3";"\$7"\t"\$7"\t-" \
             }' \
-            $spliceJunctions_tab \
+            $junctionsTab \
             > ${params.sampleId}.starJunctions.bed
     
         cat <<-END_VERSIONS > versions.yaml

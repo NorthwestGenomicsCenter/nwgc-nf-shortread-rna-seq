@@ -6,7 +6,7 @@ process RSEM {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.isoforms.results"
  
     input:
-        path bam
+        tuple (path(starBam), path(starBai), path(transcriptomeBam), path(junctionsTab))
 
     output:
         path "*.genes.results",  emit: genes
@@ -25,7 +25,7 @@ process RSEM {
             --paired-end \
             --estimate-rspd \
             --forward-prob 0.0 \
-            --bam $bam \
+            --bam $transcriptomeBam \
             ${params.starDirectory}/${params.rsemReferencePrefix} \
             ${params.sampleId}.transcriptome_hits.merged 
     

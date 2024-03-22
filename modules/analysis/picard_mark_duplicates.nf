@@ -7,8 +7,7 @@ process PICARD_MARK_DUPLICATES {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5"}
 
     input:
-        path bam
-        path bai
+        tuple (path(starBam), path(starBai), path(transcriptomeBam), path(junctionsTab))
 
     output:
         path "${params.sampleId}.markeddups.bam", emit: bam
@@ -30,7 +29,7 @@ process PICARD_MARK_DUPLICATES {
             -XX:MaxRAMPercentage=85.0 \
             -jar \$PICARD_DIR/picard.jar \
             MarkDuplicates \
-            --INPUT $bam \
+            --INPUT $starBam \
             --OUTPUT ${params.sampleId}.markeddups.bam \
             --METRICS_FILE ${params.sampleId}.duplicate_metrics.txt \
             --TMP_DIR \$PICARD_TEMP_DIR \
