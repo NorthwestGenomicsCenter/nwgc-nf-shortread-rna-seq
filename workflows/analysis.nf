@@ -8,7 +8,7 @@ include { QC } from './analysis/qc.nf'
 workflow ANALYSIS {
 
     take:
-        anaylisInputTuple 
+        analysisInputTuple 
 
     main:
 
