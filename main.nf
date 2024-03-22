@@ -5,10 +5,11 @@ workflow {
 
     // Versions channel
     ch_versions = Channel.empty()
+    ch_analysisInput = Channel.empty()
 
     // Map/Merge using STAR
-    println "Starting STAR_MAP_MERGE_SORT"
-    STAR_MAP_MERGE_SORT()
+    ch_fastqs = Channel.fromList(param.fastqs)
+    STAR_MAP_MERGE_SORT(ch_fastqs)
     ch_versions = ch_versions.mix(STAR_MAP_MERGE_SORT.out.versions)
 
     read_count_ch = STAR_MAP_MERGE_SORT.out.readCount
@@ -21,9 +22,12 @@ workflow {
 
     // If not enough reads, write early exit message to stdout
     read_count_ch.fail.view()
+    ch_analysisInput.mix(read_count_ch.pass)
+
+    // Check for workflow starting from merge
 
     // Enough reads, so proceed with RNA Analysis
-    ANALYSIS(read_count_ch.pass)
+    ANALYSIS(ch_analysisInput.collect())
     ch_versions = ch_versions.mix(ANALYSIS.out.versions)
 
     ch_versions.unique().collectFile(name: 'rna-star_software_versions.yaml', storeDir: "${params.sampleDirectory}")
