@@ -19,12 +19,10 @@ workflow STAR_MAP_MERGE_SORT {
         ch_versions = ch_versions.mix(SAMBAMBA_SORT.out.versions)
 
     emit:
-        analysis_tuple = tuple (
-            starBam = SAMBAMBA_SORT.out.sortedByCoordinate_bam
-            starBai =SAMBAMBA_SORT.out.sortedByCoordinate_bai
-            trancriptomeBam = STAR.out.transcriptome_bam
-            spliceJunctionsTab = STAR.out.spliceJunctions_tab
-        )
+        starBam = SAMBAMBA_SORT.out.sortedByCoordinate_bam
+        starBai =SAMBAMBA_SORT.out.sortedByCoordinate_bai
+        trancriptomeBam = STAR.out.transcriptome_bam
+        spliceJunctionsTab = STAR.out.spliceJunctions_tab
         readsPerGene_tab = STAR.out.readsPerGene_tab
         readCount = CHECK_MAPPED_READ_COUNT.out.readCount
         versions = ch_versions
