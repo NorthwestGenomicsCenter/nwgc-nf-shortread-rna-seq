@@ -4,9 +4,12 @@ include { CHECK_MAPPED_READ_COUNT } from '../modules/star/check_mapped_read_coun
 
 workflow STAR_MAP_MERGE_SORT {
 
+    take:
+        fastqsTuple
+
     main:
 
-        STAR(params.fastqs)
+        STAR(fastqsTuple)
         SAMBAMBA_SORT(STAR.out.aligned_bam)
         CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedByCoordinate_bam, SAMBAMBA_SORT.out.sortedByCoordinate_bai)
 
