@@ -8,7 +8,7 @@ workflow {
     ch_analysisInput = Channel.empty()
 
     // Map/Merge using STAR
-    ch_fastqs = Channel.fromList(param.fastqs)
+    ch_fastqs = Channel.fromList(params.fastqs)
     STAR_MAP_MERGE_SORT(ch_fastqs)
     ch_versions = ch_versions.mix(STAR_MAP_MERGE_SORT.out.versions)
 
