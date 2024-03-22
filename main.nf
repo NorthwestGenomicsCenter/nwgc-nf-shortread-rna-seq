@@ -15,7 +15,7 @@ workflow {
     read_count_ch = STAR_MAP_MERGE_SORT.out.readCount
       .branch {readCount ->
             pass: readCount.isInteger() && readCount.toInteger() >= 1000
-                  return STAR_MAP_MERGE_SORT.out
+                  return STAR_MAP_MERGE_SORT.out.analysis_tuple
             fail: !readCount.isInteger() || readCount.toInteger() < 1000
                   return "Not enough reads to proceed " + readCount
       }
