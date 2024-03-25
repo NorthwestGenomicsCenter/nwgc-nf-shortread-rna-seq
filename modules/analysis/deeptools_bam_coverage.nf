@@ -16,9 +16,6 @@ process DEEPTOOLS_BAM_COVERAGE {
         path "*.bw", emit: bigwig
         path "versions.yaml", emit: versions
 
-    when:
-        params.analysisToRun.contains("All") || params.analysisToRun.contains("BigWig")
-
     script:
 
         """
