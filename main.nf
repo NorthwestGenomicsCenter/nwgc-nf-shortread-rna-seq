@@ -24,7 +24,7 @@ workflow {
     read_count_ch.fail.view()
 
     // Analysis
-    ch_analysisInput = read_count_ch.pass
+    ch_analysisInput = ch_analysisInput.mix(read_count_ch.pass)
 
     // Enough reads, so proceed with RNA Analysis
     ANALYSIS(ch_analysisInput)
