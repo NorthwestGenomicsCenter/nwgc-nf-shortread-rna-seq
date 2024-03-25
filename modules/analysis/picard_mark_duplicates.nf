@@ -11,7 +11,7 @@ process PICARD_MARK_DUPLICATES {
 
     output:
         tuple (
-            path("${params.sampleId}.markeddups.bam")
+            path("${params.sampleId}.markeddups.bam"),
             path("${params.sampleId}.markeddups.bai")
         ), emit: bamTuple
         path "${params.sampleId}.markeddups.bam.md5", emit: md5
