@@ -4,13 +4,12 @@ include { RNASEQC } from '../../modules/analysis/qc/qc_rnaseqc.nf'
 workflow QC {
 
     take:
-        markedDupsBam
-        markedDupsBai
+        markedDupsBamTuple
 
     main:
 
-        PICARD_INSERT_SIZE(markedDupsBam, markedDupsBai)
-        RNASEQC(markedDupsBam, markedDupsBai)
+        PICARD_INSERT_SIZE(markedDupsBamTuple)
+        RNASEQC(markedDupsBamTuple)
 
         // Versions
         ch_versions = Channel.empty()

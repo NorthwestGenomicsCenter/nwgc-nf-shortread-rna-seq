@@ -10,13 +10,12 @@ process PICARD_MARK_DUPLICATES {
         tuple (path(starBam), path(starBai), path(transcriptomeBam), path(junctionsTab))
 
     output:
-        path "${params.sampleId}.markeddups.bam", emit: bam
-        path "${params.sampleId}.markeddups.bai", emit: bai
+        tuple (
+            path("${params.sampleId}.markeddups.bam")
+            path("${params.sampleId}.markeddups.bai")
+        ), emit: bamTuple
         path "${params.sampleId}.markeddups.bam.md5", emit: md5
         path "versions.yaml", emit: versions
-
-    when:
-        params.analysisToRun.contains("All") || params.analysisToRun.contains("VCF") || params.analysisToRun.contains("QC") || params.analysisToRun.contains("BigWig")
 
     script:
 

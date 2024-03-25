@@ -3,8 +3,7 @@ include { DEEPTOOLS_BAM_COVERAGE } from '../../modules/analysis/deeptools_bam_co
 workflow BIGWIG {
 
     take:
-        markedDupsBam
-        markedDupsBai
+        markedDupsBamTuple
 
     main:
 
@@ -12,8 +11,9 @@ workflow BIGWIG {
         chromosomesChannel = Channel.fromList(params.chromosomes)
         strandChannel = Channel.fromList(['forward','reverse'])
         chromosomeStrandTuple = chromosomesChannel.combine(strandChannel)
+        deeptoolsInputTuple = chromosomeStrandTuple.combine(markeDupsBamTuple) 
 
-        DEEPTOOLS_BAM_COVERAGE(chromosomeStrandTuple, markedDupsBam, markedDupsBai)
+        DEEPTOOLS_BAM_COVERAGE(deeptoolsInputTuple)
 
         // Versions
         ch_versions = Channel.empty()

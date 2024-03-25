@@ -3,16 +3,15 @@ process GATK_SPLIT_N_CIGAR_READS {
     label "GATK_SPLIT_N_CIGAR_READS_${params.sampleId}_${params.userId}"
 
     input:
-        path bam
-        path bai
+        tuple (
+            path(bam),
+            path(bai)
+        )
 
     output:
         path "*.splitncigar.bam", emit: bam
         path "*.splitncigar.bai", emit: bai
         path "versions.yaml", emit: versions
-
-    when:
-        params.analysisToRun.contains("All") || params.analysisToRun.contains("VCF") 
 
     script:
 

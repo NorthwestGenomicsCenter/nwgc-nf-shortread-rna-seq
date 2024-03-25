@@ -13,9 +13,6 @@ process RSEM {
         path "*.isoforms.results",  emit: isoforms
         path "versions.yaml", emit: versions
 
-    when:
-        params.analysisToRun.contains("All") || params.analysisToRun.contains("RSEM")
-
     script:
         """
         rsem-calculate-expression \

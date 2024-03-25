@@ -5,12 +5,11 @@ include { GATK_VARIANT_FILTRATION } from '../../modules/analysis/call_variants/g
 workflow CALL_VARIANTS {
 
     take:
-        markedDupsBam
-        markedDupsBai
+        markedDupsBamTuple
 
     main:
 
-        GATK_SPLIT_N_CIGAR_READS(markedDupsBam, markedDupsBai)
+        GATK_SPLIT_N_CIGAR_READS(markedDupsBamTuple)
         GATK_HAPLOTYPE_CALLER(GATK_SPLIT_N_CIGAR_READS.out.bam, GATK_SPLIT_N_CIGAR_READS.out.bai)
         GATK_VARIANT_FILTRATION(GATK_HAPLOTYPE_CALLER.out.vcf, GATK_HAPLOTYPE_CALLER.out.vcf_index)
 

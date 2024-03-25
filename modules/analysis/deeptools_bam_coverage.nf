@@ -8,16 +8,16 @@ process DEEPTOOLS_BAM_COVERAGE {
     errorStrategy { task.exitStatus == 137 ? 'retry' : 'terminate' }
 
     input:
-        tuple val(chromosome), val(strand)
-        path bam
-        path bai
+        tuple (
+            val(chromosome),
+            val(strand),
+            path(bam),
+            path(bai)
+        )
 
     output:
         path "*.bw", emit: bigwig
         path "versions.yaml", emit: versions
-
-    when:
-        params.analysisToRun.contains("All") || params.analysisToRun.contains("BigWig")
 
     script:
 

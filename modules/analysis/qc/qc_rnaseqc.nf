@@ -9,8 +9,10 @@ process RNASEQC {
     publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.exon_reads.gct"
 
     input:
-        path bam
-        path bai
+        tuple (
+            path(bam),
+            path(bai)
+        )
 
     output:
         path "*.metrics.tsv", emit: metrics
@@ -19,9 +21,6 @@ process RNASEQC {
         path "*.gene_fragments.gct", emit: gene_fragments
         path "*.exon_reads.gct", emit: exon_reads
         path "versions.yaml", emit: versions
-
-    when:
-        params.analysisToRun.contains("All") || params.analysisToRun.contains("QC")
 
     script:
 
