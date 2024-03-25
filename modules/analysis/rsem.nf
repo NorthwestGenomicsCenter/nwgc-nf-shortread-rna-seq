@@ -6,7 +6,7 @@ process RSEM {
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.isoforms.results"
  
     input:
-        tuple (path(starBam), path(starBai), path(transcriptomeBam), path(junctionsTab))
+        tuple (path(starBam), path(starBai), path(transcriptomeBam), path(junctionsTab), val(readCount))
 
     output:
         path "*.genes.results",  emit: genes
