@@ -25,10 +25,10 @@ workflow {
     ch_analysisInput.mix(read_count_ch.pass)
 */
 
-    ch_analysisInput.mix(STAR_MAP_MERGE_SORT.out.analysisTuple)
+    ch_analysisInput = ch_analysisInput.mix(STAR_MAP_MERGE_SORT.out.analysisTuple)
 
     // Check for workflow starting from merge
-    ch_analysisInput.view()
+/   ch_analysisInput.view()
 
 
     // Enough reads, so proceed with RNA Analysis
