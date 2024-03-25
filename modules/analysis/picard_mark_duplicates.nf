@@ -10,10 +10,7 @@ process PICARD_MARK_DUPLICATES {
         tuple (path(starBam), path(starBai), path(transcriptomeBam), path(junctionsTab))
 
     output:
-        tuple (
-            path("${params.sampleId}.markeddups.bam"),
-            path("${params.sampleId}.markeddups.bai")
-        ), emit: bamTuple
+        tuple path("${params.sampleId}.markeddups.bam"),  path("${params.sampleId}.markeddups.bai"), emit: bamTuple
         path "${params.sampleId}.markeddups.bam.md5", emit: md5
         path "versions.yaml", emit: versions
 
