@@ -12,8 +12,8 @@ workflow {
     STAR_MAP_MERGE_SORT(ch_fastqs)
     ch_versions = ch_versions.mix(STAR_MAP_MERGE_SORT.out.versions)
 
-    read_count_ch = STAR_MAP_MERGE_SORT.out
-      .branch {analysisTuple, readsPerGene_tab, readCount, versions ->
+    read_count_ch = STAR_MAP_MERGE_SORT.out.analysisTuple
+      .branch {starBam, starBai, transcriptomeBam, junctionsTab, readCount ->
             pass: readCount.isInteger() && readCount.toInteger() >= 1000
             fail: !readCount.isInteger() || readCount.toInteger() < 1000
       }
@@ -22,7 +22,7 @@ workflow {
     read_count_ch.fail.view()
 
     // Analysis
-    ch_analysisInput = ch_analysisInput.mix(read_count_ch.pass.analysisTuple)
+    ch_analysisInput = read_count_ch.pass
 
     // Enough reads, so proceed with RNA Analysis
     ANALYSIS(ch_analysisInput)
