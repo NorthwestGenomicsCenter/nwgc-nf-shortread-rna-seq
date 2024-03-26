@@ -23,7 +23,7 @@ workflow {
 
     // Analysis
     ch_analysisInput = read_count_ch.pass
-    if (params.analysis) {
+    if (!params.fastqs && params.analysis) {
         ch_analysisInput = Channel.fromList(params.analysis)
     }
 
