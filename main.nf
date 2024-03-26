@@ -22,10 +22,7 @@ workflow {
     read_count_ch.fail.view()
 
     // Analysis
-    ch_analysisInput = read_count_ch.pass
-    if (params.analysis) {
-        ch_analysisInput = Channel.fromList(params.analysis)
-    }
+    ch_analysisInput = read_count_ch.pass.ifEmpty(Channel.fromList(params.analysis))
 
     // Enough reads, so proceed with RNA Analysis
     ANALYSIS(ch_analysisInput)
