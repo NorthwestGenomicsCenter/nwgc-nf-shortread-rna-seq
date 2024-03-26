@@ -24,7 +24,16 @@ workflow {
     // Analysis
     ch_analysisInput = read_count_ch.pass
     if (!params.fastqs && params.analysis) {
-        ch_analysisInput = Channel.fromList(params.analysis)
+        ch_analysisInput =
+            Channel.from(params.analysis)
+                .map{ row ->
+                    Path starBam = row.starBam
+                    Path starBai = row.starBam + ".bai"
+                    Path transcriptomeBam = row.transcriptomeBam
+                    Path spliceJunctionsTab = row.spliceJunctionsTab
+
+                    return tuple(starBam, starBai, transcriptomeBam, spliceJunctionsTab)
+                }
     }
 
     // Enough reads, so proceed with RNA Analysis
