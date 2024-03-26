@@ -23,6 +23,9 @@ workflow {
 
     // Analysis
     ch_analysisInput = read_count_ch.pass
+    if (params.analysis) {
+        ch_analysisInput = Channel.fromList(params.analysis)
+    }
 
     // Enough reads, so proceed with RNA Analysis
     ANALYSIS(ch_analysisInput)
