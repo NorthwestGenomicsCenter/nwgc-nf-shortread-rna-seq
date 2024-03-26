@@ -38,10 +38,10 @@ workflow {
         ch_analysisInput =
             Channel.from(params.analysis)
                 .map{ row ->
-                    Path starBam = file(row.starBam)
-                    Path starBai = file(row.starBam + ".bai")
-                    Path transcriptomeBam = file(row.transcriptomeBam)
-                    Path spliceJunctionsTab = file(row.spliceJunctionsTab)
+                    Path starBam = row.star.bam ? file(row.starBam) : null
+                    Path starBai = row.starBam ? file(row.starBam + ".bai") : null
+                    Path transcriptomeBam = row.transcriptomeBam ? file(row.transcriptomeBam) : null
+                    Path spliceJunctionsTab = row.spliceJunctionsTab ? file(row.spliceJunctionsTab) : null
 
                     return tuple(starBam, starBai, transcriptomeBam, spliceJunctionsTab)
                 }
