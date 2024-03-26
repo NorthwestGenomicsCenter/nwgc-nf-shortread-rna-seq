@@ -28,7 +28,7 @@ workflow {
             Channel.from(params.analysis)
                 .map{ row ->
                     Path starBam = row.starBam
-                    Path starBai = row.starBam + ".bai"
+                    Path starBai = row.starBai
                     Path transcriptomeBam = row.transcriptomeBam
                     Path spliceJunctionsTab = row.spliceJunctionsTab
 
