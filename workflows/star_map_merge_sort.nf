@@ -19,7 +19,10 @@ workflow STAR_MAP_MERGE_SORT {
         ch_versions = ch_versions.mix(SAMBAMBA_SORT.out.versions)
 
     emit:
-        analysisTuple =SAMBAMBA_SORT.out.sortedByCoordinate_bam.merge(SAMBAMBA_SORT.out.sortedByCoordinate_bai).merge(STAR.out.transcriptome_bam).merge(STAR.out.spliceJunctions_tab).merge(CHECK_MAPPED_READ_COUNT.out.readCount)
+        starTuple = SAMBAMBA_SORT.out.sortedByCoordinate_bam.merge(SAMBAMBA_SORT.out.sortedByCoordinate_bai).merge(CHECK_MAPPED_READ_COUNT.out.readCount)
+        transcriptomeTuple = STAR.out.transcriptome_bam.merge(CHECK_MAPPED_READ_COUNT.out.readCount)
+        junctionsTuple = STAR.out.spliceJunctions_tab.merge(CHECK_MAPPED_READ_COUNT.out.readCount)
+        readCount = CHECK_MAPPED_READ_COUNT.out.readCount
         readsPerGene_tab = STAR.out.readsPerGene_tab
         versions = ch_versions
 }

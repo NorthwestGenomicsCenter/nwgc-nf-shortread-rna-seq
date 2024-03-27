@@ -8,40 +8,42 @@ include { QC } from './analysis/qc.nf'
 workflow ANALYSIS {
 
     take:
-        analysisInputTuple 
+        starTuple
+        rsemTuple
+        junctionsTuple 
 
     main:
 
         ch_versions = Channel.empty()
 
         if (params.analysisToRun.contains("All") || params.analysisToRun.contains("RSEM")) {
-            RSEM(analysisInputTuple)
+            RSEM(rsemTuple)
             ch_versions = ch_versions.mix(RSEM.out.versions)
         }
 
         if (params.analysisToRun.contains("All") || params.analysisToRun.contains("Junctions")) {
-            JUNCTIONS_BED(analysisInputTuple)
+            JUNCTIONS_BED(junctionsTuple)
             ch_versions = ch_versions.mix(JUNCTIONS_BED.out.versions)
         }
 
         if (params.analysisToRun.contains("All") || params.analysisToRun.contains("VCF") || params.analysisToRun.contains("QC") || params.analysisToRun.contains("BigWig")) {
-            PICARD_MARK_DUPLICATES(analysisInputTuple)
+            PICARD_MARK_DUPLICATES(starTuple)
             ch_versions = ch_versions.mix(PICARD_MARK_DUPLICATES.out.versions)
-        }
 
-        if (params.analysisToRun.contains("All") || params.analysisToRun.contains("VCF")) {
-            CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bamTuple)
-            ch_versions = ch_versions.mix(CALL_VARIANTS.out.versions)
-        }
+            if (params.analysisToRun.contains("All") || params.analysisToRun.contains("VCF")) {
+                CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bamTuple)
+                ch_versions = ch_versions.mix(CALL_VARIANTS.out.versions)
+            }
 
-        if (params.analysisToRun.contains("All") || params.analysisToRun.contains("QC")) {
-            QC(PICARD_MARK_DUPLICATES.out.bamTuple)
-            ch_versions = ch_versions.mix(QC.out.versions)
-        }
+            if (params.analysisToRun.contains("All") || params.analysisToRun.contains("QC")) {
+                QC(PICARD_MARK_DUPLICATES.out.bamTuple)
+                ch_versions = ch_versions.mix(QC.out.versions)
+            }
 
-        if (params.analysisToRun.contains("All") || params.analysisToRun.contains("BigWig")) {
-            BIGWIG(PICARD_MARK_DUPLICATES.out.bamTuple)
-            ch_versions = ch_versions.mix(BIGWIG.out.versions)
+            if (params.analysisToRun.contains("All") || params.analysisToRun.contains("BigWig")) {
+                BIGWIG(PICARD_MARK_DUPLICATES.out.bamTuple)
+                ch_versions = ch_versions.mix(BIGWIG.out.versions)
+            }
         }
 
 

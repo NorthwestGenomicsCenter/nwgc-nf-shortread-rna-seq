@@ -21,7 +21,7 @@ gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "
 referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
 
 ##########################################
-### Inputs  - Pick one set  Fastqs or Analysis 
+### Inputs  - Pick one set  Fastqs or Analysis Only
 ##########################################
 # Fastqs & Read Groups 
 fastqs:  
@@ -34,18 +34,13 @@ fastqs:
 #     fastq2Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz 
 #     readGroups: ID:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:22.912" , ID:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:16.431"
 
-# Analysis Only
-analysis:   
-  - starBam: "<full path to star bam file>"
-    transcriptomeBam: "<full path to transcriptome bam file>"
-    spliceJunctionsTab: "<full path to spiceJunctions.tab file>"
-#e.g.
-# analysis:   
-#   - starBam: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/"
-#     transcriptomeBam: "<full path to transcriptome bam file>"
-#     spliceJunctionsTab: "<full path to spiceJunctions.tab file>"#
-
-
+# Analysis Only -- supply the files you need for the analysis you are running
+#  analysisStarBam - "VCF" and/or "QC" and/or "BigWig"
+#  analysisTranscriptomeBam -"RSEM"
+#  analysisSpliceJunctionsTab - "Junctions"
+analysisStarBam: "<full path to star bam file>"                        # e.g analysisStarBam: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/123456.aligned.sortedByCoord.bam
+analysisTranscriptomeBam: "<full path to transcriptome bam file>"      # e.g analysisTranscriptomeBam: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/123456.transcriptome_hits.merged.bam
+analysisSpliceJunctionsTab: "<full path to spiceJunctions.tab file>"   # e.g analysisSpliceJunctionsTab: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/123456.SJ.out.tab
 
 ##########################################
 ### RabbitMQ
