@@ -32,7 +32,7 @@ workflow {
 
     // Star Bam Channel
     ch_starBam = STAR_MAP_MERGE_SORT.out.starTuple.filter{starBam, starBai, readCount -> readCount.toInteger() >= lowReadsTreshold}
-    if (!params.fastqs && params.analysisStarBam {
+    if (!params.fastqs && params.analysisStarBam) {
         ch_starBam =
             Channel.from(params.analysisStarBam)
                 .map{ row ->
@@ -45,13 +45,13 @@ workflow {
 T
     // Transcriptome Bam Channel
     ch_transcriptomeBam = STAR_MAP_MERGE_SORT.out.transcriptomeTuple.filter{transcriptomeBam, readCount -> readCount.toInteger() >= lowReadsTreshold}
-    if (!params.fastqs && params.analysisTranscriptomeBam {
+    if (!params.fastqs && params.analysisTranscriptomeBam) {
         ch_transcriptomeBam = Channel.from(params.analysisTranscriptomeBam)
     }
 
     // Junctions Bed Channel
     ch_junctionsBed = STAR_MAP_MERGE_SORT.out.junctionsTuple.filter{junctionsBed, readCount -> readCount.toInteger() >= lowReadsTreshold}
-    if (!params.fastqs && params.analysisJunctionBed{
+    if (!params.fastqs && params.analysisJunctionBed) {
         ch_junctionsBed = Channel.from(params.analysisJunctionBed)
     }
 
