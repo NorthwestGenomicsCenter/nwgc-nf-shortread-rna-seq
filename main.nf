@@ -42,7 +42,7 @@ workflow {
                     return tuple(starBam, starBai)
                 }
     }
-T
+
     // Transcriptome Bam Channel
     ch_transcriptomeBam = STAR_MAP_MERGE_SORT.out.transcriptomeTuple.filter{transcriptomeBam, readCount -> readCount.toInteger() >= lowReadsTreshold}
     if (!params.fastqs && params.analysisTranscriptomeBam) {
