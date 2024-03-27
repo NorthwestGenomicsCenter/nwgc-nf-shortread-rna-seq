@@ -5,7 +5,7 @@ process JUNCTIONS_BED {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.starJunctions.bed"
  
     input:
-        tuple (path(junctionsTab), val(readCount))
+        path junctionsTab
 
     output:
         path "*.starJunctions.bed",  emit: junctions_bed
