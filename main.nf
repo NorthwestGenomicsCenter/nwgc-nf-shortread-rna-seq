@@ -53,7 +53,7 @@ workflow {
     if (runAnalysis) {
         // Input channels
         ch_starBam = ch_analysisInput.starBam
-        if (!runMerge && params.analysisStarBam) {
+        if (!runStar && params.analysisStarBam) {
             ch_analysisInput.starBam =
                 Channel.of(params.analysisStarBam)
                     .map{ row ->
@@ -65,12 +65,12 @@ workflow {
         }
 
         ch_transcriptomeBam = ch_analysisInput.transcriptomeBam
-        if (!runMerge && params.analysisTranscriptomeBam) {
+        if (!runStar && params.analysisTranscriptomeBam) {
             ch_analysisInput.transcriptomeBam = Channel.of(params.analysisTranscriptomeBam)
         }
 
         ch_junctionsBed = ch_analysisInput.junctionsTab
-        if (!runMerge && params.analysisSpliceJunctionsTab) {
+        if (!runStar && params.analysisSpliceJunctionsTab) {
             ch_analysisInput.junctionsTab = Channel.of(params.analysisSpliceJunctionsTab)
         }
 
