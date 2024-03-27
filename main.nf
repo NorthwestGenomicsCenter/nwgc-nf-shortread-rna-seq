@@ -37,7 +37,7 @@ workflow {
                 }
 
         // If not enough reads, write early exit message to stdout
-        ch_lowReads = starOutput.fail.map{starBam, starBai, transcriptomeBam, junctionsTab, readCount -> readCount}
+        ch_lowReads = ch_starOutput.fail.map{starBam, starBai, transcriptomeBam, junctionsTab, readCount -> readCount}
         REGISTER_LOW_READS(ch_lowReads)
 
         // Define analysis input channels
