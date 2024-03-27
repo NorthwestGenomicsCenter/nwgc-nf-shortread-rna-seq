@@ -17,7 +17,7 @@ workflow ANALYSIS {
         ch_versions = Channel.empty()
 
         if (params.analysisToRun.contains("All") || params.analysisToRun.contains("RSEM")) {
-            RSEM(transcriptome)
+            RSEM(transcriptomeBam)
             ch_versions = ch_versions.mix(RSEM.out.versions)
         }
 
