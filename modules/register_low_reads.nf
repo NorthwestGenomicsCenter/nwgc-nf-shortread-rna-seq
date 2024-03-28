@@ -5,12 +5,11 @@ process REGISTER_LOW_READS {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.starJunctions.bed"
  
     input:
-        val sampleId
         val readCount
 
     script:
 
-        String message = "There are not enough reads to proceed with this sample.  sampleId: " + $sampleId + "  readCount: " + $readCount
+        String message = "There are not enough reads to proceed with this sample.  sampleId: " + params.sampleId + "  readCount: " + readCount
         println(message)
 
         """
