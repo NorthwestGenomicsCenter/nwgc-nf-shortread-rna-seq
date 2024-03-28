@@ -4,6 +4,11 @@ include { REGISTER_LOW_READS } from  './modules/register_low_reads.nf'
 
 workflow {
 
+    if (params.help) {
+        println(params.helpMessage)
+        exit(0)
+    }
+
     // Create Local Variables
     Integer lowReadsTreshold = params.lowReadsThreshold.toInteger()
     Boolean runStar = params.stepsToRun.contains("STAR")
