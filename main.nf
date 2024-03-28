@@ -11,7 +11,6 @@ workflow {
 
     // Versions channel
     ch_versions = Channel.empty()
-    ch_analysisInput = Channel.empty()
 
     if (runStar) {
         // Fastqs channel
@@ -52,9 +51,12 @@ workflow {
     }
 
     if (runAnalysis) {
-        // Input channels
-        ch_starBam = ch_analysisInput.starBam
-        if (!runStar && params.analysisStarBam) {
+        // StarBam Input channel
+        ch_starBam = Channel.empty()
+        if (runStar) {
+            ch_starBam = ch_analysisInput.starBam
+        }
+        else if (params.analysisStarBam) {
             ch_starBam =
                 Channel.of(params.analysisStarBam)
                     .map{ row ->
@@ -65,13 +67,21 @@ workflow {
                     }
         }
 
-        ch_transcriptomeBam = ch_analysisInput.transcriptomeBam
-        if (!runStar && params.analysisTranscriptomeBam) {
+        // TranscriptomBam Input channel
+        ch_transcriptomeBam = Channel.empty()
+        if (runStar) {
+            ch_transcriptomeBam = ch_analysisInput.transcriptomeBam
+        }
+        else if (params.analysisTranscriptomeBam) {
             ch_transcriptomeBam = Channel.of(params.analysisTranscriptomeBam)
         }
 
-        ch_junctionsTab = ch_analysisInput.junctionsTab
-        if (!runStar && params.analysisSpliceJunctionsTab) {
+        // JunctionsTab Input channel
+        ch_junctionsTab = Channel.empty()
+        if (runStar) {
+            ch_junctionsTab = ch_analysisInput.junctionsTab
+        }
+        else if (params.analysisSpliceJunctionsTab) {
             ch_junctionsTab = Channel.of(params.analysisSpliceJunctionsTab)
         }
 
