@@ -15,6 +15,9 @@ workflow {
     Boolean runAnalysis = params.stepsToRun.contains("Analysis")
     List analysisToRun = params.analysisToRun
 
+    // Create data tuples
+    ch_sampleInfo = Channel.value([params.sampleId, params.sampleDirectory, params.userId])
+
     // Versions channel
     ch_versions = Channel.empty()
 
@@ -44,7 +47,7 @@ workflow {
 
         // If not enough reads, write early exit message to stdout
         ch_lowReads = ch_starOutput.fail.map{starBam, starBai, transcriptomeBam, junctionsTab, readCount -> readCount}
-        REGISTER_LOW_READS(ch_lowReads)
+        REGISTER_LOW_READS(ch_lowReads, ch_sampleInfo)
 
         // Define analysis input channels
         ch_analysisInput =
@@ -62,7 +65,7 @@ workflow {
         if (runStar) {
             ch_starBam = ch_analysisInput.starBam
         }
-        else if (params.analysisStarBam) {
+        else if (anlparams.analysisStarBam) {
             ch_starBam =
                 Channel.of(params.analysisStarBam)
                     .map{ analysisStarBam ->
@@ -78,7 +81,7 @@ workflow {
         if (runStar) {
             ch_transcriptomeBam = ch_analysisInput.transcriptomeBam
         }
-        else if (params.analysisTranscriptomeBam) {
+        else if (analysisToRun.contains("RSEM")) {
             ch_transcriptomeBam = Channel.of(params.analysisTranscriptomeBam)
         }
 
