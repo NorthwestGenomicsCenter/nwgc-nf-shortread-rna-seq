@@ -11,6 +11,7 @@ workflow {
 
     // Versions channel
     ch_versions = Channel.empty()
+    ch_analysisInput = Channel.empty()
 
     if (runStar) {
         // Fastqs channel
