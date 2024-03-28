@@ -58,10 +58,10 @@ workflow {
         }
         else if (params.analysisStarBam) {
             ch_starBam =
-                Channel.of(analysisStarBam)
-                    .map{ row ->
-                        Path starBam = file(params.analysisStarBam)
-                        Path starBai = file(params.analysisStarBam + ".bai")
+                Channel.of(params.analysisStarBam)
+                    .map{ analysisStarBam ->
+                        Path starBam = file(analysisStarBam)
+                        Path starBai = file(analysisStarBam + ".bai")
 
                         return tuple(starBam, starBai)
                     }
