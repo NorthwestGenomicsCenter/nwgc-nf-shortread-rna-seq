@@ -1,10 +1,10 @@
 process CHECK_MAPPED_READ_COUNT {
 
-    label "CHECK_MAPPED_READ_COUNT_${params.sampleId}_${params.userId}"
+    tag "CHECK_MAPPED_READ_COUNT_${sampleId}_${userId}"
 
     input:
-        path bam
-        path bai
+        tuple path(bam), path (bai)
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
         env MAPPED_READS_FROM_SAMTOOLS, emit: readCount

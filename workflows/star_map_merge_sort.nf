@@ -6,12 +6,14 @@ workflow STAR_MAP_MERGE_SORT {
 
     take:
         fastqsTuple
+        starDirectory
+        userInfoTuple
 
     main:
 
-        STAR(fastqsTuple)
-        SAMBAMBA_SORT(STAR.out.aligned_bam)
-        CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedByCoordinate_bam, SAMBAMBA_SORT.out.sortedByCoordinate_bai)
+        STAR(fastqsTuple, starDirectory, userInfoTuple)
+        SAMBAMBA_SORT(STAR.out.aligned_bam, userInfoTuple)
+        CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedBamTuple, userInfoTuple)
 
         // Versions
         ch_versions = Channel.empty()
@@ -19,7 +21,7 @@ workflow STAR_MAP_MERGE_SORT {
         ch_versions = ch_versions.mix(SAMBAMBA_SORT.out.versions)
 
     emit:
-        analysisTuple = SAMBAMBA_SORT.out.sortedByCoordinate_bam.merge(SAMBAMBA_SORT.out.sortedByCoordinate_bai).merge(STAR.out.transcriptome_bam).merge(STAR.out.spliceJunctions_tab).merge(CHECK_MAPPED_READ_COUNT.out.readCount)
+        analysisTuple = SAMBAMBA_SORT.out.sortedBamTuple.merge(STAR.out.transcriptome_bam).merge(STAR.out.spliceJunctions_tab).merge(CHECK_MAPPED_READ_COUNT.out.readCount)
         readsPerGene_tab = STAR.out.readsPerGene_tab
         versions = ch_versions
 }

@@ -17,6 +17,7 @@ workflow {
 
     // Create data tuples
     ch_sampleInfo = Channel.value([params.sampleId, params.sampleDirectory, params.userId])
+    ch_starDirectory = Channel.value(params.starDirectory)
 
     // Versions channel
     ch_versions = Channel.empty()
@@ -34,7 +35,7 @@ workflow {
                 }
 
         // Map/Merge using STAR
-        STAR_MAP_MERGE_SORT(ch_fastqs)
+        STAR_MAP_MERGE_SORT(ch_fastqs, ch_starDirectory, ch_sampleInfo)
         ch_versions = ch_versions.mix(STAR_MAP_MERGE_SORT.out.versions)
 
         // Split into pass/fail channels

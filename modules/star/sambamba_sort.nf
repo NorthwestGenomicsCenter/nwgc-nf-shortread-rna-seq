@@ -1,17 +1,17 @@
 process SAMBAMBA_SORT {
 
-    label "SAMBAMBA_SORT_${params.sampleId}_${params.userId}"
+    tag "SAMBAMBA_SORT_${sampleId}_${userId}"
 
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.aligned.sortedByCoord.bam"
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.aligned.sortedByCoord.bam.bai"
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.aligned.sortedByCoord.bam.md5sum"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.aligned.sortedByCoord.bam"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.aligned.sortedByCoord.bam.bai"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.aligned.sortedByCoord.bam.md5sum"
 
     input:
         path bam
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
-        path "*.aligned.sortedByCoord.bam",  emit: sortedByCoordinate_bam
-        path "*.aligned.sortedByCoord.bam.bai",  emit: sortedByCoordinate_bai
+        tuple path("*.aligned.sortedByCoord.bam"), path("*.aligned.sortedByCoord.bam.bai"),  emit: sortedBamTuple
         path "versions.yaml", emit: versions
 
     script:
@@ -19,10 +19,10 @@ process SAMBAMBA_SORT {
         \$MOD_GSSAMBAMBA_DIR/bin/sambamba sort \
             --tmpdir $TMP \
             -t $task.cpus \
-            -o ${params.sampleId}.aligned.sortedByCoord.bam \
+            -o ${sampleId}.aligned.sortedByCoord.bam \
             $bam
 
-        md5sum ${params.sampleId}.aligned.sortedByCoord.bam | awk '{print \$1}' > ${params.sampleId}.aligned.sortedByCoord.bam.md5sum
+        md5sum ${sampleId}.aligned.sortedByCoord.bam | awk '{print \$1}' > ${sampleId}.aligned.sortedByCoord.bam.md5sum
 
 
         cat <<-END_VERSIONS > versions.yaml

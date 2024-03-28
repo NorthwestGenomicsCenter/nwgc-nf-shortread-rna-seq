@@ -2,11 +2,11 @@ process REGISTER_LOW_READS {
 
     tag "REGISTER_LOW_READS_${sampleId}_${userId}"
 
-    publishDir "$sampleDirectory", mode:  'link', pattern: "*.starJunctions.bed"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.starJunctions.bed"
  
     input:
         val readCount
-        tuple val(sampleId), val(sampleDirectory), val(userId)
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     script:
 

@@ -1,19 +1,17 @@
 process STAR {
 
-    tag "STAR_${params.sampleId}_${params.userId}"
+    tag "STAR_${sampleId}_${userId}"
 
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.Aligned.out.bam"
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam"}
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5sum"}
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.ReadsPerGene.out.tab"
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.Aligned.out.bam"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam", saveAs: {s-> "${sampleId}.transcriptome_hits.merged.bam"}
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum", saveAs: {s-> "${sampleId}.transcriptome_hits.merged.bam.md5sum"}
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.ReadsPerGene.out.tab"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
 
     input:
-        tuple(
-            val(fastq1Files),
-            val(fastq2Files),
-            val(readGroups)
-        )
+        tuple val(fastq1Files), val(fastq2Files), val(readGroups)
+        val starDirectory
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
@@ -27,7 +25,7 @@ process STAR {
         STAR \
             --runMode alignReads \
             --runThreadN ${task.cpus} \
-            --genomeDir ${params.starDirectory} \
+            --genomeDir $starDirectory \
             --twopassMode Basic \
             --alignSJoverhangMin 8 \
             --alignSJDBoverhangMin 1 \
@@ -43,7 +41,7 @@ process STAR {
             --limitSjdbInsertNsj 1200000 \
             --readFilesIn $fastq1Files $fastq2Files \
             --readFilesCommand zcat \
-            --outFileNamePrefix "${params.sampleId}." \
+            --outFileNamePrefix "${sampleId}." \
             --outSAMstrandField intronMotif \
             --outFilterIntronMotifs None \
             --alignSoftClipAtReferenceEnds Yes \
@@ -59,7 +57,7 @@ process STAR {
             --outSAMattrRGline $readGroups \
             --outTmpDir starTempDir
 
-        md5sum ${params.sampleId}.Aligned.toTranscriptome.out.bam | awk '{print \$1}' > ${params.sampleId}.Aligned.toTranscriptome.out.bam.md5sum
+        md5sum ${sampleId}.Aligned.toTranscriptome.out.bam | awk '{print \$1}' > ${sampleId}.Aligned.toTranscriptome.out.bam.md5sum
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':
