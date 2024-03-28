@@ -1,6 +1,6 @@
 process REGISTER_LOW_READS {
 
-    executor local
+    executor 'local'
 
     tag "REGISTER_LOW_READS_${sampleId}_${userId}"
 
