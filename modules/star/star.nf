@@ -1,6 +1,6 @@
 process STAR {
 
-    label "STAR_${params.sampleId}_${params.userId}"
+    tag "STAR_${params.sampleId}_${params.userId}"
 
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.Aligned.out.bam"
     publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam"}
