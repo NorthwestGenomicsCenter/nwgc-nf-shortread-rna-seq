@@ -1,6 +1,6 @@
 process REGISTER_LOW_READS {
 
-    label "REGISTER_LOW_READS_$sampleId_$userId"
+    label "REGISTER_LOW_READS_${sampleId}_${userId}"
 
     publishDir "$sampleDirectory", mode:  'link', pattern: "*.starJunctions.bed"
  
