@@ -3,38 +3,38 @@ params.helpMessage =
         Usage:
         The typical command for running the pipeline is as follows:
         nextflow run main.nf 
-            -params-file SAMPLE_YAML
-	        -profile PROFILES
-	        -w WORKING_DIR
-	        -N USER_EMAIL
-	        -resume
-	        -name JOB_NAME
+          -params-file SAMPLE_YAML
+          -profile PROFILES
+          -w WORKING_DIR
+          -N USER_EMAIL
+          -resume
+          -name JOB_NAME
 
         Mandatory arguments:
-	        --params-file SAMPLE_YAML    Path to YAML file with sample information (see example-config.yaml in git repository)
-	        --profile PROFILES           Comma separated list of profiles that specify which instanceSize, executor and environment profiles to use.
+	      --params-file SAMPLE_YAML    Path to YAML file with sample information (see example-config.yaml in git repository)
+	      --profile PROFILES           Comma separated list of profiles that specify which instanceSize, executor and environment profiles to use.
 	                                     See PROFILES section below for details.
 
        Optional arguments:
-	        -w WORKING_DIR               Path to a directory to store all the work in (default is "work" in directory where pipeline is run
-	        -N USER_EMAIL                Your email address if you want an email when the pipeline finishes
-	        -resume                      Include this if you want to resume a pipeline that failed part way through
-	        -name JOB_NAME               If you want your pipeline to have a specific name (good for qsubbed pipelines)
+	      -w WORKING_DIR               Path to a directory to store all the work in (default is "work" in directory where pipeline is run
+	      -N USER_EMAIL                Your email address if you want an email when the pipeline finishes
+	      -resume                      Include this if you want to resume a pipeline that failed part way through
+	      -name JOB_NAME               If you want your pipeline to have a specific name (good for qsubbed pipelines)
 	        
        PROFILES
-          You should specify 3 different types of profiles instanceSize, executor and environment.  A * below designates the most commonly used 
-          profiles in our environment
+         You should specify 3 different types of profiles instanceSize, executor and environment.  A * below designates the most commonly used 
+         profiles in our environment
           
-          instanceSize
-             instanceSizeHigh *          High memory, multiple cpus
-             instanceSizeLow             Minimal memory and cpus, (Used for testing mostly)
+         instanceSize
+           instanceSizeHigh *          High memory, multiple cpus
+           instanceSizeLow             Minimal memory and cpus, (Used for testing mostly)
              
-          executor
-             executorGridEngine *        Defines grid cluster options (project, runtime guestimates, etc.)
-             executorLocal               This is used for testing on your local machine
+         executor
+           executorGridEngine *        Defines grid cluster options (project, runtime guestimates, etc.)
+           executorLocal               This is used for testing on your local machine
              
-          environment
-             environmentCentOS7 *        Defines modules needed for CentOS7
-             environmentUbuntu22         Defines modules needed for Ubuntu22
-             environmentContainer        Defines container(s) to use that have software preloaded
+         environment
+           environmentCentOS7 *        Defines modules needed for CentOS7
+           environmentUbuntu22         Defines modules needed for Ubuntu22
+           environmentContainer        Defines container(s) to use that have software preloaded
     """
