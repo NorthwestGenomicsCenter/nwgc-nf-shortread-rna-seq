@@ -3,11 +3,11 @@ params.helpMessage =
         Usage:
         The typical command for running the pipeline is as follows:
         nextflow run main.nf 
-            -params-file SAMPLE_YAML \
-	        -profile PROFILES \
-	        -w WORKING_DIR \
-	        -N USER_EMAIL \
-	        -resume \
+            -params-file SAMPLE_YAML
+	        -profile PROFILES
+	        -w WORKING_DIR
+	        -N USER_EMAIL
+	        -resume
 	        -name JOB_NAME
 
         Mandatory arguments:
