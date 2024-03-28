@@ -4,10 +4,11 @@ include { REGISTER_LOW_READS } from  './modules/register_low_reads.nf'
 
 workflow {
 
-    // Create params channels
+    // Create Local Variables
     Integer lowReadsTreshold = params.lowReadsThreshold.toInteger()
     Boolean runStar = params.stepsToRun.contains("STAR")
     Boolean runAnalysis = params.stepsToRun.contains("Analysis")
+    List analysisToRun = params.analysisToRun
 
     // Versions channel
     ch_versions = Channel.empty()
@@ -86,7 +87,7 @@ workflow {
         }
 
         // Analysis
-        ANALYSIS(ch_starBam, ch_transcriptomeBam, ch_junctionsTab)
+        ANALYSIS(analysisToRun, ch_starBam, ch_transcriptomeBam, ch_junctionsTab)
         ch_versions = ch_versions.mix(ANALYSIS.out.versions)
     }
 
