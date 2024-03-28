@@ -13,7 +13,7 @@ params.helpMessage =
         Mandatory arguments:
 	      --params-file SAMPLE_YAML    Path to YAML file with sample information (see example-config.yaml in git repository)
 	      --profile PROFILES           Comma separated list of profiles that specify which instanceSize, executor and environment profiles to use.
-	                                     See PROFILES section below for details.
+	                                   See PROFILES section below for details.
 
        Optional arguments:
 	      -w WORKING_DIR               Path to a directory to store all the work in (default is "work" in directory where pipeline is run
