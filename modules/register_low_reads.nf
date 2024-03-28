@@ -11,8 +11,4 @@ process REGISTER_LOW_READS {
 
         String message = "There are not enough reads to proceed with this sample.  sampleId: " + params.sampleId + "  readCount: " + readCount
         println(message)
-
-        """
-        echo $message
-        """
 }
