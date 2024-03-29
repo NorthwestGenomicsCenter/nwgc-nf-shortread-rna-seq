@@ -18,6 +18,7 @@ workflow {
     ch_sampleInfo = Channel.value([params.sampleId, params.sampleDirectory, params.userId])
     ch_starReference = Channel.value([params.starDirectory,  params.referenceGenome, params.rsemReferencePrefix, params.gtfFile])
     ch_bigwigDirectory = Channel.value(params.sampleBigWigDirectory)
+    ch_sampleQCDirectory = Channel.value(params.sampleQCDirectory)
 
     // Versions channel
     ch_versions = Channel.empty()
@@ -96,7 +97,7 @@ workflow {
         }
 
         // Analysis
-        ANALYSIS(ch_starBam, ch_transcriptomeBam, ch_junctionsTab, ch_starReference, ch_bigwigDirectory, ch_sampleInfo)
+        ANALYSIS(ch_starBam, ch_transcriptomeBam, ch_junctionsTab, ch_starReference, ch_bigwigDirectory, ch_sampleQCDirectory, ch_sampleInfo)
         ch_versions = ch_versions.mix(ANALYSIS.out.versions)
     }
 
