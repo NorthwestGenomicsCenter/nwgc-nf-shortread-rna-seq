@@ -1,5 +1,5 @@
 include { STAR_MAP_MERGE_SORT } from './workflows/star_map_merge_sort.nf'
-include { ANALYSIS } from './workflows/analysis.nf'
+include { ANALYSIS } from './workflows/analysis.nf' params(Utils.formatParamsForInclusion('analysisToRun', params.customAnalysisToRun))
 include { REGISTER_LOW_READS } from  './modules/register_low_reads.nf'
 
 workflow {
@@ -13,7 +13,6 @@ workflow {
     Integer lowReadsTreshold = params.lowReadsThreshold.toInteger()
     Boolean runStar = params.stepsToRun.contains("STAR")
     Boolean runAnalysis = params.stepsToRun.contains("Analysis")
-    List analysisToRun = params.analysisToRun
 
     // Create data tuples
     ch_sampleInfo = Channel.value([params.sampleId, params.sampleDirectory, params.userId])
@@ -96,7 +95,7 @@ workflow {
         }
 
         // Analysis
-        ANALYSIS(analysisToRun, ch_starBam, ch_transcriptomeBam, ch_junctionsTab)
+        ANALYSIS(ch_starBam, ch_transcriptomeBam, ch_junctionsTab)
         ch_versions = ch_versions.mix(ANALYSIS.out.versions)
     }
 

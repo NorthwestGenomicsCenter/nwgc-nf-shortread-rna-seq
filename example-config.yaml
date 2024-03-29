@@ -43,6 +43,12 @@ analysisTranscriptomeBam: "<full path to transcriptome bam file>"      # e.g ana
 analysisSpliceJunctionsTab: "<full path to spiceJunctions.tab file>"   # e.g analysisSpliceJunctionsTab: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/123456.SJ.out.tab
 
 ##########################################
+### OPTIONAL - Only use thiese paramters if you want to override the defaults 
+##########################################
+# customAnalysisToRun - Limit the analysis to run to only the ones in this list
+customAnalysisToRun: [<list of analysis to run>]     # e.e.g customAnalysisToRun: ["RSEM", "Junctions", "VCF", "QC", "BigWig"]
+
+##########################################
 ### RabbitMQ
 ##########################################
 rabbitHost: "<name of host for rabbitMQ>"				#e.g rabbitHost: "burnet"
