@@ -11,7 +11,7 @@ workflow QC {
 
     main:
 
-        PICARD_INSERT_SIZE(markedDupsBamTuplem, sampleQCDirectory, sampleInfoTuple)
+        PICARD_INSERT_SIZE(markedDupsBamTuple, sampleQCDirectory, sampleInfoTuple)
         RNASEQC(markedDupsBamTuple, starReferenceTuple, sampleQCDirectory, sampleInfoTuple)
 
         // Versions
