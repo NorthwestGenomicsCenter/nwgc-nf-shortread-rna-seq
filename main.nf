@@ -67,7 +67,7 @@ workflow {
         if (runStar) {
             ch_starBam = ch_analysisInput.starBam
         }
-        else if (anlparams.analysisStarBam) {
+        else {
             ch_starBam =
                 Channel.of(params.analysisStarBam)
                     .map{ analysisStarBam ->
@@ -83,7 +83,7 @@ workflow {
         if (runStar) {
             ch_transcriptomeBam = ch_analysisInput.transcriptomeBam
         }
-        else if (analysisToRun.contains("RSEM")) {
+        else {
             ch_transcriptomeBam = Channel.of(params.analysisTranscriptomeBam)
         }
 
@@ -92,7 +92,7 @@ workflow {
         if (runStar) {
             ch_junctionsTab = ch_analysisInput.junctionsTab
         }
-        else if (params.analysisSpliceJunctionsTab) {
+        else {
             ch_junctionsTab = Channel.of(params.analysisSpliceJunctionsTab)
         }
 
