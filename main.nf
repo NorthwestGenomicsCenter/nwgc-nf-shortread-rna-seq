@@ -71,8 +71,8 @@ workflow {
             ch_starBam =
                 Channel.of(params.analysisStarBam)
                     .map{ analysisStarBam ->
-                        Path starBam = file(analysisStarBam)
-                        Path starBai = file(analysisStarBam + ".bai")
+                        starBam = analysisStarBam
+                        starBai = analysisStarBam + ".bai"
 
                         return tuple(starBam, starBai)
                     }
