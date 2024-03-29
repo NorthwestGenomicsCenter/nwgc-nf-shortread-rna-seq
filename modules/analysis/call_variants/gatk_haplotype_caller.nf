@@ -3,7 +3,7 @@ process GATK_HAPLOTYPE_CALLER {
     tag "GATK_HAPLOTYPE_CALLER_${sampleId}_${userId}"
 
     input:
-        tuple path(bam), path bai
+        tuple path(bam), path(bai)
         tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
         tuple val(sampleId), val(publishDirectory), val(userId)
 
