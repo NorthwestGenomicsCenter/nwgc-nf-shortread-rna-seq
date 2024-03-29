@@ -8,7 +8,7 @@ process GATK_SPLIT_N_CIGAR_READS {
         tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
-        tuple path "*.splitncigar.bam", path "*.splitncigar.bai", emit: bamTuple
+        tuple path("*.splitncigar.bam"), path("*.splitncigar.bai"), emit: bamTuple
         path "versions.yaml", emit: versions
 
     script:

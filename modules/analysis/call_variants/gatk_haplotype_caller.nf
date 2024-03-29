@@ -8,7 +8,7 @@ process GATK_HAPLOTYPE_CALLER {
         tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
-        tuple path  "*.vcf", path  "*.vcf.idx", emit: vcfTuple
+        tuple path("*.vcf"), path("*.vcf.idx"), emit: vcfTuple
         path "versions.yaml", emit: versions
 
     script:
