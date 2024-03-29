@@ -12,7 +12,7 @@ process DEEPTOOLS_BAM_COVERAGE {
             val(chromosome),
             val(strand),
             path(bam),
-            path(bai)
+            path(bai),
             val(bigWigDirectory),
             val(sampleId),
             val(sampleDirectory),
