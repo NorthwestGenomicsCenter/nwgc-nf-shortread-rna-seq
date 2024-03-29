@@ -1,17 +1,18 @@
 process PICARD_MARK_DUPLICATES {
 
-    label "PICARD_MARK_DUPLICATES_${params.sampleId}_${params.userId}"
+    tag "PICARD_MARK_DUPLICATES_${sampleId}_${userId}"
 
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bam", saveAs: {s-> "${params.sampleId}.accepted_hits.merged.markeddups.recal.bam"}
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bai", saveAs: {s-> "${params.sampleId}.accepted_hits.merged.markeddups.recal.bai"}
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${params.sampleId}.transcriptome_hits.merged.bam.md5"}
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bam", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bam"}
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bai", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bai"}
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${sampleId}.transcriptome_hits.merged.bam.md5"}
 
     input:
-        tuple (path(starBam), path(starBai))
+        tuple path(starBam), path(starBai)
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
-        tuple path("${params.sampleId}.markeddups.bam"),  path("${params.sampleId}.markeddups.bai"), emit: bamTuple
-        path "${params.sampleId}.markeddups.bam.md5", emit: md5
+        tuple path("${sampleId}.markeddups.bam"),  path("${sampleId}.markeddups.bai"), emit: bamTuple
+        path "${sampleId}.markeddups.bam.md5", emit: md5
         path "versions.yaml", emit: versions
 
     script:
@@ -26,8 +27,8 @@ process PICARD_MARK_DUPLICATES {
             -jar \$PICARD_DIR/picard.jar \
             MarkDuplicates \
             --INPUT $starBam \
-            --OUTPUT ${params.sampleId}.markeddups.bam \
-            --METRICS_FILE ${params.sampleId}.duplicate_metrics.txt \
+            --OUTPUT ${sampleId}.markeddups.bam \
+            --METRICS_FILE ${sampleId}.duplicate_metrics.txt \
             --TMP_DIR \$PICARD_TEMP_DIR \
             --ASSUME_SORT_ORDER coordinate \
             --CREATE_MD5_FILE true \

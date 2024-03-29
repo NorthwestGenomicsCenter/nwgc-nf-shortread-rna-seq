@@ -10,7 +10,7 @@ process STAR {
 
     input:
         tuple val(fastq1Files), val(fastq2Files), val(readGroups)
-        val starDirectory
+        tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
         tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:

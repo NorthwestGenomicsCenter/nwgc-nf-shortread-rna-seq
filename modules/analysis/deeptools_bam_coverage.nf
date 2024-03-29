@@ -1,8 +1,8 @@
 process DEEPTOOLS_BAM_COVERAGE {
 
-    label "DEEPTOOLS_BAM_COVERAGE${params.sampleId}_${params.userId}"
+    tag "DEEPTOOLS_BAM_COVERAGE_${sampleId}_${userId}"
 
-    publishDir "${params.sampleBigWigDirectory}", mode:  'link', pattern: "*.bw"
+    publishDir "${bigWigDirectory}", mode:  'link', pattern: "*.bw"
 
     memory { 10.GB * (Math.pow(2, task.attempt - 1)) }
     errorStrategy { task.exitStatus == 137 ? 'retry' : 'terminate' }
@@ -13,7 +13,12 @@ process DEEPTOOLS_BAM_COVERAGE {
             val(strand),
             path(bam),
             path(bai)
+            val(bigWigDirectory),
+            val(sampleId),
+            val(sampleDirectory),
+            val(userId)
         )
+
 
     output:
         path "*.bw", emit: bigwig
@@ -31,7 +36,7 @@ process DEEPTOOLS_BAM_COVERAGE {
             --outFileFormat bigwig \
             --normalizeUsing RPGC \
             --numberOfProcessors 1 \
-            --outFileName ${params.sampleId}.${chromosome}.${strand}.bw
+            --outFileName ${sampleId}.${chromosome}.${strand}.bw
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':

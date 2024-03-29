@@ -1,18 +1,18 @@
 process RNASEQC {
 
-    label "RNASEQC_${params.sampleId}_${params.userId}"
+    tag "RNASEQC_${sampleId}_${userId}"
 
-    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.metrics.tsv"
-    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.gene_tpm.gct"
-    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.gene_reads.gct"
-    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.gene_fragments.gct"
-    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.exon_reads.gct"
+    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.metrics.tsv"
+    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.gene_tpm.gct"
+    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.gene_reads.gct"
+    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.gene_fragments.gct"
+    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.exon_reads.gct"
 
     input:
-        tuple (
-            path(bam),
-            path(bai)
-        )
+        tuple path(bam), path(bai)
+        tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
+        val sampleQCDirectory
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
         path "*.metrics.tsv", emit: metrics
@@ -26,10 +26,10 @@ process RNASEQC {
 
         """
         rnaseqc \
-            ${params.starDirectory}/${params.gtfFile} \
+            ${starDirectory}/${gtfFile} \
             $bam \
             . \
-            --sample=${params.sampleId} \
+            --sample=${sampleId} \
             --stranded=rf \
             --coverage \
             -v

@@ -5,11 +5,14 @@ workflow QC {
 
     take:
         markedDupsBamTuple
+        starReferenceTuple
+        sampleQCDirectory
+        sampleInfoTuple
 
     main:
 
-        PICARD_INSERT_SIZE(markedDupsBamTuple)
-        RNASEQC(markedDupsBamTuple)
+        PICARD_INSERT_SIZE(markedDupsBamTuplem, sampleQCDirectory, sampleInfoTuple)
+        RNASEQC(markedDupsBamTuple, starReferenceTuple, sampleQCDirectory, sampleInfoTuple)
 
         // Versions
         ch_versions = Channel.empty()

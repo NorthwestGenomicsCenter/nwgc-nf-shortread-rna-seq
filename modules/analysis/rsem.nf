@@ -1,12 +1,14 @@
 process RSEM {
 
-    label "RSEM_${params.sampleId}_${params.userId}"
+    tag "RSEM_${sampleId}_${userId}"
 
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.genes.results"
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.isoforms.results"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.genes.results"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.isoforms.results"
  
     input:
         path transcriptomeBam
+        tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
         path "*.genes.results",  emit: genes
@@ -23,8 +25,8 @@ process RSEM {
             --estimate-rspd \
             --forward-prob 0.0 \
             --bam $transcriptomeBam \
-            ${params.starDirectory}/${params.rsemReferencePrefix} \
-            ${params.sampleId}.transcriptome_hits.merged 
+            ${starDirectory}/${rsemReferencePrefix} \
+            ${sampleId}.transcriptome_hits.merged 
     
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':

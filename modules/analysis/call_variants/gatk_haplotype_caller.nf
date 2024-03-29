@@ -1,14 +1,14 @@
 process GATK_HAPLOTYPE_CALLER {
 
-    label "GATK_HAPLOTYPE_CALLER_${params.sampleId}_${params.userId}"
+    tag "GATK_HAPLOTYPE_CALLER_${sampleId}_${userId}"
 
     input:
-        path bam
-        path bai
+        tuple path(bam), path bai
+        tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
-        path  "*.vcf", emit: vcf
-        path  "*.vcf.idx", emit: vcf_index
+        tuple path  "*.vcf", path  "*.vcf.idx", emit: vcfTuple
         path "versions.yaml", emit: versions
 
     script:
@@ -17,9 +17,9 @@ process GATK_HAPLOTYPE_CALLER {
         gatk \
             --java-options "-XX:InitialRAMPercentage=80.0 -XX:MaxRAMPercentage=85.0" \
             HaplotypeCaller \
-            -R ${params.starDirectory}/${params.referenceGenome} \
+            -R ${starDirectory}/${referenceGenome} \
             -I $bam \
-            -O ${params.sampleId}.vcf \
+            -O ${sampleId}.vcf \
             --read-filter OverclippedReadFilter \
             --dont-require-soft-clips-both-ends \
             --dont-use-soft-clipped-bases \

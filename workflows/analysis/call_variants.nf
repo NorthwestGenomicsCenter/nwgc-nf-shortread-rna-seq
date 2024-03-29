@@ -6,12 +6,14 @@ workflow CALL_VARIANTS {
 
     take:
         markedDupsBamTuple
+        starReferenceTuple
+        sampleInfoTuple
 
     main:
 
-        GATK_SPLIT_N_CIGAR_READS(markedDupsBamTuple)
-        GATK_HAPLOTYPE_CALLER(GATK_SPLIT_N_CIGAR_READS.out.bam, GATK_SPLIT_N_CIGAR_READS.out.bai)
-        GATK_VARIANT_FILTRATION(GATK_HAPLOTYPE_CALLER.out.vcf, GATK_HAPLOTYPE_CALLER.out.vcf_index)
+        GATK_SPLIT_N_CIGAR_READS(markedDupsBamTuple, starReferenceTuple, sampleInfoTuple)
+        GATK_HAPLOTYPE_CALLER(GATK_SPLIT_N_CIGAR_READS.out.bamTuple, starReferenceTuple, sampleInfoTuple)
+        GATK_VARIANT_FILTRATION(GATK_HAPLOTYPE_CALLER.out.vcfTuple, starReferenceTuple, sampleInfoTuple)
 
         // Versions
         ch_versions = Channel.empty()

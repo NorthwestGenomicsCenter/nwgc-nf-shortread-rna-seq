@@ -12,38 +12,42 @@ workflow ANALYSIS {
     take:
         starBamTuple
         transcriptomeBam
-        junctionsTab 
+        junctionsTab
+        starReferenceTuple
+        bigWigDirectory
+        sampleQCDirectory
+        sampleInfoTuple
 
     main:
 
         ch_versions = Channel.empty()
 
         if (params.analysisToRun.contains("RSEM")) {
-            RSEM(transcriptomeBam)
+            RSEM(transcriptomeBam, starReferenceTuple, sampleInfoTuple)
             ch_versions = ch_versions.mix(RSEM.out.versions)
         }
 
         if (params.analysisToRun.contains("Junctions")) {
-            JUNCTIONS_BED(junctionsTab)
+            JUNCTIONS_BED(junctionsTab, sampleInfoTuple)
             ch_versions = ch_versions.mix(JUNCTIONS_BED.out.versions)
         }
 
         if (params.analysisToRun.contains("VCF") || params.analysisToRun.contains("QC") || params.analysisToRun.contains("BigWig")) {
-            PICARD_MARK_DUPLICATES(starBamTuple)
+            PICARD_MARK_DUPLICATES(starBamTuple, sampleInfoTuple)
             ch_versions = ch_versions.mix(PICARD_MARK_DUPLICATES.out.versions)
 
             if (params.analysisToRun.contains("VCF")) {
-                CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bamTuple)
+                CALL_VARIANTS(PICARD_MARK_DUPLICATES.out.bamTuple, starReferenceTuple, sampleInfoTuple)
                 ch_versions = ch_versions.mix(CALL_VARIANTS.out.versions)
             }
 
             if (params.analysisToRun.contains("QC")) {
-                QC(PICARD_MARK_DUPLICATES.out.bamTuple)
+                QC(PICARD_MARK_DUPLICATES.out.bamTuple, starReferenceTuple, sampleQCDirectory, sampleInfoTuple)
                 ch_versions = ch_versions.mix(QC.out.versions)
             }
 
             if (params.analysisToRun.contains("BigWig")) {
-                BIGWIG(PICARD_MARK_DUPLICATES.out.bamTuple)
+                BIGWIG(PICARD_MARK_DUPLICATES.out.bamTuple, bigWigDirectory, sampleInfoTuple)
                 ch_versions = ch_versions.mix(BIGWIG.out.versions)
             }
         }

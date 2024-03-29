@@ -16,9 +16,9 @@ sampleId: <samplify sampleId>                              # e.g sampleId: 12345
 starDirectory: "<full path to STAR reference directory>"       # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev30/bundle"
 
 # STAR specific files (should reside in the starDirectory defined above)
+referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
 rsemReferencePrefix: "<label used as prefix for rsem files>"   # e.g. rsemReferencePrefix: "rsem_reference"
 gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "gencode.v30.GRCh38.ERCC.genes.collapsed_only.gtf"
-referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
 
 ##########################################
 ### Inputs  - Pick one set  Fastqs or Analysis Only

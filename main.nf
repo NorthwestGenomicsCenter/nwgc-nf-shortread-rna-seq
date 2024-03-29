@@ -16,7 +16,8 @@ workflow {
 
     // Create data tuples
     ch_sampleInfo = Channel.value([params.sampleId, params.sampleDirectory, params.userId])
-    ch_starDirectory = Channel.value(params.starDirectory)
+    ch_starReference = Channel.value([params.starDirectory,  params.referenceGenome, params.rsemReferencePrefix, params.gtfFile])
+    ch_bigwigDirectory = Channel.value(params.sampleBigWigDirectory)
 
     // Versions channel
     ch_versions = Channel.empty()
@@ -34,7 +35,7 @@ workflow {
                 }
 
         // Map/Merge using STAR
-        STAR_MAP_MERGE_SORT(ch_fastqs, ch_starDirectory, ch_sampleInfo)
+        STAR_MAP_MERGE_SORT(ch_fastqs, ch_starReference, ch_sampleInfo)
         ch_versions = ch_versions.mix(STAR_MAP_MERGE_SORT.out.versions)
 
         // Split into pass/fail channels
@@ -95,7 +96,7 @@ workflow {
         }
 
         // Analysis
-        ANALYSIS(ch_starBam, ch_transcriptomeBam, ch_junctionsTab)
+        ANALYSIS(ch_starBam, ch_transcriptomeBam, ch_junctionsTab, ch_starReference, ch_bigwigDirectory, ch_sampleInfo)
         ch_versions = ch_versions.mix(ANALYSIS.out.versions)
     }
 

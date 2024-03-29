@@ -4,6 +4,8 @@ workflow BIGWIG {
 
     take:
         markedDupsBamTuple
+        bigWigDirectory
+        sampleInfoTuple
 
     main:
 
@@ -11,7 +13,7 @@ workflow BIGWIG {
         chromosomesChannel = Channel.fromList(params.chromosomes)
         strandChannel = Channel.fromList(['forward','reverse'])
         chromosomeStrandTuple = chromosomesChannel.combine(strandChannel)
-        deeptoolsInputTuple = chromosomeStrandTuple.combine(markedDupsBamTuple) 
+        deeptoolsInputTuple = chromosomeStrandTuple.combine(markedDupsBamTuple).combine(bigWigDirectory).combine(sampleInfoTuple)
 
         DEEPTOOLS_BAM_COVERAGE(deeptoolsInputTuple)
 

@@ -1,13 +1,15 @@
 process GATK_VARIANT_FILTRATION {
 
-    label "GATK_VARIANT_FILTRATION${params.sampleId}_${params.userId}"
+    tag "GATK_VARIANT_FILTRATION_${sampleId}_${userId}"
 
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz"
-    publishDir "${params.sampleDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz.tbi"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz.tbi"
 
     input:
-        path vcf
-        path vcf_index
+        tuple path(vcf), path(vcf_index)
+        tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
+        tuple val(sampleId), val(publishDirectory), val(userId)
+
 
     output:
         path  "*.filtered.vcf.gz", emit: filtered_vcf
@@ -20,16 +22,16 @@ process GATK_VARIANT_FILTRATION {
         gatk \
             --java-options "-XX:InitialRAMPercentage=80.0 -XX:MaxRAMPercentage=85.0" \
             VariantFiltration \
-            -R ${params.starDirectory}/${params.referenceGenome} \
+            -R ${starDirectory}/${referenceGenome} \
             -V $vcf \
-            -O ${params.sampleId}.filtered.vcf \
+            -O ${sampleId}.filtered.vcf \
             -window 35 \
             -cluster 3 \
             --filter-name FS -filter "FS > 30.0" \
             --filter-name QD -filter "QD < 2.0"
 
-        bgzip -f ${params.sampleId}.filtered.vcf 
-        tabix -p vcf -f ${params.sampleId}.filtered.vcf.gz
+        bgzip -f ${sampleId}.filtered.vcf 
+        tabix -p vcf -f ${sampleId}.filtered.vcf.gz
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':

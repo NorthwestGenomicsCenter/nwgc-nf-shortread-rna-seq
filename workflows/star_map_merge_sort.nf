@@ -6,14 +6,14 @@ workflow STAR_MAP_MERGE_SORT {
 
     take:
         fastqsTuple
-        starDirectory
-        userInfoTuple
+        starReferenceTuple
+        sampleInfoTuple
 
     main:
 
-        STAR(fastqsTuple, starDirectory, userInfoTuple)
-        SAMBAMBA_SORT(STAR.out.aligned_bam, userInfoTuple)
-        CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedBamTuple, userInfoTuple)
+        STAR(fastqsTuple, starReferenceTuple, sampleInfoTuple)
+        SAMBAMBA_SORT(STAR.out.aligned_bam, sampleInfoTuple)
+        CHECK_MAPPED_READ_COUNT(SAMBAMBA_SORT.out.sortedBamTuple, sampleInfoTuple)
 
         // Versions
         ch_versions = Channel.empty()

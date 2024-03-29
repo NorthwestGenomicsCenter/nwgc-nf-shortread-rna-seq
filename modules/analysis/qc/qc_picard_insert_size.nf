@@ -1,19 +1,19 @@
 process PICARD_INSERT_SIZE {
 
-    label "PICARD_INSERT_SIZE_${params.sampleId}_${params.userId}"
+    tag "PICARD_INSERT_SIZE_${sampleId}_${userId}"
 
-    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.insert_size_metrics.txt"
-    publishDir "$params.sampleQCDirectory", mode:  'link', pattern: "*.insert_size_histogram.png"
+    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.insert_size_metrics.txt"
+    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.insert_size_histogram.png"
 
     input:
-        tuple (
-            path(bam),
-            path(bai)
-        )
+        tuple path(bam), path(bai)
+        val sampleQCDirectory
+        tuple val(sampleId), val(publishDirectory), val(userId)
+
 
     output:
-        path "${params.sampleId}.insert_size_metrics.txt", emit: metrics
-        path "${params.sampleId}.insert_size_histogram.png", emit: histogram
+        path "${sampleId}.insert_size_metrics.txt", emit: metrics
+        path "${sampleId}.insert_size_histogram.png", emit: histogram
         path "versions.yaml", emit: versions
 
     script:
@@ -28,12 +28,12 @@ process PICARD_INSERT_SIZE {
             -jar \$PICARD_DIR/picard.jar \
             CollectInsertSizeMetrics \
             --INPUT $bam \
-            --OUTPUT ${params.sampleId}.insert_size_metrics.txt \
+            --OUTPUT ${sampleId}.insert_size_metrics.txt \
             --TMP_DIR \$PICARD_TEMP_DIR \
-            --Histogram_FILE ${params.sampleId}.insert_size_histogram.pdf \
+            --Histogram_FILE ${sampleId}.insert_size_histogram.pdf \
             --HISTOGRAM_WIDTH 1000 
 
-        pdftoppm ${params.sampleId}.insert_size_histogram.pdf -png -scale-to 480 > ${params.sampleId}.insert_size_histogram.png
+        pdftoppm ${sampleId}.insert_size_histogram.pdf -png -scale-to 480 > ${sampleId}.insert_size_histogram.png
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':

@@ -1,11 +1,12 @@
 process JUNCTIONS_BED {
 
-    label "JUNCTIONS_BED_${params.sampleId}_${params.userId}"
+    tag "JUNCTIONS_BED_${sampleId}_${userId}"
 
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.starJunctions.bed"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.starJunctions.bed"
  
     input:
         path junctionsTab
+        tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:
         path "*.starJunctions.bed",  emit: junctions_bed
@@ -41,7 +42,7 @@ process JUNCTIONS_BED {
                 else if(\$4==2 && \$5==6) print \$1"\t"\$2"\t"\$3"\tGT-AT_"\$1":"\$2"-"\$3";"\$7"\t"\$7"\t-" \
             }' \
             $junctionsTab \
-            > ${params.sampleId}.starJunctions.bed
+            > ${sampleId}.starJunctions.bed
     
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':
