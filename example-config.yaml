@@ -24,39 +24,41 @@ gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "
 ### Inputs  - Pick one set flowCellLaneLibrary or Analysis Only
 ##########################################
 # flowCellLaneLibrary (libray, fastq, and flow cell info for Read Group Id)
+# Only fastq1 and fastq2 are required.  The rest of the parameters are for defining read groups in the bam
 # Input for running steps "FastxQC" or "STAR"
 flowCellLaneLibraries:
-  - library: "<library id>"
-    fastq1: "<full path to the fastq1 file>"
-    fastq2: "<full path to the fastq1 file>"
-    flowCell: "<flow cell name>"
-    lane: "<flow cell lane number>"
-    runDate: "<iso formatted date the flow cell was run on the sequencer"
-    platform: "<sequencing platform of the flow cell>"
   - fastq1: "<full path to the fastq1 file>"
     fastq2: "<full path to the fastq1 file>"
+    library: "<library id>"
     flowCell: "<flow cell name>"
     lane: "<flow cell lane number>"
     runDate: "<iso formatted date the flow cell was run on the sequencer"
-    platform: "<sequencing platform of the flow cell>"
+    sequencingPlatform: "<sequencing platform of the flow cell>"			# defaulted in config file to Illumina
+  - fastq1: "<full path to the fastq1 file>"
+    fastq2: "<full path to the fastq1 file>"
+    library: "<library id>"
+    flowCell: "<flow cell name>"
+    lane: "<flow cell lane number>"
+    runDate: "<iso formatted date the flow cell was run on the sequencer"
+    sequencingPlatform: "<sequencing platform of the flow cell>"
         
     readGroups: "<comma separated list of read group info (in same order ast fastq1Files)>"
 #e.g.
 # flowCellLaneLibraries:
-#  - library: "123456"
-#    fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz"
+#  - fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz"
 #    fastq2: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz"
+#    library: "123456"
 #    flowCell: "HLG2HDMXY"
 #    lane: "1"
 #    runDate: "2023-05-21"
-#    platform: "Illumina"
-#  - library: "123456"
-#    fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz"
+#    sequencingPlatform: "Illumina"
+#  - fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz"
 #    fastq2: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz"
+#    library: "123456"
 #    flowCell: "HLG2HDMXY"
 #    lane: "2"
 #    runDate: "2023-05-21"
-#    platform: "Illumina"
+#    sequencingPlatform: "Illumina"
 
 
 # Analysis Only -- supply the files you need for the analysis you are running

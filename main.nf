@@ -27,7 +27,7 @@ workflow {
         // Format star input
         fastq1Input = Utils.formatFastq1InputForStar(params.flowCellLaneLibraries)
         fastq2Input = Utils.formatFastq2InputForStar(params.flowCellLaneLibraries)
-        readGroupInput = Utils.formatReadGroupInputForStar(params.flowCellLaneLibraries)
+        readGroupInput = Utils.formatReadGroupInputForStar(params.sequencingCenter, param.sequencingPlatform, params.sampleId, params.flowCellLaneLibraries)
         ch_starInput = Channel.value([fastq1Input, fastq2Input, readGroupInput])
 
         // Map/Merge using STAR
