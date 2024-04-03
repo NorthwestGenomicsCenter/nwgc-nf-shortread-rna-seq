@@ -136,11 +136,11 @@ public class Utils {
 
         // FlowCellLaneLibrary required fields
         flowCellLaneLibraries.each { flowCellLaneLibrary ->
-            if (!flowCellLaneLibary.fastq1) {throw new Exception("fastq1 missing from flowCellLaneLibrary")}
-            if (!flowCellLaneLibary.fastq2) {throw new Exception("fastq2 missing from flowCellLaneLibrary")}
-            if (!flowCellLaneLibary.flowCell) {throw new Exception("flowCell missing from flowCellLaneLibrary")}
-            if (!flowCellLaneLibary.lane) {throw new Exception("lane missing from flowCellLaneLibrary")}
-            if (!flowCellLaneLibary.library) {throw new Exception("library missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibrary.fastq1) {throw new Exception("fastq1 missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibrary.fastq2) {throw new Exception("fastq2 missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibrary.flowCell) {throw new Exception("flowCell missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibrary.lane) {throw new Exception("lane missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibrary.library) {throw new Exception("library missing from flowCellLaneLibrary")}
         }
     }
 }
