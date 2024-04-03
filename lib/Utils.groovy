@@ -43,16 +43,17 @@ public class Utils {
     }
     
     public static defineReadGroups(sequencingCenter, defaultSequencingPlatform, sampleId, flowCellLaneLibraries) {
-        // Verify flowCell, lane and library are defined
-        if (!flowCellLaneLibrary.flowCell || !flowCellLaneLibrary.lane || !flowCellLaneLibrary.library) {
-                throw new Exception("The flowCellLanLibrary is missing a flowCell, lane or libary defintion: " + flowCellLaneLibrary.library)
-        }
 
         // Set up default values 
         def defaultDate = new Date().format('yyyy-MM-dd')
  
         def readGroups = []
         flowCellLaneLibraries.eachWithIndex { flowCellLaneLibrary, index ->
+            // Verify flowCell, lane and library are defined
+            if (!flowCellLaneLibrary.flowCell || !flowCellLaneLibrary.lane || !flowCellLaneLibrary.library) {
+                    throw new Exception("The flowCellLaneLibrary is missing a flowCell, lane or libary defintion")
+            }
+
             // Set up the values need to build the tags            
             def flowCell = flowCellLaneLibrary.flowCell
             def lane = flowCellLaneLibrary.lane
