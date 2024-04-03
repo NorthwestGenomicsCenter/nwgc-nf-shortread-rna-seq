@@ -21,9 +21,9 @@ process FASTX_QC {
         gunzip -c $fastq | \
         fastx_quality_stats \
             -Q 33 \
-            -o \${fastqName}.fastq.stats.temp
+            -o \${FASTQ_BASENAME}.fastq.stats.temp
 
-        mv \${FASTQ_BASENAME}.fastq.stats
+        mv \${FASTQ_BASENAME}.fastq.stats.temp \${FASTQ_BASENAME}.fastq.stats
     
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':
