@@ -5,9 +5,18 @@ include { REGISTER_LOW_READS } from  './modules/register_low_reads.nf'
 
 workflow {
 
+    // Print help message --help entered at command line
     if (params.help) {
         println(params.helpMessage)
         exit(0)
+    }
+
+    // Verify the input paramters are well formed
+    try {
+        Utils.validateInputParams(params)
+    }
+    catch (Exception exception) {
+        error exception.message
     }
 
     // Create Local Variables
@@ -38,9 +47,17 @@ workflow {
         ch_starReference = Channel.value([params.starDirectory,  params.referenceGenome, params.rsemReferencePrefix, params.gtfFile])
 
         // Format star input
-        fastq1Input = Utils.formatFastq1InputForStar(params.flowCellLaneLibraries)
-        fastq2Input = Utils.formatFastq2InputForStar(params.flowCellLaneLibraries)
-        readGroupInput = Utils.formatReadGroupInputForStar(params.sequencingCenter, params.sequencingPlatform, params.sampleId, params.flowCellLaneLibraries)
+        String fastq1Input = ""
+        String fastq2Input = ""
+        String readGroupInput = ""
+        try {
+            fastq1Input = Utils.formatFastq1InputForStar(params.flowCellLaneLibraries)
+            fastq2Input = Utils.formatFastq2InputForStar(params.flowCellLaneLibraries)
+            readGroupInput = Utils.formatReadGroupInputForStar(params.sequencingCenter, params.sequencingPlatform, params.sampleId, params.flowCellLaneLibraries)
+        }
+        catch (Exception exception) {
+            error exception.message
+        }
         ch_starInput = Channel.value([fastq1Input, fastq2Input, readGroupInput])
 
         // Map/Merge using STAR

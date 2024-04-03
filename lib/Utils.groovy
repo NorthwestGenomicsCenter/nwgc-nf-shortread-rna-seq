@@ -6,6 +6,9 @@ public class Utils {
         return
     }
 
+    /////////////////////////////////////////
+    //  Format Star Input
+    ////////////////////////////////////////
     public static String formatFastq1InputForStar(flowCellLaneLibraries) {
         def fastq1s = []
         flowCellLaneLibraries.each { flowCellLaneLibrary ->
@@ -40,18 +43,20 @@ public class Utils {
     }
     
     public static defineReadGroups(sequencingCenter, defaultSequencingPlatform, sampleId, flowCellLaneLibraries) {
+        // Verify flowCell, lane and library are defined
+        if (!flowCellLaneLibrary.flowCell || !flowCellLaneLibrary.lane || !flowCellLaneLibrary.library) {
+                throw new Exception("The flowCellLanLibrary is missing a flowCell, lane or libary defintion: " + flowCellLaneLibrary.library)
+        }
+
         // Set up default values 
-        def defaultFlowCell = "FlowCell"
-        def defaultLane = "Lane"
-        def defaultLibraryPrefix = "Library"
         def defaultDate = new Date().format('yyyy-MM-dd')
  
         def readGroups = []
         flowCellLaneLibraries.eachWithIndex { flowCellLaneLibrary, index ->
             // Set up the values need to build the tags            
-            def flowCell = flowCellLaneLibrary.flowCell ? flowCellLaneLibrary.flowCell : defaultFlowCell
-            def lane = flowCellLaneLibrary.lane ? flowCellLaneLibrary.lane : defaultLane
-            def library = flowCellLaneLibrary.library ? flowCellLaneLibrary.library : defaultLibraryPrefix + index
+            def flowCell = flowCellLaneLibrary.flowCell
+            def lane = flowCellLaneLibrary.lane
+            def library = flowCellLaneLibrary.library
             def dateString = flowCellLaneLibrary.runDate ? flowCellLaneLibrary.runDate : defaultDate
             def sequencingPlatform = flowCellLaneLibrary.sequencingPlatform ? flowCellLaneLibrary.sequencingPlatform : defaultSequencingPlatform
 
@@ -70,5 +75,71 @@ public class Utils {
         }
 
         return readGroups
+    }
+
+    /////////////////////////////////////////
+    //  Validation
+    ////////////////////////////////////////
+    public static validateInputParams(parameters) {
+
+        // User
+        if (!parameters.userId) {throw new Exception("userId is null or empty")}
+        if (!parameters.userEmail) {throw new Exception("userEmail is null or empty")}
+
+        // Sample
+        if (!parameters.sampleId) {throw new Exception("sampleId is null or empty")}
+        if (!parameters.sampleDirectory) {throw new Exception("sampleDirectory is null or empty")}
+
+        // FastqxQC
+        if (parameters.stepsToRun.contains("FastxQC")) {
+            // FlowCellLaneLibraries
+            verifyFlowCellLaneLibraries(parameters.flowCellLaneLibraries)
+        }
+
+        // STAR
+        if (parameters.stepsToRun.contains("STAR")) {
+            // FlowCellLaneLibraries
+            verifyFlowCellLaneLibraries(parameters.flowCellLaneLibraries)
+
+            // STAR files
+            if (!parameters.starDirectory) {throw new Exception("starDirectory is null or empty")}
+            if (!parameters.referenceGenome) {throw new Exception("referenceGenome is null or empty")}
+            if (!parameters.rsemReferencePrefix) {throw new Exception("rsemReferencePrefix is null or empty")}
+            if (!parameters.gtfFile) {throw new Exception("gtfFile is null or empty")}
+        }
+
+        // Analysis
+        if (parameters.stepsToRun.contains("Analysis") && !parameters.stepsToRun.contains("STAR")) {
+            def customAnalysisToRun = parameters.customAnalysisToRun
+
+            // analysisStarBam - needed for QC, VCF, or BigWig
+            if (!customAnalysisToRun || customAnalysisToRun.contains("QC") || customAnalysisToRun.contains("VCF") || customAnalysisToRun.contains("BigWig")) {
+                if (!parameters.analysisStarBam) {throw new Exception("analysisStarBam is null or empty")}
+            }
+
+            // analysisTranscriptomeBam - needed for RSEM
+            if (!customAnalysisToRun || customAnalysisToRun.contains("RSEM")) {
+                if (!parameters.analysisTranscriptomeBam) {throw new Exception("analysisTranscriptomeBam is null or empty")}
+            }
+
+            // analysisSpliceJunctionsTab - needed for RSEM
+            if (!customAnalysisToRun || customAnalysisToRun.contains("Junctions")) {
+                if (!parameters.analysisSpliceJunctionsTab) {throw new Exception("analysisSpliceJunctionsTab is null or empty")}
+            }
+        }
+    }
+
+    private static verifyFlowCellLaneLibraries(flowCellLaneLibraries) {
+        // FlowCellLaneLibraries
+        if (!flowCellLaneLibraries) {throw new Exception("flowCellLaneLibraries must be supplied to run FastxQC")}
+
+        // FlowCellLaneLibrary required fields
+        flowCellLaneLibraries.each { flowCellLaneLibrary ->
+            if (!flowCellLaneLibary.fastq1) {throw new Exception("fastq1 missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibary.fastq2) {throw new Exception("fastq2 missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibary.flowCell) {throw new Exception("flowCell missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibary.lane) {throw new Exception("lane missing from flowCellLaneLibrary")}
+            if (!flowCellLaneLibary.library) {throw new Exception("library missing from flowCellLaneLibrary")}
+        }
     }
 }
