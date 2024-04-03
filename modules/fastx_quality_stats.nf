@@ -16,7 +16,7 @@ process FASTX_QC {
 
     script:
         """
-        FASTQ_BASENAME=$(basename "$fastq" .fastq.gz)
+        FASTQ_BASENAME=\$(basename "$fastq" .fastq.gz)
 
         gunzip -c $fastq | \
         fastx_quality_stats \
