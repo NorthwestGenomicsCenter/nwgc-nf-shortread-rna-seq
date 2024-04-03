@@ -2,7 +2,7 @@ process DEEPTOOLS_BAM_COVERAGE {
 
     tag "DEEPTOOLS_BAM_COVERAGE_${sampleId}_${userId}"
 
-    publishDir "${bigWigDirectory}", mode:  'link', pattern: "*.bw"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.bw"
 
     memory { 10.GB * (Math.pow(2, task.attempt - 1)) }
     errorStrategy { task.exitStatus == 137 ? 'retry' : 'terminate' }
@@ -13,7 +13,7 @@ process DEEPTOOLS_BAM_COVERAGE {
             val(strand),
             path(bam),
             path(bai),
-            val(bigWigDirectory),
+            val(publishDirectory),
             val(sampleId),
             val(sampleDirectory),
             val(userId)

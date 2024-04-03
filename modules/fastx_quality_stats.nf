@@ -2,11 +2,11 @@ process FASTX_QC {
 
     tag "FASTX_QC_${sampleId}_${userId}"
 
-    publishDir "${fastxQCDirectory}", mode:  'link', pattern: "*.fastq.stats"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.fastq.stats"
  
     input:
         path fastq
-        val fastxQCDirectory
+        val publishDirectory
         tuple val(sampleId), val(sampleDirectory), val(userId)
 
     output:

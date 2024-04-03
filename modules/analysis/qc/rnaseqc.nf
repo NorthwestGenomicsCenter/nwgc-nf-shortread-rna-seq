@@ -2,17 +2,17 @@ process RNASEQC {
 
     tag "RNASEQC_${sampleId}_${userId}"
 
-    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.metrics.tsv"
-    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.gene_tpm.gct"
-    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.gene_reads.gct"
-    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.gene_fragments.gct"
-    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.exon_reads.gct"
-    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.coverage.tsv"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.metrics.tsv"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.gene_tpm.gct"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.gene_reads.gct"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.gene_fragments.gct"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.exon_reads.gct"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.coverage.tsv"
 
     input:
         tuple path(bam), path(bai)
         tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
-        val sampleQCDirectory
+        val publishDirectory
         tuple val(sampleId), val(publishDirectory), val(userId)
 
     output:

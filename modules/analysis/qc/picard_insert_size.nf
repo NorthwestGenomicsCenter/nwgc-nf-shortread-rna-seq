@@ -2,12 +2,12 @@ process PICARD_INSERT_SIZE {
 
     tag "PICARD_INSERT_SIZE_${sampleId}_${userId}"
 
-    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.insert_size_metrics.txt"
-    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.insert_size_histogram.png"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.insert_size_metrics.txt"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.insert_size_histogram.png"
 
     input:
         tuple path(bam), path(bai)
-        val sampleQCDirectory
+        val publishDirectory
         tuple val(sampleId), val(publishDirectory), val(userId)
 
 
