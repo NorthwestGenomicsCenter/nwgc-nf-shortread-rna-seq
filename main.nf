@@ -1,4 +1,4 @@
-include { FASTX_QC } from './modules/fastx_quality_metrics.nf'
+include { FASTX_QC } from './modules/fastx_quality_stats.nf'
 include { STAR_MAP_MERGE_SORT } from './workflows/star_map_merge_sort.nf'
 include { ANALYSIS } from './workflows/analysis.nf' params(Utils.formatParamsForInclusion('analysisToRun', params.customAnalysisToRun))
 include { REGISTER_LOW_READS } from  './modules/register_low_reads.nf'
