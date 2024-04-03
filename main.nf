@@ -25,8 +25,8 @@ workflow {
     if (runFastXQC) {
 
         // Fastqs channel
-        ch_fastq1 = Channel.fromList(params.flowCellLaneLibraries).map{ flowcellLaneLibrary -> return flowCellLaneLibrary.fastq1}
-        ch_fastq2 = Channel.fromList(params.flowCellLaneLibraries).map{ flowcellLaneLibrary -> return flowCellLaneLibrary.fastq2}
+        ch_fastq1 = Channel.fromList(params.flowCellLaneLibraries).map{ flowCellLaneLibrary -> return flowCellLaneLibrary.fastq1}
+        ch_fastq2 = Channel.fromList(params.flowCellLaneLibraries).map{ flowCellLaneLibrary -> return flowCellLaneLibrary.fastq2}
 
         ch_fastxQCDirectory = Channel.value(params.sampleDirectory + "/fastxQC")
 
