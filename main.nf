@@ -24,19 +24,14 @@ workflow {
     ch_versions = Channel.empty()
 
     if (runStar) {
-        // Fastqs channel
-        ch_fastqs =
-            Channel.fromList(params.fastqs)
-                .map{ row ->
-                    String fastq1Files = row.fastq1Files
-                    String fastq2Files = row.fastq2Files
-                    String readGroups = row.readGroups
-
-                    return tuple(fastq1Files, fastq2Files, readGroups)
-                }
+        // Format star input
+        fastq1Input = Utils.formatFastq1InputForStar(params.flowCellLaneLibraries)
+        fastq2Input = Utils.formatFastq2InputForStar(params.flowCellLaneLibraries)
+        readGroupInput = Utils.formatReadGroupInputForStar(params.flowCellLaneLibraries)
+        ch_starInput = Channel.value([fastq1Input, fastq2Input, readGroupInput])
 
         // Map/Merge using STAR
-        STAR_MAP_MERGE_SORT(ch_fastqs, ch_starReference, ch_sampleInfo)
+        STAR_MAP_MERGE_SORT(ch_starInput, ch_starReference, ch_sampleInfo)
         ch_versions = ch_versions.mix(STAR_MAP_MERGE_SORT.out.versions)
 
         // Split into pass/fail channels

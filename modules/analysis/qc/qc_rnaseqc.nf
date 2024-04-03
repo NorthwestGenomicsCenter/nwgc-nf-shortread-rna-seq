@@ -7,6 +7,7 @@ process RNASEQC {
     publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.gene_reads.gct"
     publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.gene_fragments.gct"
     publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.exon_reads.gct"
+    publishDir "$sampleQCDirectory", mode:  'link', pattern: "*.coverage.tsv"
 
     input:
         tuple path(bam), path(bai)
@@ -20,6 +21,7 @@ process RNASEQC {
         path "*.gene_reads.gct", emit: gene_reads
         path "*.gene_fragments.gct", emit: gene_fragments
         path "*.exon_reads.gct", emit: exon_reads
+        path "*.coverage.tsv", emit: coverage
         path "versions.yaml", emit: versions
 
     script:

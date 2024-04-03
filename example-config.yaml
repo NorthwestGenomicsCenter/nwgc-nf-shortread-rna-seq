@@ -21,18 +21,43 @@ rsemReferencePrefix: "<label used as prefix for rsem files>"   # e.g. rsemRefere
 gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "gencode.v30.GRCh38.ERCC.genes.collapsed_only.gtf"
 
 ##########################################
-### Inputs  - Pick one set  Fastqs or Analysis Only
+### Inputs  - Pick one set flowCellLaneLibrary or Analysis Only
 ##########################################
-# Fastqs & Read Groups 
-fastqs:  
-  - fastq1Files: "<comma separated list of full path to the fastq1 files>"
-    fastq2Files: "<comma separated list of full path to the fastq2 files (in same order as fastq1Files>"
+# flowCellLaneLibrary (libray, fastq, and flow cell info for Read Group Id)
+# Input for running steps "FastxQC" or "STAR"
+flowCellLaneLibraries:
+  - library: "<library id>"
+    fastq1: "<full path to the fastq1 file>"
+    fastq2: "<full path to the fastq1 file>"
+    flowCell: "<flow cell name>"
+    lane: "<flow cell lane number>"
+    runDate: "<iso formatted date the flow cell was run on the sequencer"
+    platform: "<sequencing platform of the flow cell>"
+  - fastq1: "<full path to the fastq1 file>"
+    fastq2: "<full path to the fastq1 file>"
+    flowCell: "<flow cell name>"
+    lane: "<flow cell lane number>"
+    runDate: "<iso formatted date the flow cell was run on the sequencer"
+    platform: "<sequencing platform of the flow cell>"
+        
     readGroups: "<comma separated list of read group info (in same order ast fastq1Files)>"
 #e.g.
-# fastqs:
-#   - fastq1Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz   
-#     fastq2Files: /net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz,/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz 
-#     readGroups: ID:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.2.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:22.912" , ID:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG CN:UW PL:illumina PU:HLG2HDMXY.1.TCGTACTTGC.TGTTGTGAAG LB:170482 SM:TOR108097 "DT:2023-05-21T10:09:16.431"
+# flowCellLaneLibraries:
+#  - library: "123456"
+#    fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz"
+#    fastq2: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz"
+#    flowCell: "HLG2HDMXY"
+#    lane: "1"
+#    runDate: "2023-05-21"
+#    platform: "Illumina"
+#  - library: "123456"
+#    fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz"
+#    fastq2: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz"
+#    flowCell: "HLG2HDMXY"
+#    lane: "2"
+#    runDate: "2023-05-21"
+#    platform: "Illumina"
+
 
 # Analysis Only -- supply the files you need for the analysis you are running
 #  analysisStarBam - "VCF" and/or "QC" and/or "BigWig"
@@ -45,6 +70,9 @@ analysisSpliceJunctionsTab: "<full path to spiceJunctions.tab file>"   # e.g ana
 ##########################################
 ### OPTIONAL - Only use thiese paramters if you want to override the defaults 
 ##########################################
+# stepsToRun - Limit the steps to runj to only the ones in this list
+stepsToRun: [<list of steps to run>]	  # e.g. stepsToRun: ["FastxQC", "STAR", "Analysis"]  - default in nextflow config is ["STAR", "Analysis"]
+
 # customAnalysisToRun - Limit the analysis to run to only the ones in this list
 customAnalysisToRun: [<list of analysis to run>]     # e.e.g customAnalysisToRun: ["RSEM", "Junctions", "VCF", "QC", "BigWig"]
 
