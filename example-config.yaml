@@ -7,10 +7,12 @@ userId: "<samplify userId>"  # e.g. userid: "kolart"
 userEmail: "<userEmail>"     # e.g. userEmail: "kolart@uw.edu"
 
 # Sample
-sampleDirectory: "<full path to sample directory>"         # e.g. sampleDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star"
-sampleQCDirectory: "<full path to sample QC directory>"    # e.g. sampleQCDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/qc"
-sampleBigWigDirectory: "<full path to sample BigWig directory>"    # e.g. sampleBigWigDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/tracks"
 sampleId: <samplify sampleId>                              # e.g sampleId: 123456
+sampleDirectory: "<full path to sample directory>"         # e.g. sampleDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star"
+
+##########################################
+### STAR - these are only needed if running the STAR step
+##########################################
 
 # STAR
 starDirectory: "<full path to STAR reference directory>"       # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev30/bundle"
@@ -23,9 +25,11 @@ gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "
 ##########################################
 ### Inputs  - Pick one set flowCellLaneLibrary or Analysis Only
 ##########################################
-# flowCellLaneLibrary (libray, fastq, and flow cell info for Read Group Id)
-# Only fastq1 and fastq2 are required.  The rest of the parameters are for defining read groups in the bam
-# Input for running steps "FastxQC" or "STAR"
+
+# FlowCellLaneLibrary   (Input for running steps "FastxQC" or "STAR")
+#   Contains the fastqs (FastXQC and STAR), and flow cell info for Read Group Id (STAR)
+#   Only fastq1 and fastq2 are required.  The rest of the parameters are for defining read groups in the bam when running STAR
+#   
 flowCellLaneLibraries:
   - fastq1: "<full path to the fastq1 file>"
     fastq2: "<full path to the fastq1 file>"

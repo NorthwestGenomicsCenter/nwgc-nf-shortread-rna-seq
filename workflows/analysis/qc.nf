@@ -1,5 +1,5 @@
-include { PICARD_INSERT_SIZE } from '../../modules/analysis/qc/qc_picard_insert_size.nf'
-include { RNASEQC } from '../../modules/analysis/qc/qc_rnaseqc.nf'
+include { PICARD_INSERT_SIZE } from '../../modules/analysis/qc/picard_insert_size.nf'
+include { RNASEQC } from '../../modules/analysis/qc/rnaseqc.nf'
 
 workflow QC {
 

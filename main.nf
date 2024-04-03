@@ -1,3 +1,4 @@
+include { FASTX_QC } from './modules/fastx_quality_metrics.nf'
 include { STAR_MAP_MERGE_SORT } from './workflows/star_map_merge_sort.nf'
 include { ANALYSIS } from './workflows/analysis.nf' params(Utils.formatParamsForInclusion('analysisToRun', params.customAnalysisToRun))
 include { REGISTER_LOW_READS } from  './modules/register_low_reads.nf'
@@ -10,20 +11,32 @@ workflow {
     }
 
     // Create Local Variables
-    Integer lowReadsTreshold = params.lowReadsThreshold.toInteger()
+    Boolean runFastXQC = params.stepsToRun.contains("FastxQC")
     Boolean runStar = params.stepsToRun.contains("STAR")
     Boolean runAnalysis = params.stepsToRun.contains("Analysis")
 
     // Create data tuples
     ch_sampleInfo = Channel.value([params.sampleId, params.sampleDirectory, params.userId])
-    ch_starReference = Channel.value([params.starDirectory,  params.referenceGenome, params.rsemReferencePrefix, params.gtfFile])
-    ch_bigwigDirectory = Channel.value(params.sampleBigWigDirectory)
-    ch_sampleQCDirectory = Channel.value(params.sampleQCDirectory)
 
     // Versions channel
     ch_versions = Channel.empty()
 
+    if (runFastXQC) {
+
+        // Fastqs channel
+        ch_fastq1 = Channel.fromList(params.flowCellLaneLibraries).map{ flowcellLaneLibrary -> return flowCellLaneLibrary.fastq1}
+        ch_fastq2 = Channel.fromList(params.flowCellLaneLibraries).map{ flowcellLaneLibrary -> return flowCellLaneLibrary.fastq2}
+
+        ch_fastxQCDirectory = Channel.value(params.sampleDirectory + "/fastxQC")
+
+        FASTX_QC(ch_fastq1, ch_fastxQCDirectory, ch_sampleInfo)
+        FASTX_QC(ch_fastq2, ch_fastxQCDirectory, ch_sampleInfo)
+    }
+
     if (runStar) {
+        Integer lowReadsTreshold = params.lowReadsThreshold.toInteger()
+        ch_starReference = Channel.value([params.starDirectory,  params.referenceGenome, params.rsemReferencePrefix, params.gtfFile])
+
         // Format star input
         fastq1Input = Utils.formatFastq1InputForStar(params.flowCellLaneLibraries)
         fastq2Input = Utils.formatFastq2InputForStar(params.flowCellLaneLibraries)
@@ -57,6 +70,9 @@ workflow {
     }
 
     if (runAnalysis) {
+        ch_bigwigDirectory = Channel.value(params.sampleDirectory + "/tracks")
+        ch_sampleQCDirectory = Channel.value(params.sampleDirectory + "/qc")
+        
         // StarBam Input channel
         ch_starBam = Channel.empty()
         if (runStar) {
