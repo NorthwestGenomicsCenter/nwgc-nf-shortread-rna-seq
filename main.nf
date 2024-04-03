@@ -1,4 +1,5 @@
-include { FASTX_QC } from './modules/fastx_quality_stats.nf'
+include { FASTX_QC as FASTX_QC_FASTQ1} from './modules/fastx_quality_stats.nf'
+include { FASTX_QC as FASTX_QC_FASTQ2} from './modules/fastx_quality_stats.nf'
 include { STAR_MAP_MERGE_SORT } from './workflows/star_map_merge_sort.nf'
 include { ANALYSIS } from './workflows/analysis.nf' params(Utils.formatParamsForInclusion('analysisToRun', params.customAnalysisToRun))
 include { REGISTER_LOW_READS } from  './modules/register_low_reads.nf'
@@ -29,8 +30,8 @@ workflow {
 
         ch_fastxQCDirectory = Channel.value(params.sampleDirectory + "/fastxQC")
 
-        FASTX_QC(ch_fastq1, ch_fastxQCDirectory, ch_sampleInfo)
-        FASTX_QC(ch_fastq2, ch_fastxQCDirectory, ch_sampleInfo)
+        FASTX_QC_FASTQ1(ch_fastq1, ch_fastxQCDirectory, ch_sampleInfo)
+        FASTX_QC_FASTQ2(ch_fastq2, ch_fastxQCDirectory, ch_sampleInfo)
     }
 
     if (runStar) {
