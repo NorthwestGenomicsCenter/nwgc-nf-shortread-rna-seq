@@ -16,7 +16,7 @@ workflow {
         Utils.validateInputParams(params)
     }
     catch (Exception exception) {
-        error exception.message
+        error "Undefined Input: " + exception.message
     }
 
     // Create Local Variables

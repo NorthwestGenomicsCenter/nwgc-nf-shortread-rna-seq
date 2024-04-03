@@ -51,7 +51,7 @@ public class Utils {
         flowCellLaneLibraries.eachWithIndex { flowCellLaneLibrary, index ->
             // Verify flowCell, lane and library are defined
             if (!flowCellLaneLibrary.flowCell || !flowCellLaneLibrary.lane || !flowCellLaneLibrary.library) {
-                    throw new Exception("The flowCellLaneLibrary is missing a flowCell, lane or libary defintion")
+                    throw new Exception("A flowCellLaneLibrary is missing a flowCell, lane or libary defintion")
             }
 
             // Set up the values need to build the tags            
@@ -132,7 +132,7 @@ public class Utils {
 
     private static verifyFlowCellLaneLibraries(flowCellLaneLibraries) {
         // FlowCellLaneLibraries
-        if (!flowCellLaneLibraries) {throw new Exception("flowCellLaneLibraries must be supplied to run FastxQC")}
+        if (!flowCellLaneLibraries) {throw new Exception("flowCellLaneLibraries is null or empty")}
 
         // FlowCellLaneLibrary required fields
         flowCellLaneLibraries.each { flowCellLaneLibrary ->
