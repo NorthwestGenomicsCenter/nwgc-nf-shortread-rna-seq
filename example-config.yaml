@@ -15,7 +15,7 @@ sampleDirectory: "<full path to sample directory>"         # e.g. sampleDirector
 ##########################################
 
 # STAR
-starDirectory: "<full path to STAR reference directory>"       # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev30/bundle"
+starDirectory: "<full path to STAR reference directory>"       # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev39/bundle"
 
 # STAR specific files (should reside in the starDirectory defined above)
 referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
@@ -27,42 +27,36 @@ gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "
 ##########################################
 
 # FlowCellLaneLibrary   (Input for running steps "FastxQC" or "STAR")
-#   Contains the fastqs (FastXQC and STAR), and flow cell info for Read Group Id (STAR)
-#   Only fastq1 and fastq2 are required.  The rest of the parameters are for defining read groups in the bam when running STAR
-#   
+#   Contains the fastqs and flow cell info for Read Group Id 
+#   flowCell, lane, library, fastq1, fastq2, are required.  runDate (run date of the flowCell) and sequencingPlatform are optional
 flowCellLaneLibraries:
-  - fastq1: "<full path to the fastq1 file>"
-    fastq2: "<full path to the fastq1 file>"
-    library: "<library id>"
-    flowCell: "<flow cell name>"
+  - flowCell: "<flow cell name>"
     lane: "<flow cell lane number>"
+    library: "<library id>"
+    fastq1: "<full path to the fastq1 file>"
+    fastq2: "<full path to the fastq2 file>"
     runDate: "<iso formatted date the flow cell was run on the sequencer"
     sequencingPlatform: "<sequencing platform of the flow cell>"			# defaulted in config file to Illumina
-  - fastq1: "<full path to the fastq1 file>"
-    fastq2: "<full path to the fastq1 file>"
-    library: "<library id>"
-    flowCell: "<flow cell name>"
+  - flowCell: "<flow cell name>"
     lane: "<flow cell lane number>"
-    runDate: "<iso formatted date the flow cell was run on the sequencer"
-    sequencingPlatform: "<sequencing platform of the flow cell>"
-        
-    readGroups: "<comma separated list of read group info (in same order ast fastq1Files)>"
+    library: "<library id>"
+    fastq1: "<full path to the fastq1 file>"
+    fastq2: "<full path to the fastqw file>"
+
 #e.g.
 # flowCellLaneLibraries:
-#  - fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz"
-#    fastq2: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz"
-#    library: "123456"
-#    flowCell: "HLG2HDMXY"
+#  - flowCell: "HLG2HDMXY"
 #    lane: "1"
-#    runDate: "2023-05-21"
-#    sequencingPlatform: "Illumina"
-#  - fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz"
-#    fastq2: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz"
 #    library: "123456"
-#    flowCell: "HLG2HDMXY"
-#    lane: "2"
+#    fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_1.fastq.gz"
+#    fastq2: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_1.fastq.gz"
 #    runDate: "2023-05-21"
 #    sequencingPlatform: "Illumina"
+#  - flowCell: "HLG2HDMXY"
+#    lane: "2"
+#    library: "123456"
+#    fastq1: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_1_2.fastq.gz"
+#    fastq2: "/net/nwgc/vol1/data/processed/flow_cells/HLG2HDMXY/dmux.dir/TCGTACTTGC.TGTTGTGAAG/s_2_2.fastq.gz"
 
 
 # Analysis Only -- supply the files you need for the analysis you are running
