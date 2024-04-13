@@ -3,6 +3,7 @@ process DEEPTOOLS_BAM_COVERAGE {
     tag "DEEPTOOLS_BAM_COVERAGE_${sampleId}_${userId}"
 
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.bw"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.bw.md5sum"
 
     memory { 10.GB * (Math.pow(2, task.attempt - 1)) }
     errorStrategy { task.exitStatus == 137 ? 'retry' : 'terminate' }
@@ -22,6 +23,7 @@ process DEEPTOOLS_BAM_COVERAGE {
 
     output:
         path "*.bw", emit: bigwig
+        env  BIGWIG_MD5SUM, emit: bigwig_md5sum
         path "versions.yaml", emit: versions
 
     script:
@@ -37,6 +39,9 @@ process DEEPTOOLS_BAM_COVERAGE {
             --normalizeUsing RPGC \
             --numberOfProcessors 1 \
             --outFileName ${sampleId}.${chromosome}.${strand}.bw
+
+        BIGWIG_MD5SUM=`md5sum ${sampleId}.${chromosome}.${strand}.bw | awk '{print \$1}'`
+        echo \$BIGWIG_MD5SUM  > ${sampleId}.${chromosome}.${strand}.bw.md5sum
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':

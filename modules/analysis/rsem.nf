@@ -3,7 +3,9 @@ process RSEM {
     tag "RSEM_${sampleId}_${userId}"
 
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.genes.results"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.genes.results.md5sum"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.isoforms.results"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.isoforms.results.md5sum"
  
     input:
         path transcriptomeBam
@@ -12,7 +14,9 @@ process RSEM {
 
     output:
         path "*.genes.results",  emit: genes
+        env  GENES_RESULTS_MD5SUM, emit: genes_md5sum
         path "*.isoforms.results",  emit: isoforms
+        env  ISOFORMS_RESULTS_MD5SUM, emit: isoforms_md5sum
         path "versions.yaml", emit: versions
 
     script:
@@ -27,7 +31,13 @@ process RSEM {
             --bam $transcriptomeBam \
             ${starDirectory}/${rsemReferencePrefix} \
             ${sampleId}.transcriptome_hits.merged 
-    
+
+        GENES_RESULTS_MD5SUM=`md5sum ${sampleId}.genes.results | awk '{print \$1}'`
+        echo \$GENES_RESULTS_MD5SUM  > ${sampleId}.genes.results.md5sum
+
+        ISOFORMS_RESULTS_MD5SUM=`md5sum ${sampleId}.isoforms.results | awk '{print \$1}'`
+        echo \$ISOFORMS_RESULTS_MD5SUM  > ${sampleId}.isoforms.results.md5sum
+
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':
             rsem: \$( rsem-calculate-expression --version | awk '{print \$4}')

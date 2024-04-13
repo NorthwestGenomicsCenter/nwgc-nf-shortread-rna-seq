@@ -3,6 +3,7 @@ process GATK_VARIANT_FILTRATION {
     tag "GATK_VARIANT_FILTRATION_${sampleId}_${userId}"
 
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz.md5sum"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.filtered.vcf.gz.tbi"
 
     input:
@@ -12,8 +13,9 @@ process GATK_VARIANT_FILTRATION {
 
 
     output:
-        path  "*.filtered.vcf.gz", emit: filtered_vcf
-        path  "*.filtered.vcf.gz.tbi", emit: filtered_vcf_index
+        path "*.filtered.vcf.gz", emit: filtered_vcf
+        env  FILTERED_VCF_MD5SUM, emit: filtered_vcf_md5sum
+        path "*.filtered.vcf.gz.tbi", emit: filtered_vcf_tbi
         path "versions.yaml", emit: versions
 
     script:
@@ -32,6 +34,9 @@ process GATK_VARIANT_FILTRATION {
 
         bgzip -f ${sampleId}.filtered.vcf 
         tabix -p vcf -f ${sampleId}.filtered.vcf.gz
+
+        FILTERED_VCF_MD5SUM=`md5sum ${sampleId}.filtered.vcf.gz | awk '{print \$1}'`
+        echo \$FILTERED_VCF_MD5SUM  > ${sampleId}.filtered.vcf.gz.md5sum
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':

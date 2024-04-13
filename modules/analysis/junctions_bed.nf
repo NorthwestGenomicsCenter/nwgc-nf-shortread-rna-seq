@@ -3,6 +3,7 @@ process JUNCTIONS_BED {
     tag "JUNCTIONS_BED_${sampleId}_${userId}"
 
     publishDir "$publishDirectory", mode:  'link', pattern: "*.starJunctions.bed"
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.starJunctions.bed.md5sum"
  
     input:
         path junctionsTab
@@ -10,6 +11,7 @@ process JUNCTIONS_BED {
 
     output:
         path "*.starJunctions.bed",  emit: junctions_bed
+        env  JUNCTIONS_BED_MD5SUM, emit: junctions_bed_md5sum
         path "versions.yaml", emit: versions
 
     script:
@@ -43,7 +45,10 @@ process JUNCTIONS_BED {
             }' \
             $junctionsTab \
             > ${sampleId}.starJunctions.bed
-    
+
+        JUNCTIONS_BED_MD5SUM=`md5sum ${sampleId}.starJunctions.bed | awk '{print \$1}'`
+        echo \$JUNCTIONS_BED_MD5SUM  > ${sampleId}.starJunctions.bed.md5sum
+
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':
             awk: \$(awk --version | awk 'NR==1 {print \$3}')

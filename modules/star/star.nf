@@ -2,11 +2,12 @@ process STAR {
 
     tag "STAR_${sampleId}_${userId}"
 
-    publishDir "${publishDirectory}", mode:  'link', pattern: "*.Aligned.out.bam"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam", saveAs: {s-> "${sampleId}.transcriptome_hits.merged.bam"}
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.Aligned.toTranscriptome.out.bam.md5sum", saveAs: {s-> "${sampleId}.transcriptome_hits.merged.bam.md5sum"}
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.ReadsPerGene.out.tab"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.ReadsPerGene.out.tab.md5sum"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
+    publishDir "${publishDirectory}", mode:  'link', pattern: "*.SJ.out.tab.md5sum"
 
     input:
         tuple val(fastq1Files), val(fastq2Files), val(readGroups)
@@ -16,8 +17,11 @@ process STAR {
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
         path "*.Aligned.toTranscriptome.out.bam", emit: transcriptome_bam
+        env  TRANSCRIPTOME_BAM_MD5SUM, emit: transcriptome_bam_md5sum
         path "*.ReadsPerGene.out.tab", emit: readsPerGene_tab
+        env  READS_PER_GENE_MD5SUM, emit: readsPerGene_tab_md5sum
         path "*.SJ.out.tab", emit: spliceJunctions_tab
+        env  SJ_MD5SUM, emit: spliceJunctions_tab_md5sum
         path "versions.yaml", emit: versions
 
     script:
@@ -57,7 +61,14 @@ process STAR {
             --outSAMattrRGline $readGroups \
             --outTmpDir starTempDir
 
-        md5sum ${sampleId}.Aligned.toTranscriptome.out.bam | awk '{print \$1}' > ${sampleId}.Aligned.toTranscriptome.out.bam.md5sum
+        TRANSCRIPTOME_BAM_MD5SUM=`md5sum ${sampleId}.Aligned.toTranscriptome.out.bam | awk '{print \$1}'`
+        echo \$TRANSCRIPTOME_BAM_MD5SUM  > ${sampleId}.Aligned.toTranscriptome.out.bam.md5sum
+
+        READS_PER_GENE_MD5SUM=`md5sum ${sampleId}.ReadsPerGene.out.tab | awk '{print \$1}'`
+        echo \$READS_PER_GENE_MD5SUM > ${sampleId}.ReadsPerGene.out.tab.md5sum
+
+        SJ_MD5SUM=`md5sum ${sampleId}.SJ.out.tab | awk '{print \$1}'`
+        echo \$SJ_MD5SUM > ${sampleId}.SJ.out.tab.md5sum
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':

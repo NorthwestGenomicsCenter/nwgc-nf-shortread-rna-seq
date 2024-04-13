@@ -63,7 +63,7 @@ flowCellLaneLibraries:
 #  analysisStarBam - "VCF" and/or "QC" and/or "BigWig"
 #  analysisTranscriptomeBam -"RSEM"
 #  analysisSpliceJunctionsTab - "Junctions"
-analysisStarBam: "<full path to star bam file>"                        # e.g analysisStarBam: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/123456.aligned.sortedByCoord.bam
+analysisStarBam: "<full path to star bam file>"                        # e.g analysisStarBam: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/123456.accepted_hits.merged.markeddups.recal.bam
 analysisTranscriptomeBam: "<full path to transcriptome bam file>"      # e.g analysisTranscriptomeBam: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/123456.transcriptome_hits.merged.bam
 analysisSpliceJunctionsTab: "<full path to spiceJunctions.tab file>"   # e.g analysisSpliceJunctionsTab: "/net/nwgc/vol1/data/processed/samples/123456/rna-star/123456.SJ.out.tab
 

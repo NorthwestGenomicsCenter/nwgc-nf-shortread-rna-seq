@@ -3,8 +3,9 @@ process PICARD_MARK_DUPLICATES {
     tag "PICARD_MARK_DUPLICATES_${sampleId}_${userId}"
 
     publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bam", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bam"}
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bam.md5"}
     publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bai", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bai"}
-    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${sampleId}.transcriptome_hits.merged.bam.md5"}
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bai.md5", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bai.md5"}
 
     input:
         tuple path(starBam), path(starBai)
@@ -12,7 +13,8 @@ process PICARD_MARK_DUPLICATES {
 
     output:
         tuple path("${sampleId}.markeddups.bam"),  path("${sampleId}.markeddups.bai"), emit: bamTuple
-        path "${sampleId}.markeddups.bam.md5", emit: md5
+        env  MARKEDDUPS_BAM_MD5SUM, emit: markeddups_bam_md5sum
+        env  MARKEDDUPS_BAI_MD5SUM, emit: markeddups_bai_md5sum
         path "versions.yaml", emit: versions
 
     script:
@@ -37,6 +39,12 @@ process PICARD_MARK_DUPLICATES {
             --PROGRAM_RECORD_ID null \
             --REMOVE_DUPLICATES false \
             --COMPRESSION_LEVEL 5 
+
+        MARKEDDUPS_BAM_MD5SUM=`cat ${sampleId}.markeddups.bam.md5`
+
+        MARKEDDUPS_BAI_MD5SUM=`md5sum ${sampleId}.markeddups.bai | awk '{print \$1}'`
+        echo \$MARKEDDUPS_BAI_MD5SUM  > ${sampleId}.markeddups.bai.md5
+
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':
