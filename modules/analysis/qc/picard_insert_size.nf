@@ -8,7 +8,7 @@ process PICARD_INSERT_SIZE {
     input:
         tuple path(bam), path(bai)
         val publishDirectory
-        tuple val(sampleId), val(publishDirectory), val(userId)
+        tuple val(sampleId), val(sampleDirectory), val(userId)
 
 
     output:

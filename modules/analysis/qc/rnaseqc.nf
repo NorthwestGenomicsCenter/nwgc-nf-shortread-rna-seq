@@ -18,7 +18,7 @@ process RNASEQC {
         tuple path(bam), path(bai)
         tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
         val publishDirectory
-        tuple val(sampleId), val(publishDirectory), val(userId)
+        tuple val(sampleId), val(sampleDirectory), val(userId)
 
     output:
         path "*.metrics.tsv", emit: metrics
