@@ -34,11 +34,11 @@ process RSEM {
             ${starDirectory}/${rsemReferencePrefix} \
             ${sampleId}.transcriptome_hits.merged 
 
-        GENES_RESULTS_MD5SUM=`md5sum ${sampleId}.genes.results | awk '{print \$1}'`
-        echo \$GENES_RESULTS_MD5SUM  > ${sampleId}.genes.results.md5sum
+        GENES_RESULTS_MD5SUM=`md5sum ${sampleId}.transcriptome_hits.merged.genes.results | awk '{print \$1}'`
+        echo \$GENES_RESULTS_MD5SUM  > ${sampleId}.transcriptome_hits.merged.genes.results.md5sum
 
-        ISOFORMS_RESULTS_MD5SUM=`md5sum ${sampleId}.isoforms.results | awk '{print \$1}'`
-        echo \$ISOFORMS_RESULTS_MD5SUM  > ${sampleId}.isoforms.results.md5sum
+        ISOFORMS_RESULTS_MD5SUM=`md5sum ${sampleId}.transcriptome_hits.merged.isoforms.results | awk '{print \$1}'`
+        echo \$ISOFORMS_RESULTS_MD5SUM  > ${sampleId}.transcriptome_hits.merged.isoforms.results.md5sum
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':
