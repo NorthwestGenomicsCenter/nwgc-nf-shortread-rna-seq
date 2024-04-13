@@ -14,9 +14,11 @@ process RSEM {
 
     output:
         path "*.genes.results",  emit: genes
-        env  GENES_RESULTS_MD5SUM, emit: genes_md5sum
+        path "*.genes.results.md5sum",  emit: genes_md5sum
         path "*.isoforms.results",  emit: isoforms
-        env  ISOFORMS_RESULTS_MD5SUM, emit: isoforms_md5sum
+        path "*.isoforms.results.md5sum",  emit: isoforms_md5sum
+        env  GENES_RESULTS_MD5SUM, emit: genes_md5sum_env
+        env  ISOFORMS_RESULTS_MD5SUM, emit: isoforms_md5sum_env
         path "versions.yaml", emit: versions
 
     script:

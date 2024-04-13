@@ -17,11 +17,14 @@ process STAR {
     output:
         path "*.Aligned.out.bam",  emit: aligned_bam
         path "*.Aligned.toTranscriptome.out.bam", emit: transcriptome_bam
-        env  TRANSCRIPTOME_BAM_MD5SUM, emit: transcriptome_bam_md5sum
+        path "*.Aligned.toTranscriptome.out.bam.md5sum", emit: transcriptome_bam_md5sum
         path "*.ReadsPerGene.out.tab", emit: readsPerGene_tab
-        env  READS_PER_GENE_MD5SUM, emit: readsPerGene_tab_md5sum
+        path "*.ReadsPerGene.out.tab.md5sum", emit: readsPerGene_tab_md5sum
         path "*.SJ.out.tab", emit: spliceJunctions_tab
-        env  SJ_MD5SUM, emit: spliceJunctions_tab_md5sum
+        path "*.SJ.out.tab.md5sum", emit: spliceJunctions_tab_md5sum
+        env  READS_PER_GENE_MD5SUM, emit: readsPerGene_tab_md5sum_env
+        env  TRANSCRIPTOME_BAM_MD5SUM, emit: transcriptome_bam_md5sum_env
+        env  SJ_MD5SUM, emit: spliceJunctions_tab_md5sum_env
         path "versions.yaml", emit: versions
 
     script:

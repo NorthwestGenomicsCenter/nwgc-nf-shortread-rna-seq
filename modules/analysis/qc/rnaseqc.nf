@@ -22,15 +22,20 @@ process RNASEQC {
 
     output:
         path "*.metrics.tsv", emit: metrics
-        env  METRICS_MD5SUM, emit: metrics_md5sum
+        path "*.metrics.tsv.md5sum", emit: metrics_md5sum
         path "*.gene_tpm.gct", emit: gene_tpm
-        env  GENE_TPM_MD5SUM, emit: gene_tpm_md5sum
+        path "*.gene_tpm.gct.md5sum", emit: gene_tpm_md5sum
         path "*.gene_reads.gct", emit: gene_reads
-        env  GENE_READS_MD5SUM, emit: gene_reads_md5sum
+        path "*.gene_reads.gct.md5sum", emit: gene_reads_md5sum
         path "*.gene_fragments.gct", emit: gene_fragments
-        env  GENE_FRAGMENTS_MD5SUM, emit: gene_fragments_md5sum
+        path "*.gene_fragments.gct.md5sum", emit: gene_fragments_md5sum
         path "*.exon_reads.gct", emit: exon_reads
-        env  EXON_READS_MD5SUM, emit: exon_reads_md5sum
+        path "*.exon_reads.gct.md5sum", emit: exon_reads_md5sum
+        env  METRICS_MD5SUM, emit: metrics_md5sum_env
+        env  GENE_TPM_MD5SUM, emit: gene_tpm_md5sum_env
+        env  GENE_READS_MD5SUM, emit: gene_reads_md5sum_env
+        env  GENE_FRAGMENTS_MD5SUM, emit: gene_fragments_md5sum_env
+        env  EXON_READS_MD5SUM, emit: exon_reads_md5sum_env
         path "*.coverage.tsv", emit: coverage
         path "versions.yaml", emit: versions
 

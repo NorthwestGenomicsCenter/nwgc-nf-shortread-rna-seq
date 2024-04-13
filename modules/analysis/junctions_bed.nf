@@ -11,7 +11,8 @@ process JUNCTIONS_BED {
 
     output:
         path "*.starJunctions.bed",  emit: junctions_bed
-        env  JUNCTIONS_BED_MD5SUM, emit: junctions_bed_md5sum
+        path "*.starJunctions.bed.md5sum",  emit: junctions_bed_md5sum
+        env  JUNCTIONS_BED_MD5SUM, emit: junctions_bed_md5sum_env
         path "versions.yaml", emit: versions
 
     script:

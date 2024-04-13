@@ -3,9 +3,9 @@ process PICARD_MARK_DUPLICATES {
     tag "PICARD_MARK_DUPLICATES_${sampleId}_${userId}"
 
     publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bam", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bam"}
-    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bam.md5"}
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bam.md5", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bam.md5sum"}
     publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bai", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bai"}
-    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bai.md5", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bai.md5"}
+    publishDir "$publishDirectory", mode:  'link', pattern: "*.markeddups.bai.md5", saveAs: {s-> "${sampleId}.accepted_hits.merged.markeddups.recal.bai.md5sum"}
 
     input:
         tuple path(starBam), path(starBai)
@@ -13,8 +13,10 @@ process PICARD_MARK_DUPLICATES {
 
     output:
         tuple path("${sampleId}.markeddups.bam"),  path("${sampleId}.markeddups.bai"), emit: bamTuple
-        env  MARKEDDUPS_BAM_MD5SUM, emit: markeddups_bam_md5sum
-        env  MARKEDDUPS_BAI_MD5SUM, emit: markeddups_bai_md5sum
+        path "${sampleId}.markeddups.bam.md5", emit: markeddups_bam_md5sum
+        path "${sampleId}.markeddups.bai.md5", emit: markeddups_bai_md5sum
+        env  MARKEDDUPS_BAM_MD5SUM, emit: markeddups_bam_md5sum_env
+        env  MARKEDDUPS_BAI_MD5SUM, emit: markeddups_bai_md5sum_env
         path "versions.yaml", emit: versions
 
     script:

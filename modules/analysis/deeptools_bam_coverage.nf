@@ -23,7 +23,8 @@ process DEEPTOOLS_BAM_COVERAGE {
 
     output:
         path "*.bw", emit: bigwig
-        env  BIGWIG_MD5SUM, emit: bigwig_md5sum
+        path "*.bw.md5sum", emit: bigwig_md5sum
+        env  BIGWIG_MD5SUM, emit: bigwig_md5sum_env
         path "versions.yaml", emit: versions
 
     script:

@@ -14,7 +14,8 @@ process GATK_VARIANT_FILTRATION {
 
     output:
         path "*.filtered.vcf.gz", emit: filtered_vcf
-        env  FILTERED_VCF_MD5SUM, emit: filtered_vcf_md5sum
+        path "*.filtered.vcf.gz.md5sum", emit: filtered_vcf_md5sum
+        env  FILTERED_VCF_MD5SUM, emit: filtered_vcf_md5sum_env
         path "*.filtered.vcf.gz.tbi", emit: filtered_vcf_tbi
         path "versions.yaml", emit: versions
 
