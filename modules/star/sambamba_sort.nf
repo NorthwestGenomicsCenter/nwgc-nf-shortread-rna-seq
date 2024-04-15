@@ -13,7 +13,6 @@ process SAMBAMBA_SORT {
     script:
         """
         \$MOD_GSSAMBAMBA_DIR/bin/sambamba sort \
-            --tmpdir $TMP \
             -t $task.cpus \
             -o ${sampleId}.aligned.sortedByCoord.bam \
             $bam
