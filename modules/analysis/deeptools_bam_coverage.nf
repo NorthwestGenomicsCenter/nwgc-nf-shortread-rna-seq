@@ -6,7 +6,8 @@ process DEEPTOOLS_BAM_COVERAGE {
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.bw.md5sum"
 
     memory { 10.GB * (Math.pow(2, task.attempt - 1)) }
-    errorStrategy { task.exitStatus == 137 ? 'retry' : 'terminate' }
+    retryErrorCodes = [135, 137]
+    errorStrategy { retryErrorCodes.contains(task.exitStatus) ? 'retry' : 'terminate' }
 
     input:
         tuple (
