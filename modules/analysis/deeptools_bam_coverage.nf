@@ -1,6 +1,6 @@
 process DEEPTOOLS_BAM_COVERAGE {
 
-    tag "DEEPTOOLS_BAM_COVERAGE_${sampleId}_${userId}"
+    tag "DEEPTOOLS_BAM_COVERAGE_${sampleId}_${userId}_${chromosome}_${strand}_${task.index}"
 
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.bw"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.bw.md5sum"
