@@ -42,9 +42,9 @@ workflow {
         FASTX_QC(ch_fastq, ch_fastxQCDirectory, ch_sampleInfo)
     }
 
+    ch_starReference = Channel.value([params.starDirectory,  params.referenceGenome, params.rsemReferencePrefix, params.gtfFile])
     if (runStar) {
         Integer lowReadsTreshold = params.lowReadsThreshold.toInteger()
-        ch_starReference = Channel.value([params.starDirectory,  params.referenceGenome, params.rsemReferencePrefix, params.gtfFile])
 
         // Format star input
         String fastq1Input = ""
