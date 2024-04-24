@@ -10,7 +10,7 @@ process DEEPTOOLS_BAM_COVERAGE {
     retryErrorCodes = [135, 137]
     errorStrategy { 
         if (retryErrorCodes.contains(task.exitStatus)) {
-            if (task.index <= maxRetries ) {
+            if (task.attempt <= maxRetries ) {
                 'retry'
             }
             else {
