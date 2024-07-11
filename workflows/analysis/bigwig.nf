@@ -10,12 +10,11 @@ workflow BIGWIG {
         organism
         effectiveGenomeSize
 
-
     main:
 
         ch_versions = Channel.empty()
 
-        if (organisme.equals("Homo sapiens") {
+        if (organism.equals("Homo sapiens")) {
             // Chromsomee-Strand Input for DEEPTOOLS_BAM_COVERAGE
             chromosomesChannel = Channel.fromList(params.chromosomes)
             strandChannel = Channel.fromList(['forward','reverse'])
