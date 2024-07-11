@@ -1,5 +1,5 @@
-include { DEEPTOOLS_BAM_COVERAGE AS COVERAGE_BY_CHROMOSOME } from '../../modules/analysis/deeptools_bam_coverage_by_chromosome.nf'
-include { DEEPTOOLS_BAM_COVERAGE AS COVERAGE_BY_SAMPLE } from '../../modules/analysis/deeptools_bam_coverage_by_sample.nf'
+include { DEEPTOOLS_BAM_COVERAGE as COVERAGE_BY_CHROMOSOME } from '../../modules/analysis/deeptools_bam_coverage_by_chromosome.nf'
+include { DEEPTOOLS_BAM_COVERAGE as COVERAGE_BY_SAMPLE } from '../../modules/analysis/deeptools_bam_coverage_by_sample.nf'
 
 workflow BIGWIG {
 
