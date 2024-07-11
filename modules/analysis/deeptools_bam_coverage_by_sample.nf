@@ -30,9 +30,9 @@ process DEEPTOOLS_BAM_COVERAGE {
             val(publishDirectory),
             val(sampleId),
             val(sampleDirectory),
-            val(userId),
-            val(effectiveGenomeSize)
+            val(userId)
         )
+        val(effectiveGenomeSize)
 
 
     output:

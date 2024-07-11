@@ -19,16 +19,16 @@ workflow BIGWIG {
             chromosomesChannel = Channel.fromList(params.chromosomes)
             strandChannel = Channel.fromList(['forward','reverse'])
             chromosomeStrandTuple = chromosomesChannel.combine(strandChannel)
-            deeptoolsInputTuple = chromosomeStrandTuple.combine(markedDupsBamTuple).combine(bigWigDirectory).combine(sampleInfoTuple).combine(effectiveGenomeSize)
+            deeptoolsInputTuple = chromosomeStrandTuple.combine(markedDupsBamTuple).combine(bigWigDirectory).combine(sampleInfoTuple)
 
-            COVERAGE_BY_CHROMOSOME(deeptoolsInputTuple)
+            COVERAGE_BY_CHROMOSOME(deeptoolsInputTuple, effectiveGenomeSize)
             ch_versions = ch_versions.mix(COVERAGE_BY_CHROMOSOME.out.versions)
         }
         else {
             strandChannel = Channel.fromList(['forward','reverse'])
-            deeptoolsInputTuple = strandChannel.combine(markedDupsBamTuple).combine(bigWigDirectory).combine(sampleInfoTuple).combine(effectiveGenomeSize)
+            deeptoolsInputTuple = strandChannel.combine(markedDupsBamTuple).combine(bigWigDirectory).combine(sampleInfoTuple)
 
-            COVERAGE_BY_SAMPLE(deeptoolsInputTuple)
+            COVERAGE_BY_SAMPLE(deeptoolsInputTuple, effectiveGenomeSize)
             ch_versions = ch_versions.mix(COVERAGE_BY_SAMPLE.out.versions)
         }
 
