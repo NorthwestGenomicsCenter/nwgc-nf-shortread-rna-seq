@@ -125,7 +125,7 @@ workflow {
         }
 
         // Analysis
-        ANALYSIS(ch_starBam, ch_transcriptomeBam, ch_junctionsTab, ch_starReference, ch_bigwigDirectory, ch_sampleQCDirectory, ch_sampleInfo)
+        ANALYSIS(ch_starBam, ch_transcriptomeBam, ch_junctionsTab, ch_starReference, ch_bigwigDirectory, ch_sampleQCDirectory, ch_sampleInfo, params.organism, params.effectiveGenomeSize)
         ch_versions = ch_versions.mix(ANALYSIS.out.versions)
     }
 

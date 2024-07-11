@@ -15,6 +15,8 @@ workflow ANALYSIS {
         bigWigDirectory
         sampleQCDirectory
         sampleInfoTuple
+        organism
+        effectiveGenomeSize
 
     main:
 
@@ -41,7 +43,7 @@ workflow ANALYSIS {
         }
 
         if (params.analysisToRun.contains("BigWig")) {
-            BIGWIG(starBamTuple, bigWigDirectory, sampleInfoTuple)
+            BIGWIG(starBamTuple, bigWigDirectory, sampleInfoTuple, organism, effectiveGenomeSize)
             ch_versions = ch_versions.mix(BIGWIG.out.versions)
         }
 

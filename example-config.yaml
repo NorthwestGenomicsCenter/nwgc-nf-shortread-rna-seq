@@ -7,8 +7,9 @@ userId: "<samplify userId>"  # e.g. userid: "kolart"
 userEmail: "<userEmail>"     # e.g. userEmail: "kolart@uw.edu"
 
 # Sample
-sampleId: <samplify sampleId>                              # e.g sampleId: 123456
+sampleId: <samplify sampleId>                              # e.g. sampleId: 123456
 sampleDirectory: "<full path to sample directory>"         # e.g. sampleDirectory: "/net/nwgc/vol1/data/processed/samples/123456/rna-star"
+organism: "<scientific organism name>"                     # e.g. organism: "Homo sapiens"
 
 ##########################################
 ### STAR - these are only needed if running the STAR step
@@ -18,9 +19,10 @@ sampleDirectory: "<full path to sample directory>"         # e.g. sampleDirector
 starDirectory: "<full path to STAR reference directory>"       # e.g. STARDirectory: "/net/nwgc/vol1/references/human/grc38/genome/STAR/100bp/gencodev39/bundle"
 
 # STAR specific files (should reside in the starDirectory defined above)
-referenceGenome: "<name of reference genome file>"             # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
-rsemReferencePrefix: "<label used as prefix for rsem files>"   # e.g. rsemReferencePrefix: "rsem_reference"
-gtfFile: "<name of GTF file (used for rnaseqqc)>"              # e.g. gtfFile: "gencode.v30.GRCh38.ERCC.genes.collapsed_only.gtf"
+referenceGenome: "<name of reference genome file>"                 # e.g. referenceGenome: "Homo_sapiens_assembly38_noALT_noHLA_noDecoy_ERCC.fasta"
+rsemReferencePrefix: "<label used as prefix for rsem files>"       # e.g. rsemReferencePrefix: "rsem_reference"
+gtfFile: "<name of GTF file (used for rnaseqqc)>"                  # e.g. gtfFile: "gencode.v30.GRCh38.ERCC.genes.collapsed_only.gtf"
+effectiveGenomeSize: "<numberOfBasesInGenome needed for BigWig>"   # e.g. effectiveGenomeSize: 2913022398
 
 ##########################################
 ### Inputs  - Pick one set flowCellLaneLibrary or Analysis Only

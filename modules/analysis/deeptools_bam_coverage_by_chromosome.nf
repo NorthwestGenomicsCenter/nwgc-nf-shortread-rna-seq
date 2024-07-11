@@ -31,7 +31,8 @@ process DEEPTOOLS_BAM_COVERAGE {
             val(publishDirectory),
             val(sampleId),
             val(sampleDirectory),
-            val(userId)
+            val(userId),
+            val(effectiveGenomeSize)
         )
 
 
@@ -48,7 +49,7 @@ process DEEPTOOLS_BAM_COVERAGE {
             --bam $bam \
             --region $chromosome \
             --filterRNAstrand $strand \
-            --effectiveGenomeSize 2913022398 \
+            --effectiveGenomeSize $effectiveGenomeSize \
             --binSize 1 \
             --outFileFormat bigwig \
             --normalizeUsing RPGC \
