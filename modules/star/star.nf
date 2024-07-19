@@ -9,6 +9,21 @@ process STAR {
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.SJ.out.tab"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.SJ.out.tab.md5sum"
 
+    retryErrorCodes = [104]
+    errorStrategy {
+        if (retryErrorCodes.contains(task.exitStatus)) {
+            if (task.attempt <= maxRetries ) {
+                'retry'
+            }
+            else {
+                'terminate'
+            }
+        }
+        else {
+            'terminate'
+        }
+    }
+
     input:
         tuple val(fastq1Files), val(fastq2Files), val(readGroups)
         tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
@@ -28,6 +43,10 @@ process STAR {
         path "versions.yaml", emit: versions
 
     script:
+        String limitOutSJcollapsed = ""
+        if (task.attempt > 1) {
+            limitOutSJcollapsed = "--limitOutSJcollapsed " + (500000 * (Math.pow(2, task.attempt)))
+        }
         """
         STAR \
             --runMode alignReads \
@@ -62,6 +81,7 @@ process STAR {
             --chimMainSegmentMultNmax 1 \
             --outSAMattributes NH HI AS nM NM ch \
             --outSAMattrRGline $readGroups \
+            $limitOutSJcollapsed \
             --outTmpDir starTempDir
 
         TRANSCRIPTOME_BAM_MD5SUM=`md5sum ${sampleId}.Aligned.toTranscriptome.out.bam | awk '{print \$1}'`
