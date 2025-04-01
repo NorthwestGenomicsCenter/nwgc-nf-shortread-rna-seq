@@ -5,6 +5,7 @@ process DEEPTOOLS_BAM_COVERAGE {
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.bw"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.bw.md5sum"
 
+    // Memory / Error Strategy is all overriden in the nextflow instatnceSizeHigh profile
     memory { 10.GB * (Math.pow(2, task.attempt - 1)) }
  
     retryErrorCodes = [135, 137]
