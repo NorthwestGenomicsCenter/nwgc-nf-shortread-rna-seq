@@ -6,7 +6,16 @@ process RSEM {
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.genes.results.md5sum"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.isoforms.results"
     publishDir "${publishDirectory}", mode:  'link', pattern: "*.isoforms.results.md5sum"
- 
+
+     errorStrategy {
+         if (task.attempt <= maxRetries ) {
+             'retry'
+         }
+         else {
+             'terminate'
+         }
+     }
+
     input:
         path transcriptomeBam
         tuple val(starDirectory), val(referenceGenome), val(rsemReferencePrefix), val(gtfFile)
