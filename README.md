@@ -1,36 +1,41 @@
-# nextflow
+# nwgc-nf-shortread-rna-seq
+[![License](https://img.shields.io/badge/license-GPLv3-blue)](https://www.gnu.org/licenses/gpl-3.0.txt)
 
-## Envirnomental varialbles for your bash profile
-| Nextflow Env Variable  	| Description 	|
-|---	|---	|
-| export NXF_ASSETS="/net/nwgc/vol1/software/nextflow" | # location to store  downloaded pipelines |
-| export NXF_ORG="NickersonGenomeSciUW" | # github organization to look for pipelines |
-| export NXF_SCM_FILE="/net/nwgc/vol1/software/nextflow/scm" | # config file for connecting to private github repo |
+Contact: nwgc-software@uw.edu
 
+----
 
-## SCM file for connecting to private github repo
-    providers {
-    
-        github {
-            platform = 'github'
-            server = 'https://github.com'
-            endpoint = 'https://api.github.com'
-        }
-            
-    }
-    
-    
-## NOT for this file in the long run...but we may need to use this for memory
-    process my_process {
-    cpus 2
+## Introduction
 
-    memory { 16.GB * task.attempt }
-    clusterOptions "-l h_vmem=${task.memory.toMega()/cpus}M " + clusterOptions
+```mermaid
+---
+title: STAR Map Merge Sort
+---
+flowchart TD
+    A["Demultiplex Pipeline"] -- "flowCellLane1.fastq" --> B
+    A -- "flowCellLane2.fastq" --> B
+    A -- "flowCellLaneN.fastq" --> B 
+    style A fill:#E0E0E0
+    B["STAR alignReads"] -- "aligned..bam" --> C
+    C["sambama sort"] -- "aligned.sortedByCoord.bam" --> D
+    D["picard markDuplicates"] -- "sample.markeddups.bam" --> n1@{ shape: fr-circ}
+```
 
-
-    errorStrategy { task.exitStatus == 140 ? 'retry' : 'terminate' }
-    maxRetries 3
-    maxErrors -1
-
-    ...
-}
+```mermaid
+---
+title: Analysis
+---
+flowchart TD
+    A["STAR Map Merge Sort"] -- "transcriptome.bam" --> B
+    style A fill:#E0E0E0
+    B["RSEM"] -- "genes.results" -->  n1@{ shape: fr-circ}
+    B -- "isoform.results" -->  n1@{ shape: fr-circ}
+    A -- "junctions.tab" --> C
+    C["Junctions Bed"] -- "starJunctions.bed" --> n2@{ shape: fr-circ}
+    A -- "star.bam" --> D
+    D["Call Variants"]  -- "filtered.vcf.gz" --> n3@{ shape: fr-circ}
+    A -- "star.bam" --> E
+    E["QC"]  -- "various qc files" --> n4@{ shape: fr-circ}
+    A -- "star.bam" --> F
+    F["BigWig"]  -- "forward and reverse bw by chrom" --> n5@{ shape: fr-circ}
+```
