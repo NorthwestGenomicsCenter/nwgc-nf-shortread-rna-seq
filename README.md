@@ -130,13 +130,13 @@ The user id is used as part of the tag for nextflow modules.  The tag is also us
 This email address is used by nextflow to sends out emails upon workflow completion and/or errors.
 
 ### Sample
-*sampleId*
+*sampleId*  
 The sample id is used  as a prefix for some output files and as part of the tag for the nextflow modules.
 
-*samplesDirectory*
+*samplesDirectory*  
 The sample directory is used as the publish location for all output files.
 
-*organism*
+*organism*  
 The organism of the sample.  This is used in the BigWig step in order to determine what types of bigwig files to create.  If the organism is 'homo sapians' the bigwigs will be created for each chromosome, otherwise only one bigwig will be created for the entire genome.
 
 # STAR
@@ -146,7 +146,7 @@ The directory location of the STAR bundle reference files. This is need by STAR 
 *referenceGenome*  
 The name of the reference genome file located in *starDirectory*.
 
-*rsemReferencePrefix*  
+*rsemReferencePrefix*    
 Prefix of RSEM specifc file that are in the *starDirectory*.
 
 *gtfFile*  
