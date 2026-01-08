@@ -39,3 +39,34 @@ flowchart TD
     A -- "star.bam" --> F
     F["BigWig"]  -- "forward and reverse bw by chrom" --> n5@{ shape: fr-circ}
 ```
+
+```mermaid
+---
+title: Call Variants
+---
+flowchart TD
+    A["STAR Map Merge Sort"] -- "star.bam" --> B
+    style A fill:#E0E0E0
+    B["GATK SplitNCigarReads"] -- "splitncigar.bam" -->  C
+    C["GATK HaplotypeCaller"] -- "sample.vcf" --> D
+    D["GATK VariantFiltration"]  -- "filtered.vcf.gz" --> n1@{ shape: fr-circ}
+```
+
+```mermaid
+---
+title: QC
+---
+flowchart TD
+    A["STAR Map Merge Sort"] -- "star.bam" --> B
+    style A fill:#E0E0E0
+    B["Picard CollectInsertSizeMetrics"] -- "insert_size_metrics.txt" -->  n1@{ shape: fr-circ}
+    A -- "star.bam" --> C
+    C["rnaseqc"] -- "metrics.tsv" --> n2@{ shape: fr-circ}
+    C -- "gene_tpm.gct" --> n2@{ shape: fr-circ}
+    C -- "gene_reads.gct" --> n2@{ shape: fr-circ}
+    C -- "gene_fragments.gct" --> n2@{ shape: fr-circ}
+    C -- "exon_reads.gct" --> n2@{ shape: fr-circ}
+    C -- "coverage.tsv" --> n2@{ shape: fr-circ}
+```
+
+
