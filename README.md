@@ -65,7 +65,7 @@ flowchart TD
 ```
 nwgc-nf-shortread-rna-seq is a nextflow pipeline for aligning and analyizig short read rna seq data.  The pipeline takes fastq files as input.
 
-nwgc-nf-longread-iso-seq-cluster-classify uses NWGC modules as its main computing environment.  However, it could easily be adapted to use containers by creating containers corresponding to the NWGC modules.
+nwgc-nf-shortread-rna-seq uses NWGC modules as its main computing environment.  However, it could easily be adapted to use containers by creating containers corresponding to the NWGC modules.
 
 ## Contents
 
@@ -73,8 +73,6 @@ nwgc-nf-longread-iso-seq-cluster-classify uses NWGC modules as its main computin
 * [Latest Updates](#latest-updates)
 * [Usage](#usage)
 * [Configuration](#configuration)
-* [Clair3](#clair3)
-* [Sniffles2](#sniffles2)
 
 ## Latest Updates
 
