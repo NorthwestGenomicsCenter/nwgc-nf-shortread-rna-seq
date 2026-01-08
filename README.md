@@ -143,63 +143,63 @@ The organism of the sample.  This is used in the BigWig step in order to determi
 *starDirectory*  
 The directory location of the STAR bundle reference files. This is need by STAR and some of the analysis steps. It is also the location where the below reference files should be located.
 
-*referenceGenome*
+*referenceGenome*  
 The name of the reference genome file located in *starDirectory*.
 
-*rsemReferencePrefix*
+*rsemReferencePrefix*  
 Prefix of RSEM specifc file that are in the *starDirectory*.
 
 *gtfFile*  
 The name of the the genocde GTF file located in *starDirectory*.
 
-*effectiveGenomeSize*  
+*effectiveGenomeSize*    
 The number of bases in the genome reference.  Needed for BigWig.
 
 ### Standard Input  - Flow Cell Lane Libraries
-*flowCellLaneLibraries*
+*flowCellLaneLibraries*  
 Flow cell lane and fastqs info for fastq inputs.
 
-*flowCellLaneLibraries.flowCell*
+*flowCellLaneLibraries.flowCell*  
 The name of the flow cell.
 
-*flowCellLaneLibraries.lane*
+*flowCellLaneLibraries.lane*  
 The lane number of the flow cell.
 
-*flowCellLaneLibraries.library*
+*flowCellLaneLibraries.library*  
 The library id.
 
-*flowCellLaneLibraries.fastq1*
+*flowCellLaneLibraries.fastq1*  
 Path to the fastq1 file.
 
-*flowCellLaneLibraries.fastq2*
+*flowCellLaneLibraries.fastq2*  
 Path to the fastq2 file.
 
-*flowCellLaneLibraries.runDate*
+*flowCellLaneLibraries.runDate*  
 The run datee of the flow cell.
 
-*flowCellLaneLibraries.sequencingPlatform*
+*flowCellLaneLibraries.sequencingPlatform*  
 The sequencing platform of the flow cell (Illumina,Element)
 
-### Input - Analysis Only
+### Input - Analysis Only  
 Files to specify if STAR has already been run and only analysis steps are to be performed.  These should only be used if the *stepsToRun* parameter is set to "Analysis".  Also the specific analysis steps to run can be set in the *customAnalysisToRun* parameters.
 
-*analysisStarBam* (VCF, QC, and/or BigWig)
+*analysisStarBam* (VCF, QC, and/or BigWig)  
 The main bam file produced by STAR.
 
-*analysisTranscriptomeBam* (RSEM)
+*analysisTranscriptomeBam* (RSEM)  
 The transcriptome bam file produced by STAR.
 
-*analysisSpliceJunctionsTab* (Junctions)
+*analysisSpliceJunctionsTab* (Junctions)  
 The splicejunctions.tab file produced by STAR.
 
-### Optional Params
-*stepsToRun*
+### Optional Params  
+*stepsToRun*  
 Normal processing will run all 3 main steps in the pipeline: FastxQC, STAR, and Analysis.  If there is a need to run specifc steps only then this parameter can be added to the yaml file.
 
-*customAnalysisToRun:
+*customAnalysisToRun*  
 Normal processing will run all 5 analysis steps: RSEM, Junctions, VCF, QC, and BigWig.  If there is a need to run specifc analysis steps only then this parameter can be added to the yaml file.
 
-### Modules
+### Modules  
 The modules used for the steps are specified in /config/profiles/environment/environmentUbuntu22.config file.
 
 
