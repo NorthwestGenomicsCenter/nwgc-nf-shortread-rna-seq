@@ -61,12 +61,7 @@ flowchart TD
     style A fill:#E0E0E0
     B["Picard CollectInsertSizeMetrics"] -- "insert_size_metrics.txt" -->  n1@{ shape: fr-circ}
     A -- "star.bam" --> C
-    C["rnaseqc"] -- "metrics.tsv" --> n2@{ shape: fr-circ}
-    C -- "gene_tpm.gct" --> n2@{ shape: fr-circ}
-    C -- "gene_reads.gct" --> n2@{ shape: fr-circ}
-    C -- "gene_fragments.gct" --> n2@{ shape: fr-circ}
-    C -- "exon_reads.gct" --> n2@{ shape: fr-circ}
-    C -- "coverage.tsv" --> n2@{ shape: fr-circ}
+    C["rnaseqc"] -- "metrics.tsv<BR>gene_tpm.gct<BR>gene_reads.gct<BR>gene_fragments.gct<BR>exon_reads.gct<BR>coverage.tsv" --> n2@{ shape: fr-circ}
 ```
 
 
