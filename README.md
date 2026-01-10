@@ -114,7 +114,9 @@ nwgc-nf-shortread-rna-seq uses NWGC modules as its main computing environment.  
         executorLocal               This is used for testing on your local machine
          
       environment
-        environmentContainer *      Defines container(s) to use that have software preloaded
+        environmentUbuntu22 *       Defines modules in the NWGC Ubuntu environment
+        ~environmentCentOS7          Defines modules in the NWGC CentOS environment (DEPRECATED)~
+        environmentContainer        Defines container(s) to use that have software preloaded (Currently not implemented)
 
 ## Configuration
 
