@@ -115,7 +115,11 @@ nwgc-nf-shortread-rna-seq uses NWGC modules as its main computing environment.  
          
       environment
         environmentUbuntu22 *       Defines modules in the NWGC Ubuntu environment
-        <s>environmentCentOS7          Defines modules in the NWGC CentOS environment (DEPRECATED)</s>
+        <strike>
+
+        '''environmentCentOS7          Defines modules in the NWGC CentOS environment (DEPRECATED)'''
+
+        </strike?
         environmentContainer        Defines container(s) to use that have software preloaded (Currently not implemented)
 
 ## Configuration
